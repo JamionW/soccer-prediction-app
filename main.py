@@ -1,10 +1,12 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from contextlib import asynccontextmanager
 import json
 from src.common.utils import logger
 from src.common import database
 from src.common.routes import router
 
+@asynccontextmanager
 async def lifespan(app: FastAPI):
     """
     Lifespan event handler for FastAPI.
@@ -25,12 +27,13 @@ app = FastAPI(lifespan=lifespan)
 origins = [
     "http://localhost:3000",
     "https://*.vercel.app",  # Allow all Vercel subdomains
-    "https://pkbipcas.com"
+    "https://pkbipcas.com",
+    "https://*.railway.app"
 ]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[origins],
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

@@ -57,6 +57,30 @@ async def get_conference_teams(conference: str):
         "standings": standings
     }
 
+@router.get("/health")
+async def health_check():
+    """Health check endpoint for Railway and monitoring"""
+    try:
+        # Test database connection
+        await database.execute("SELECT 1")
+        return {
+            "status": "healthy",
+            "database": "connected",
+            "environment": os.getenv("ENVIRONMENT", "development"),
+            "railway_environment": os.getenv("RAILWAY_ENVIRONMENT")
+        }
+    except Exception as e:
+        logger.error(f"Health check failed: {e}")
+        raise HTTPException(
+            status_code=503,
+            detail={
+                "status": "unhealthy",
+                "database": "disconnected", 
+                "error": str(e)
+            }
+        )
+
+
 # ==================== Authentication Routes ====================
 
 @router.post("/auth/register")
