@@ -19,6 +19,12 @@ python-multipart>=0.0.5
 psycopg2-binary>=2.9.0
 sqlalchemy>=1.4.0
 alembic>=1.7.0
+databases>=0.6.0  # ← ADD THIS
+asyncpg>=0.25.0   # ← ADD THIS
+
+# Authentication & HTTP
+bcrypt>=3.2.0     # ← ADD THIS  
+httpx>=0.24.0     # ← ADD THIS
 
 # Additional utilities
 beautifulsoup4>=4.10.0  # For scraping
