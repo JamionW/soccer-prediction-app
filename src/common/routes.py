@@ -4,6 +4,7 @@ from fastapi.responses import JSONResponse
 from datetime import datetime
 from typing import Optional, List, Dict, Any
 import asyncio
+import os
 from src.auth import AuthManager
 from src.common import database, DatabaseManager, SimulationRequest, PlayoffSeedingRequest, TeamPerformance, SimulationResponse, logger
 from src.mlsnp_predictor import MLSNPRegSeasonPredictor, MLSNPPlayoffPredictor
