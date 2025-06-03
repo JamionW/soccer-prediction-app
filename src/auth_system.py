@@ -149,21 +149,17 @@ class AuthManager:
         }
     
     def generate_jwt_token(self, user_id: int) -> str:
-        """
-        Generate a JWT token for a user.
-        
-        JWT tokens contain:
-        - user_id: The user's ID
-        - exp: Expiration timestamp
-        - iat: Issued at timestamp
-        """
-        payload = {
-            "user_id": user_id,
-            "exp": datetime.now(datetime.timezone.utc) + timedelta(hours=JWT_EXPIRATION_HOURS),
-            "iat": datetime.now(datetime.timezone.utc)
-        }
-        
-        return jwt.encode(payload, JWT_SECRET_KEY, algorithm=JWT_ALGORITHM)
+        """Generate a JWT token for the given user ID"""
+        try:
+            payload = {
+                "sub": str(user_id),
+                "iat": datetime.now(timezone.utc),
+                "exp": datetime.now(timezone.utc) + timedelta(hours=JWT_EXPIRATION_HOURS),
+            }
+            return jwt.encode(payload, JWT_SECRET_KEY, algorithm=JWT_ALGORITHM)
+        except Exception as e:
+            logger.error(f"Token generation failed: {e}")
+            raise HTTPException(status_code=500, detail="Could not generate access token")
     
     async def validate_token(self, credentials: HTTPAuthorizationCredentials = Security(security)) -> Dict[str, Any]:
         """
