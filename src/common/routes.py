@@ -1,12 +1,14 @@
-# src/api/routes.py
 from fastapi import APIRouter, Body, HTTPException, Request, Depends, BackgroundTasks, Query
 from fastapi.responses import JSONResponse
 from datetime import datetime
 from typing import Optional, List, Dict, Any
 import asyncio
 import os
-from src.auth import AuthManager
-from src.common import database, DatabaseManager, SimulationRequest, PlayoffSeedingRequest, TeamPerformance, SimulationResponse, logger
+from src import AuthManager
+from src.common import SimulationRequest, PlayoffSeedingRequest, TeamPerformance, SimulationResponse
+from database import database
+from database_manager import DatabaseManager
+from utils import logger
 from src.mlsnp_predictor import MLSNPRegSeasonPredictor, MLSNPPlayoffPredictor
 
 router = APIRouter()
