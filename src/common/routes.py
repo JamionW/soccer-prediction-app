@@ -4,7 +4,7 @@ from datetime import datetime
 from typing import Optional, List, Dict, Any
 import asyncio
 import os
-from src import AuthManager
+from auth_system import AuthManager
 from src.common import SimulationRequest, PlayoffSeedingRequest, TeamPerformance, SimulationResponse
 from database import database
 from database_manager import DatabaseManager
