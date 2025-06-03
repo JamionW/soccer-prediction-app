@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 import json
 from src.common.utils import logger
-from src.common import database
+from src.common import connect, disconnect
 from src.common.routes import router
 
 @asynccontextmanager
@@ -13,13 +13,13 @@ async def lifespan(app: FastAPI):
     This can be used to initialize resources or connections.
     """
     logger.info("Starting FastAPI application...")
-    await database.connect()
+    await connect()
     logger.info("Database connected.")
     
     yield
 
     logger.info("Shutting down connection...")
-    await database.disconnect()
+    await disconnect()
     logger.info("Database disconnected.")
 
 app = FastAPI(lifespan=lifespan)
