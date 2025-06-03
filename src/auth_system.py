@@ -1,7 +1,7 @@
 import os
 import secrets
 import hashlib
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from typing import Optional, Dict, Any
 import bcrypt
 import jwt 
@@ -159,8 +159,8 @@ class AuthManager:
         """
         payload = {
             "user_id": user_id,
-            "exp": datetime.datetime.now(datetime.timezone.utc) + timedelta(hours=JWT_EXPIRATION_HOURS),
-            "iat": datetime.datetime.now(datetime.timezone.utc)
+            "exp": datetime.now(datetime.timezone.utc) + timedelta(hours=JWT_EXPIRATION_HOURS),
+            "iat": datetime.now(datetime.timezone.utc)
         }
         
         return jwt.encode(payload, JWT_SECRET_KEY, algorithm=JWT_ALGORITHM)
