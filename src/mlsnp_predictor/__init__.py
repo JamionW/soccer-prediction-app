@@ -1,2 +1,7 @@
-# This file makes Python treat the `src/mlsnp_predictor` directory as a package.
-from src.mlsnp_predictor import PlayoffPredictor
+from .playoff_predictor import MLSNPPlayoffPredictor
+from .reg_season_predictor import MLSNPRegSeasonPredictor
+
+__all__ = [
+    'MLSNPPlayoffPredictor',
+    'MLSNPRegSeasonPredictor'
+]
