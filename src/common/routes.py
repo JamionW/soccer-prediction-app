@@ -6,9 +6,9 @@ import asyncio
 import os
 from ..auth_system import AuthManager
 from src.common import SimulationRequest, PlayoffSeedingRequest, TeamPerformance, SimulationResponse
-from database import database
-from database_manager import DatabaseManager
-from utils import logger
+from .database import database
+from .database_manager import DatabaseManager
+from .utils import logger
 from src.mlsnp_predictor import MLSNPRegSeasonPredictor, MLSNPPlayoffPredictor
 
 router = APIRouter()
