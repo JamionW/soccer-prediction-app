@@ -3,6 +3,7 @@ import json
 import urllib3
 import logging
 from urllib.parse import urlencode
+import time
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)
@@ -84,56 +85,77 @@ def main():
     print("Testing different login request formats...")
 
     credentials = {
-        "username_or_email": "test_user2",
+        "username_or_email": "test_user5",
         "password": "secure_password_123"
     }
 
-    # Test 1: JSON request
-    test_login_request(
-        "JSON request",
-        credentials,
-        "application/json"
-    )
+    timestamp = int(time.time())
+    test_username = f"test_user_{timestamp}"
+    test_email = f"test_user_{timestamp}@example.com"
+    test_password = "a_very_secure_password_123!"
 
-    # Test 2: Form data request
-    test_login_request(
-        "Form data request",
-        credentials,
-        "application/x-www-form-urlencoded"
-    )
-
-    # Test 3: Register test
-    print("Test: Register endpoint")
-    register_data = {
-        "username": "test_user3",
-        "email": "test3@example.com",
-        "password": "secure_password_123"
+    # Test 1: Register a new user
+    print(f"Test: Registering new user: {test_username}")
+    register_payload = {
+        "username": test_username,
+        "email": test_email,
+        "password": test_password
     }
-
+    headers = {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+    }
     try:
-        headers = {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        }
         response = requests.post(
             f"{base_url}/auth/register",
-            json=register_data,
+            json=register_payload,
             headers=headers,
-            verify=False
+            verify=False # In production, use verify=True with proper certs
         )
         print(f"Register Status: {response.status_code}")
         print(f"Register Response: {response.text[:200]}")
-        print(f"Request Headers: {headers}")
-        print(f"Request Payload: {register_data}")
 
-        if response.status_code >= 400:
-            logger.error("Registration failed")
-            logger.debug(f"Status Code: {response.status_code}")
-            logger.debug(f"Response: {response.text}")
-            logger.debug(f"Request payload: {register_data}")
-            logger.debug(f"Request headers: {headers}")
+        if response.status_code == 200 or response.status_code == 201: # Assuming 200 or 201 for successful registration
+            print("Registration successful or user might have been created just now.")
+
+            # Test 2: Login with the newly registered user
+            print(f"Test: Logging in with new user: {test_username}")
+            login_payload = {
+                "username_or_email": test_username, # or test_email
+                "password": test_password
+            }
+            login_response = requests.post(
+                f"{base_url}/auth/login",
+                json=login_payload,
+                headers=headers,
+                verify=False
+            )
+            print(f"Login Status: {login_response.status_code}")
+            print(f"Login Response: {login_response.text[:200]}")
+
+            if login_response.status_code == 200:
+                logger.info(f"Successfully logged in as {test_username}!")
+            else:
+                logger.error(f"Failed to log in as {test_username} after registration.")
+                logger.debug(f"Login Status: {login_response.status_code}, Response: {login_response.text}")
+
+        else:
+            logger.error(f"Registration failed for {test_username}. Status: {response.status_code}, Response: {response.text}")
+
     except Exception as e:
-        logger.error(f"Register request failed: {str(e)}")
+        logger.error(f"Request failed during registration/login test: {str(e)}")
+
+    # ... (You can keep your form data test if you want to ensure it still returns 422)
+    print("\nTest: Form data request (expected 422)")
+    form_credentials = {
+        "username_or_email": test_username, # using the same username
+        "password": test_password
+    }
+    test_login_request( # Your existing helper function
+        "Form data request",
+        form_credentials,
+        "application/x-www-form-urlencoded"
+    )
 
 if __name__ == "__main__":
     main()
