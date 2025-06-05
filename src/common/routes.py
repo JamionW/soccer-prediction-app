@@ -5,7 +5,7 @@ from typing import Optional, List, Dict, Any
 import asyncio
 import os
 from ..auth_system import AuthManager
-from src.common import SimulationRequest, PlayoffSeedingRequest, TeamPerformance, SimulationResponse
+from .classes import SimulationRequest, PlayoffSeedingRequest, TeamPerformance, SimulationResponse, LoginCredentials
 from .database import database
 from .database_manager import DatabaseManager
 from .utils import logger
@@ -100,15 +100,15 @@ async def register(
     return await auth_manager.register_user(username, email, password)
 
 @router.post("/auth/login")
-async def login(
-    username_or_email: str = Body(...),
-    password: str = Body(...)
-):
+async def login(credentials: LoginCredentials):
     """
     Login with username/email and password.
     Returns a JWT token that should be included in subsequent requests.
     """
-    return await auth_manager.login_user(username_or_email, password)
+    return await auth_manager.login_user(
+        credentials.username_or_email,
+        credentials.password
+    )
 
 @router.post("/auth/oauth/{provider}")
 async def oauth_login(provider: str, code: str = Body(...)):

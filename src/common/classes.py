@@ -36,3 +36,7 @@ class PlayoffBracket(BaseModel):
     round_2: List[Dict[str, Any]]
     conference_final: Dict[str, Any]
     championship: Optional[Dict[str, Any]]
+
+class LoginCredentials(BaseModel):
+    username_or_email: str
+    password: str
