@@ -61,25 +61,26 @@ async def get_conference_teams(conference: str):
     }
 
 @router.get("/health")
-async def health_check():
+async def health_check(request: Request): # Added request: Request
     """Health check endpoint for Railway and monitoring"""
-    try:
-        # Test database connection
-        await database.execute("SELECT 1")
+    if getattr(request.app.state, 'db_connected', False):
         return {
             "status": "healthy",
+            "message": "Application is running and database is connected.",
             "database": "connected",
             "environment": os.getenv("ENVIRONMENT", "development"),
             "railway_environment": os.getenv("RAILWAY_ENVIRONMENT")
         }
-    except Exception as e:
-        logger.error(f"Health check failed: {e}")
-        raise HTTPException(
+    else:
+        # Return a 503 status code if the database is not connected
+        return JSONResponse(
             status_code=503,
-            detail={
+            content={
                 "status": "unhealthy",
-                "database": "disconnected", 
-                "error": str(e)
+                "message": "Application is running but database connection failed or is not established.",
+                "database": "disconnected",
+                "environment": os.getenv("ENVIRONMENT", "development"),
+                "railway_environment": os.getenv("RAILWAY_ENVIRONMENT")
             }
         )
 

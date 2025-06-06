@@ -1,3 +1,5 @@
+import os
+import asyncpg
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
@@ -12,15 +14,34 @@ async def lifespan(app: FastAPI):
     Lifespan event handler for FastAPI.
     This can be used to initialize resources or connections.
     """
-    logger.info("Starting FastAPI application...")
-    await database.connect()
-    logger.info("Database connected.")
+    app.state.db_connected = False  # Initialize db_connected state
+    db_url = os.getenv('DATABASE_URL')
+    if db_url is None:
+        logger.error("DATABASE_URL environment variable not set. Please configure it before running the application.")
+        # We might not want to raise HTTPException here anymore if we want the app to start for health checks
+        # For now, let's keep it to ensure config is present, but this could be revisited.
+        raise HTTPException(status_code=500, detail="Application is not configured correctly. DATABASE_URL is missing.")
+
+    logger.info("Attempting to connect to the database...")
+    try:
+        await database.connect()
+        logger.info("Database connected successfully.")
+        app.state.db_connected = True
+    except asyncpg.exceptions.PostgresConnectionError as e: # Catches InvalidPasswordError and other connection issues
+        logger.error(f"Database connection failed during startup: {e}")
+        # app.state.db_connected remains False
+    except Exception as e: # Catch any other potential errors during connection
+        logger.error(f"An unexpected error occurred during database connection: {e}")
+        # app.state.db_connected remains False
     
     yield
 
-    logger.info("Shutting down connection...")
-    await database.disconnect()
-    logger.info("Database disconnected.")
+    if app.state.db_connected:
+        logger.info("Shutting down database connection...")
+        await database.disconnect()
+        logger.info("Database disconnected.")
+    else:
+        logger.info("Skipping database disconnection as it was not connected.")
 
 app = FastAPI(lifespan=lifespan)
 

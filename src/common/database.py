@@ -5,7 +5,10 @@ import os
 # Load environment variables from .env file
 load_dotenv()
 # Database connection URL from environment variable
-DATABASE_URL = os.getenv('DATABASE_URL', "postgresql://postgres:huzKZXKRlfXQeWveALbXWcnyPKHypaRr@nozomi.proxy.rlwy.net:15606/railway")
+DATABASE_URL = os.getenv('DATABASE_URL')
+
+if DATABASE_URL is None:
+    raise ValueError("DATABASE_URL environment variable not set. Please configure it before running the application.")
 
 # Initialize the database connection
 database = Database(DATABASE_URL)
