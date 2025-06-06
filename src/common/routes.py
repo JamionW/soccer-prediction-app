@@ -124,8 +124,6 @@ async def logout(current_user: Dict = Depends(auth_manager.validate_token)):
     """
     Logout the current user by revoking their token.
     """
-    # Get the token from the request
-    # In a real implementation, you'd extract this from the Authorization header
     await auth_manager.logout(current_user.get('token'))
     return {"message": "Successfully logged out"}
 
@@ -202,8 +200,7 @@ async def get_all_simulations(
     conference: Optional[str] = Query(None, regex="^(eastern|western|both)$")
 ):
     """
-    Get all simulations from all users (public view).
-    
+    Get all simulations from all users (public view).    
     Can filter by conference and supports pagination.
     """
     where_clause = ""
@@ -458,10 +455,8 @@ async def run_conference_simulation(
     user_id: int,
     league_averages: Dict[str, float]
 ) -> Dict:
-    """
-    Run simulation for a single conference with provided league averages.
-    """
-    # Create prediction run record
+    # Run simulation for a single conference with provided league averages.
+
     run_id = await db_manager.store_simulation_run(
         user_id=user_id,
         conference=conference,
@@ -661,7 +656,6 @@ async def store_playoff_results(
     Store playoff simulation results in the database.
     Returns the playoff projection ID.
     """
-    # Create main playoff projection record
     proj_query = """
         INSERT INTO playoff_projection (
             proj_date, season_year, parent_projection, proj_type,
@@ -783,8 +777,7 @@ async def run_playoff_simulation(
 
 async def ensure_historical_data_loaded():
     """
-    Ensure we have historical data loaded.
-    
+    Ensure we have historical data loaded.    
     Checks if 2025 season is loaded and loads if not.
     """
     for year in [2025]:
