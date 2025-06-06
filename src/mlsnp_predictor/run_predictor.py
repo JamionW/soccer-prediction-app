@@ -25,10 +25,6 @@ def main():
 
     try:
         predictor = MLSNPRegSeasonPredictor()
-    
-        # Adjust file paths in constants for predictor if necessary (e.g., for FIXTURES_FILE)
-        # constants.FIXTURES_FILE = "data/fox_sports_mls_fixtures_20250526_170453.json" # Example if it needs to be overridden
-        # For now, we assume constants.py has the correct default paths or they are handled within the class.
 
         summary_df, simulation_results, _, qualification_data = predictor.run_simulations() 
     

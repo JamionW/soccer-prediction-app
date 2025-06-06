@@ -6,7 +6,7 @@ LEAGUE = "mlsnp"
 HOME_ADVANTAGE_GOALS = 0.2
 REGRESSION_WEIGHT = 0.3
 MIN_GAMES_FOR_RELIABILITY = 5
-FIXTURES_FILE = "fox_sports_mls_fixtures_20250604_224749.json"
+FIXTURES_FILE = "output/fox_sports_mlsnp_fixtures.json"
 
 # Season boundaries - games between these dates count for 2025 regular season
 SEASON_START = datetime(2025, 3, 1)  # March 2025

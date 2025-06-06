@@ -2,7 +2,7 @@ import logging
 import sys
 import io
 from datetime import datetime
-from src.mlsnp_scraper.fox_schedule_scraper import FoxSportsMLSNextProScraper
+from src.mlsnp_scraper import FoxSportsMLSNextProScraper
 
 # Configure logging
 logging.basicConfig(
@@ -21,7 +21,7 @@ def main():
     # Configuration
     asa_file = "data/asa_mls_next_pro_teams.json" 
     
-    # Date range to scrape; #UPDATE TO USER INPUT
+    # Date range to scrape
     start_date = "2025-03-07" 
     end_date = "2025-10-31"   
     
@@ -39,12 +39,15 @@ def main():
         
         # Save results
         if fixtures:
-            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-            
-            # Save to JSON in the output directory
-            json_filename = f"output/fox_sports_mls_fixtures_{timestamp}.json"
+            json_filename = "output/fox_sports_mlsnp_fixtures.json"
             scraper._save_json_results(fixtures, json_filename)
             logger.info(f"JSON results saved to: {json_filename}")
+            
+            # A backup with timestamp just in case
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            backup_filename = f"output/archive/fox_sports_mlsnp_fixtures_{timestamp}.json"
+            scraper._save_json_results(fixtures, backup_filename)
+            logger.info(f"Backup saved to: {backup_filename}")
             
             logger.info("Sample fixtures found:")
             for fixture in fixtures[:5]:
@@ -57,7 +60,7 @@ def main():
             logger.warning("- The specified date range may not have games.")
             logger.warning("- Fox Sports may have changed their HTML structure significantly.")
             logger.warning(f"- The ASA team data file ('{asa_file}') might be missing or malformed.")
-            logger.warning("- Check the log file ('fox_sports_scraper.log' - from the class, and 'run_scraper.log' - from this script) for detailed error information.")
+            logger.warning("- Check the log files for detailed error information.")
     
     except FileNotFoundError as fnf_error:
         logger.error(f"Configuration file not found: {fnf_error}")

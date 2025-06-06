@@ -1,0 +1,4122 @@
+[
+    {
+        "date": "2025-03-07",
+        "home_team": "Austin FC II",
+        "home_team_id": "eV5Dw4EMKn",
+        "away_team": "Colorado Rapids 2",
+        "away_team_id": "7VqG1oWMvW",
+        "location": "Austin, TX",
+        "time": "4-2",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-03-07",
+        "home_team": "Crown Legacy FC",
+        "home_team_id": "a35reDLML6",
+        "away_team": "New York City FC II",
+        "away_team_id": "jYQJXkP5GR",
+        "location": "Matthews, NC",
+        "time": "2-2",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-03-07",
+        "home_team": "Inter Miami CF II",
+        "home_team_id": "vzqowoZqap",
+        "away_team": "Chattanooga FC",
+        "away_team_id": "raMyeZAMd2",
+        "location": "Fort Lauderdale, FL",
+        "time": "1-2",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-03-07",
+        "home_team": "Atlanta United 2",
+        "home_team_id": "wvq9jx1QWn",
+        "away_team": "New York Red Bulls II",
+        "away_team_id": "9Yqdwg85vJ",
+        "location": "Kennesaw, GA",
+        "time": "0-1",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-03-07",
+        "home_team": "Ventura County FC",
+        "home_team_id": "4wM4E4d5jB",
+        "away_team": "Tacoma Defiance",
+        "away_team_id": "KXMe8Z2Q64",
+        "location": "Carson, CA",
+        "time": "3-2",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-03-08",
+        "home_team": "Houston Dynamo FC 2",
+        "home_team_id": "gOMnJnOMwN",
+        "away_team": "Sporting Kansas City II",
+        "away_team_id": "2vQ14GKqrA",
+        "location": "Houston, TX",
+        "time": "3-1",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-03-09",
+        "home_team": "New England Revolution II",
+        "home_team_id": "gpMO1Pyqzy",
+        "away_team": "Philadelphia Union II",
+        "away_team_id": "KPqjwN4Q6v",
+        "location": "Foxborough, MA",
+        "time": "0-0",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-03-09",
+        "home_team": "Chicago Fire FC II",
+        "home_team_id": "0x5gb3bM7O",
+        "away_team": "Huntsville City FC",
+        "away_team_id": "OlMlKDEQLz",
+        "location": "Chicago, IL",
+        "time": "1-4",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-03-09",
+        "home_team": "FC Cincinnati 2",
+        "home_team_id": "gpMOXy25zy",
+        "away_team": "Toronto FC II",
+        "away_team_id": "4JMAkpDqKg",
+        "location": "Newport, KY",
+        "time": "0-1",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-03-09",
+        "home_team": "Orlando City B",
+        "home_team_id": "kRQaW3L5KZ",
+        "away_team": "Columbus Crew 2",
+        "away_team_id": "0Oq6Yad56D",
+        "location": "Kissimmee, FL",
+        "time": "2-1",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-03-09",
+        "home_team": "North Texas SC",
+        "home_team_id": "ljqE94Vqx0",
+        "away_team": "Saint Louis City SC 2",
+        "away_team_id": "eVq3Z0D5WO",
+        "location": "Arlington, TX",
+        "time": "0-3",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-03-09",
+        "home_team": "Los Angeles FC 2",
+        "home_team_id": "2vQ1XzlqrA",
+        "away_team": "Vancouver Whitecaps FC 2",
+        "away_team_id": "N6MmWV0qEG",
+        "location": "Fullerton, CA",
+        "time": "3-3",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-03-13",
+        "home_team": "New England Revolution II",
+        "home_team_id": "gpMO1Pyqzy",
+        "away_team": "FC Cincinnati 2",
+        "away_team_id": "gpMOXy25zy",
+        "location": "Foxborough, MA",
+        "time": "2-0",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-03-13",
+        "home_team": "Inter Miami CF II",
+        "home_team_id": "vzqowoZqap",
+        "away_team": "Carolina Core",
+        "away_team_id": "NWMWJezQlz",
+        "location": "Fort Lauderdale, FL",
+        "time": "1-1",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-03-13",
+        "home_team": "Chicago Fire FC II",
+        "home_team_id": "0x5gb3bM7O",
+        "away_team": "Toronto FC II",
+        "away_team_id": "4JMAkpDqKg",
+        "location": "Chicago, IL",
+        "time": "1-0",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-03-14",
+        "home_team": "Austin FC II",
+        "home_team_id": "eV5Dw4EMKn",
+        "away_team": "Minnesota United FC 2",
+        "away_team_id": "2lqRX1AMr0",
+        "location": "Austin, TX",
+        "time": "0-1",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-03-14",
+        "home_team": "Sporting Kansas City II",
+        "home_team_id": "2vQ14GKqrA",
+        "away_team": "Saint Louis City SC 2",
+        "away_team_id": "eVq3Z0D5WO",
+        "location": "Lawrence, KS",
+        "time": "0-1",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-03-14",
+        "home_team": "New York City FC II",
+        "home_team_id": "jYQJXkP5GR",
+        "away_team": "New York City FC II",
+        "away_team_id": "jYQJXkP5GR",
+        "location": "New York, NY",
+        "time": "2-0",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-03-14",
+        "home_team": "North Texas SC",
+        "home_team_id": "ljqE94Vqx0",
+        "away_team": "Vancouver Whitecaps FC 2",
+        "away_team_id": "N6MmWV0qEG",
+        "location": "Arlington, TX",
+        "time": "3-2",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-03-14",
+        "home_team": "Los Angeles FC 2",
+        "home_team_id": "2vQ1XzlqrA",
+        "away_team": "Ventura County FC",
+        "away_team_id": "4wM4E4d5jB",
+        "location": "Fullerton, CA",
+        "time": "3-1",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-03-14",
+        "home_team": "Tacoma Defiance",
+        "home_team_id": "KXMe8Z2Q64",
+        "away_team": "The Town FC",
+        "away_team_id": "Oa5wDy8q14",
+        "location": "Tukwila, WA",
+        "time": "3-1",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-03-15",
+        "home_team": "Chattanooga FC",
+        "home_team_id": "raMyeZAMd2",
+        "away_team": "Huntsville City FC",
+        "away_team_id": "OlMlKDEQLz",
+        "location": "Chattanooga, TN",
+        "time": "1-0",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-03-15",
+        "home_team": "Portland Timbers 2",
+        "home_team_id": "zeQZe4DqKw",
+        "away_team": "Real Monarchs",
+        "away_team_id": "BLMv6m3Mxe",
+        "location": "Hillsboro, OR",
+        "time": "2-3",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-03-16",
+        "home_team": "Orlando City B",
+        "home_team_id": "kRQaW3L5KZ",
+        "away_team": "Atlanta United 2",
+        "away_team_id": "wvq9jx1QWn",
+        "location": "Kissimmee, FL",
+        "time": "2-2",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-03-17",
+        "home_team": "Philadelphia Union II",
+        "home_team_id": "KPqjwN4Q6v",
+        "away_team": "New York Red Bulls II",
+        "away_team_id": "9Yqdwg85vJ",
+        "location": "Chester, PA",
+        "time": "1-1",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-03-20",
+        "home_team": "Houston Dynamo FC 2",
+        "home_team_id": "gOMnJnOMwN",
+        "away_team": "North Texas SC",
+        "away_team_id": "ljqE94Vqx0",
+        "location": "Houston, TX",
+        "time": "POSTPONED-",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-03-23",
+        "home_team": "Philadelphia Union II",
+        "home_team_id": "KPqjwN4Q6v",
+        "away_team": "Inter Miami CF II",
+        "away_team_id": "vzqowoZqap",
+        "location": "Chester, PA",
+        "time": "POSTPONED-",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-03-23",
+        "home_team": "Saint Louis City SC 2",
+        "home_team_id": "eVq3Z0D5WO",
+        "away_team": "Sporting Kansas City II",
+        "away_team_id": "2vQ14GKqrA",
+        "location": "St. Louis, MO",
+        "time": "2-0",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-03-23",
+        "home_team": "Inter Miami CF II",
+        "home_team_id": "vzqowoZqap",
+        "away_team": "Columbus Crew 2",
+        "away_team_id": "0Oq6Yad56D",
+        "location": "Fort Lauderdale, FL",
+        "time": "4-2",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-03-23",
+        "home_team": "Houston Dynamo FC 2",
+        "home_team_id": "gOMnJnOMwN",
+        "away_team": "North Texas SC",
+        "away_team_id": "ljqE94Vqx0",
+        "location": "Houston, TX",
+        "time": "5-1",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-03-23",
+        "home_team": "Real Monarchs",
+        "home_team_id": "BLMv6m3Mxe",
+        "away_team": "Colorado Rapids 2",
+        "away_team_id": "7VqG1oWMvW",
+        "location": "Herriman, UT",
+        "time": "2-2",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-03-24",
+        "home_team": "New York City FC II",
+        "home_team_id": "jYQJXkP5GR",
+        "away_team": "Carolina Core",
+        "away_team_id": "NWMWJezQlz",
+        "location": "New York, NY",
+        "time": "2-1",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-03-26",
+        "home_team": "Crown Legacy FC",
+        "home_team_id": "a35reDLML6",
+        "away_team": "Orlando City B",
+        "away_team_id": "kRQaW3L5KZ",
+        "location": "Matthews, NC",
+        "time": "0-1",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-03-26",
+        "home_team": "Ventura County FC",
+        "home_team_id": "4wM4E4d5jB",
+        "away_team": "Houston Dynamo FC 2",
+        "away_team_id": "gOMnJnOMwN",
+        "location": "Carson, CA",
+        "time": "1-0",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-03-26",
+        "home_team": "Portland Timbers 2",
+        "home_team_id": "zeQZe4DqKw",
+        "away_team": "The Town FC",
+        "away_team_id": "Oa5wDy8q14",
+        "location": "Hillsboro, OR",
+        "time": "1-1",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-03-28",
+        "home_team": "New England Revolution II",
+        "home_team_id": "gpMO1Pyqzy",
+        "away_team": "Toronto FC II",
+        "away_team_id": "4JMAkpDqKg",
+        "location": "Foxborough, MA",
+        "time": "4-0",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-03-28",
+        "home_team": "Huntsville City FC",
+        "home_team_id": "OlMlKDEQLz",
+        "away_team": "Philadelphia Union II",
+        "away_team_id": "KPqjwN4Q6v",
+        "location": "Huntsville, AL",
+        "time": "2-2",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-03-28",
+        "home_team": "North Texas SC",
+        "home_team_id": "ljqE94Vqx0",
+        "away_team": "Sporting Kansas City II",
+        "away_team_id": "2vQ14GKqrA",
+        "location": "Arlington, TX",
+        "time": "3-3",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-03-29",
+        "home_team": "Vancouver Whitecaps FC 2",
+        "home_team_id": "N6MmWV0qEG",
+        "away_team": "Portland Timbers 2",
+        "away_team_id": "zeQZe4DqKw",
+        "location": "Burnaby, CAN",
+        "time": "1-1",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-03-30",
+        "home_team": "New York Red Bulls II",
+        "home_team_id": "9Yqdwg85vJ",
+        "away_team": "New York City FC II",
+        "away_team_id": "jYQJXkP5GR",
+        "location": "Montclair, NJ",
+        "time": "3-2",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-03-30",
+        "home_team": "Atlanta United 2",
+        "home_team_id": "wvq9jx1QWn",
+        "away_team": "Chattanooga FC",
+        "away_team_id": "raMyeZAMd2",
+        "location": "Kennesaw, GA",
+        "time": "2-2",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-03-30",
+        "home_team": "FC Cincinnati 2",
+        "home_team_id": "gpMOXy25zy",
+        "away_team": "Chicago Fire FC II",
+        "away_team_id": "0x5gb3bM7O",
+        "location": "Newport, KY",
+        "time": "1-2",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-03-30",
+        "home_team": "Saint Louis City SC 2",
+        "home_team_id": "eVq3Z0D5WO",
+        "away_team": "Austin FC II",
+        "away_team_id": "eV5Dw4EMKn",
+        "location": "St. Louis, MO",
+        "time": "0-0",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-03-30",
+        "home_team": "Houston Dynamo FC 2",
+        "home_team_id": "gOMnJnOMwN",
+        "away_team": "Minnesota United FC 2",
+        "away_team_id": "2lqRX1AMr0",
+        "location": "Houston, TX",
+        "time": "1-3",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-04-05",
+        "home_team": "Portland Timbers 2",
+        "home_team_id": "zeQZe4DqKw",
+        "away_team": "North Texas SC",
+        "away_team_id": "ljqE94Vqx0",
+        "location": "Hillsboro, OR",
+        "time": "1-2",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-04-05",
+        "home_team": "Carolina Core",
+        "home_team_id": "NWMWJezQlz",
+        "away_team": "New York City FC II",
+        "away_team_id": "jYQJXkP5GR",
+        "location": "High Point, NC",
+        "time": "5-0",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-04-05",
+        "home_team": "Chattanooga FC",
+        "home_team_id": "raMyeZAMd2",
+        "away_team": "Orlando City B",
+        "away_team_id": "kRQaW3L5KZ",
+        "location": "Chattanooga, TN",
+        "time": "2-0",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-04-06",
+        "home_team": "Atlanta United 2",
+        "home_team_id": "wvq9jx1QWn",
+        "away_team": "Inter Miami CF II",
+        "away_team_id": "vzqowoZqap",
+        "location": "Kennesaw, GA",
+        "time": "3-2",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-04-06",
+        "home_team": "New York Red Bulls II",
+        "home_team_id": "9Yqdwg85vJ",
+        "away_team": "Chicago Fire FC II",
+        "away_team_id": "0x5gb3bM7O",
+        "location": "Montclair, NJ",
+        "time": "3-2",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-04-06",
+        "home_team": "Saint Louis City SC 2",
+        "home_team_id": "eVq3Z0D5WO",
+        "away_team": "Colorado Rapids 2",
+        "away_team_id": "7VqG1oWMvW",
+        "location": "St. Louis, MO",
+        "time": "0-1",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-04-06",
+        "home_team": "Columbus Crew 2",
+        "home_team_id": "0Oq6Yad56D",
+        "away_team": "Crown Legacy FC",
+        "away_team_id": "a35reDLML6",
+        "location": "Columbus, OH",
+        "time": "1-1",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-04-06",
+        "home_team": "Houston Dynamo FC 2",
+        "home_team_id": "gOMnJnOMwN",
+        "away_team": "Los Angeles FC 2",
+        "away_team_id": "2vQ1XzlqrA",
+        "location": "Houston, TX",
+        "time": "1-0",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-04-06",
+        "home_team": "Real Monarchs",
+        "home_team_id": "BLMv6m3Mxe",
+        "away_team": "Ventura County FC",
+        "away_team_id": "4wM4E4d5jB",
+        "location": "Herriman, UT",
+        "time": "1-2",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-04-06",
+        "home_team": "Tacoma Defiance",
+        "home_team_id": "KXMe8Z2Q64",
+        "away_team": "Vancouver Whitecaps FC 2",
+        "away_team_id": "N6MmWV0qEG",
+        "location": "Tukwila, WA",
+        "time": "5-3",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-04-09",
+        "home_team": "Orlando City B",
+        "home_team_id": "kRQaW3L5KZ",
+        "away_team": "New England Revolution II",
+        "away_team_id": "gpMO1Pyqzy",
+        "location": "Kissimmee, FL",
+        "time": "1-0",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-04-09",
+        "home_team": "Sporting Kansas City II",
+        "home_team_id": "2vQ14GKqrA",
+        "away_team": "Minnesota United FC 2",
+        "away_team_id": "2lqRX1AMr0",
+        "location": "Lawrence, KS",
+        "time": "2-4",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-04-09",
+        "home_team": "New York City FC II",
+        "home_team_id": "jYQJXkP5GR",
+        "away_team": "FC Cincinnati 2",
+        "away_team_id": "gpMOXy25zy",
+        "location": "New York, NY",
+        "time": "2-2",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-04-10",
+        "home_team": "Inter Miami CF II",
+        "home_team_id": "vzqowoZqap",
+        "away_team": "Toronto FC II",
+        "away_team_id": "4JMAkpDqKg",
+        "location": "Fort Lauderdale, FL",
+        "time": "0-1",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-04-10",
+        "home_team": "Philadelphia Union II",
+        "home_team_id": "KPqjwN4Q6v",
+        "away_team": "Atlanta United 2",
+        "away_team_id": "wvq9jx1QWn",
+        "location": "Chester, PA",
+        "time": "5-1",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-04-10",
+        "home_team": "Real Monarchs",
+        "home_team_id": "BLMv6m3Mxe",
+        "away_team": "The Town FC",
+        "away_team_id": "Oa5wDy8q14",
+        "location": "Herriman, UT",
+        "time": "2-1",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-04-10",
+        "home_team": "Los Angeles FC 2",
+        "home_team_id": "2vQ1XzlqrA",
+        "away_team": "Tacoma Defiance",
+        "away_team_id": "KXMe8Z2Q64",
+        "location": "Fullerton, CA",
+        "time": "3-2",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-04-11",
+        "home_team": "Austin FC II",
+        "home_team_id": "eV5Dw4EMKn",
+        "away_team": "North Texas SC",
+        "away_team_id": "ljqE94Vqx0",
+        "location": "Austin, TX",
+        "time": "1-1",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-04-12",
+        "home_team": "Chicago Fire FC II",
+        "home_team_id": "0x5gb3bM7O",
+        "away_team": "New England Revolution II",
+        "away_team_id": "gpMO1Pyqzy",
+        "location": "Chicago, IL",
+        "time": "POSTPONED-",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-04-13",
+        "home_team": "Carolina Core",
+        "home_team_id": "NWMWJezQlz",
+        "away_team": "Chattanooga FC",
+        "away_team_id": "raMyeZAMd2",
+        "location": "High Point, NC",
+        "time": "1-4",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-04-13",
+        "home_team": "Portland Timbers 2",
+        "home_team_id": "zeQZe4DqKw",
+        "away_team": "Colorado Rapids 2",
+        "away_team_id": "7VqG1oWMvW",
+        "location": "Hillsboro, OR",
+        "time": "1-2",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-04-13",
+        "home_team": "FC Cincinnati 2",
+        "home_team_id": "gpMOXy25zy",
+        "away_team": "Columbus Crew 2",
+        "away_team_id": "0Oq6Yad56D",
+        "location": "Newport, KY",
+        "time": "POSTPONED-",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-04-13",
+        "home_team": "Crown Legacy FC",
+        "home_team_id": "a35reDLML6",
+        "away_team": "Huntsville City FC",
+        "away_team_id": "OlMlKDEQLz",
+        "location": "Matthews, NC",
+        "time": "1-1",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-04-13",
+        "home_team": "Ventura County FC",
+        "home_team_id": "4wM4E4d5jB",
+        "away_team": "Saint Louis City SC 2",
+        "away_team_id": "eVq3Z0D5WO",
+        "location": "Carson, CA",
+        "time": "3-1",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-04-15",
+        "home_team": "Inter Miami CF II",
+        "home_team_id": "vzqowoZqap",
+        "away_team": "Orlando City B",
+        "away_team_id": "kRQaW3L5KZ",
+        "location": "Fort Lauderdale, FL",
+        "time": "3-2",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-04-15",
+        "home_team": "Houston Dynamo FC 2",
+        "home_team_id": "gOMnJnOMwN",
+        "away_team": "Tacoma Defiance",
+        "away_team_id": "KXMe8Z2Q64",
+        "location": "Houston, TX",
+        "time": "POSTPONED-",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-04-18",
+        "home_team": "Toronto FC II",
+        "home_team_id": "4JMAkpDqKg",
+        "away_team": "Carolina Core",
+        "away_team_id": "NWMWJezQlz",
+        "location": "Toronto, ON",
+        "time": "1-1",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-04-19",
+        "home_team": "Chattanooga FC",
+        "home_team_id": "raMyeZAMd2",
+        "away_team": "Crown Legacy FC",
+        "away_team_id": "a35reDLML6",
+        "location": "Chattanooga, TN",
+        "time": "2-1",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-04-19",
+        "home_team": "Vancouver Whitecaps FC 2",
+        "home_team_id": "N6MmWV0qEG",
+        "away_team": "Austin FC II",
+        "away_team_id": "eV5Dw4EMKn",
+        "location": "Burnaby, CAN",
+        "time": "4-0",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-04-19",
+        "home_team": "The Town FC",
+        "home_team_id": "Oa5wDy8q14",
+        "away_team": "Minnesota United FC 2",
+        "away_team_id": "2lqRX1AMr0",
+        "location": "San Jose, CA",
+        "time": "POSTPONED-",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-04-20",
+        "home_team": "FC Cincinnati 2",
+        "home_team_id": "gpMOXy25zy",
+        "away_team": "New York Red Bulls II",
+        "away_team_id": "9Yqdwg85vJ",
+        "location": "Newport, KY",
+        "time": "3-1",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-04-20",
+        "home_team": "Huntsville City FC",
+        "home_team_id": "OlMlKDEQLz",
+        "away_team": "Chicago Fire FC II",
+        "away_team_id": "0x5gb3bM7O",
+        "location": "Huntsville, AL",
+        "time": "5-0",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-04-20",
+        "home_team": "North Texas SC",
+        "home_team_id": "ljqE94Vqx0",
+        "away_team": "Colorado Rapids 2",
+        "away_team_id": "7VqG1oWMvW",
+        "location": "Arlington, TX",
+        "time": "2-3",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-04-23",
+        "home_team": "New England Revolution II",
+        "home_team_id": "gpMO1Pyqzy",
+        "away_team": "New England Revolution II",
+        "away_team_id": "gpMO1Pyqzy",
+        "location": "Foxborough, MA",
+        "time": "2-2",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-04-23",
+        "home_team": "Real Monarchs",
+        "home_team_id": "BLMv6m3Mxe",
+        "away_team": "Los Angeles FC 2",
+        "away_team_id": "2vQ1XzlqrA",
+        "location": "Herriman, UT",
+        "time": "1-1",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-04-23",
+        "home_team": "Sporting Kansas City II",
+        "home_team_id": "2vQ14GKqrA",
+        "away_team": "Tacoma Defiance",
+        "away_team_id": "KXMe8Z2Q64",
+        "location": "Lawrence, KS",
+        "time": "1-4",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-04-23",
+        "home_team": "Atlanta United 2",
+        "home_team_id": "wvq9jx1QWn",
+        "away_team": "Carolina Core",
+        "away_team_id": "NWMWJezQlz",
+        "location": "Kennesaw, GA",
+        "time": "2-2",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-04-23",
+        "home_team": "New York City FC II",
+        "home_team_id": "jYQJXkP5GR",
+        "away_team": "Philadelphia Union II",
+        "away_team_id": "KPqjwN4Q6v",
+        "location": "New York, NY",
+        "time": "1-4",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-04-23",
+        "home_team": "North Texas SC",
+        "home_team_id": "ljqE94Vqx0",
+        "away_team": "The Town FC",
+        "away_team_id": "Oa5wDy8q14",
+        "location": "Arlington, TX",
+        "time": "2-0",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-04-23",
+        "home_team": "Vancouver Whitecaps FC 2",
+        "home_team_id": "N6MmWV0qEG",
+        "away_team": "Houston Dynamo FC 2",
+        "away_team_id": "gOMnJnOMwN",
+        "location": "Burnaby, CAN",
+        "time": "1-3",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-04-23",
+        "home_team": "Ventura County FC",
+        "home_team_id": "4wM4E4d5jB",
+        "away_team": "Portland Timbers 2",
+        "away_team_id": "zeQZe4DqKw",
+        "location": "Carson, CA",
+        "time": "2-3",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-04-24",
+        "home_team": "Colorado Rapids 2",
+        "home_team_id": "7VqG1oWMvW",
+        "away_team": "Minnesota United FC 2",
+        "away_team_id": "2lqRX1AMr0",
+        "location": "Commerce City, CO",
+        "time": "0-2",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-04-25",
+        "home_team": "Toronto FC II",
+        "home_team_id": "4JMAkpDqKg",
+        "away_team": "Chicago Fire FC II",
+        "away_team_id": "0x5gb3bM7O",
+        "location": "Toronto, ON",
+        "time": "2-0",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-04-26",
+        "home_team": "New England Revolution II",
+        "home_team_id": "gpMO1Pyqzy",
+        "away_team": "New England Revolution II",
+        "away_team_id": "gpMO1Pyqzy",
+        "location": "Foxborough, MA",
+        "time": "2-1",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-04-26",
+        "home_team": "Carolina Core",
+        "home_team_id": "NWMWJezQlz",
+        "away_team": "Crown Legacy FC",
+        "away_team_id": "a35reDLML6",
+        "location": "High Point, NC",
+        "time": "1-2",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-04-26",
+        "home_team": "Tacoma Defiance",
+        "home_team_id": "KXMe8Z2Q64",
+        "away_team": "Saint Louis City SC 2",
+        "away_team_id": "eVq3Z0D5WO",
+        "location": "Tukwila, WA",
+        "time": "4-1",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-04-27",
+        "home_team": "FC Cincinnati 2",
+        "home_team_id": "gpMOXy25zy",
+        "away_team": "Atlanta United 2",
+        "away_team_id": "wvq9jx1QWn",
+        "location": "Newport, KY",
+        "time": "0-0",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-04-27",
+        "home_team": "Colorado Rapids 2",
+        "home_team_id": "7VqG1oWMvW",
+        "away_team": "Sporting Kansas City II",
+        "away_team_id": "2vQ14GKqrA",
+        "location": "Commerce City, CO",
+        "time": "3-0",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-04-27",
+        "home_team": "Columbus Crew 2",
+        "home_team_id": "0Oq6Yad56D",
+        "away_team": "Chattanooga FC",
+        "away_team_id": "raMyeZAMd2",
+        "location": "Columbus, OH",
+        "time": "3-0",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-04-27",
+        "home_team": "Houston Dynamo FC 2",
+        "home_team_id": "gOMnJnOMwN",
+        "away_team": "Austin FC II",
+        "away_team_id": "eV5Dw4EMKn",
+        "location": "Houston, TX",
+        "time": "2-1",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-04-27",
+        "home_team": "Huntsville City FC",
+        "home_team_id": "OlMlKDEQLz",
+        "away_team": "Inter Miami CF II",
+        "away_team_id": "vzqowoZqap",
+        "location": "Huntsville, AL",
+        "time": "4-0",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-04-27",
+        "home_team": "Orlando City B",
+        "home_team_id": "kRQaW3L5KZ",
+        "away_team": "New York Red Bulls II",
+        "away_team_id": "9Yqdwg85vJ",
+        "location": "Kissimmee, FL",
+        "time": "2-4",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-04-27",
+        "home_team": "The Town FC",
+        "home_team_id": "Oa5wDy8q14",
+        "away_team": "Los Angeles FC 2",
+        "away_team_id": "2vQ1XzlqrA",
+        "location": "San Jose, CA",
+        "time": "5-1",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-04-27",
+        "home_team": "Vancouver Whitecaps FC 2",
+        "home_team_id": "N6MmWV0qEG",
+        "away_team": "Ventura County FC",
+        "away_team_id": "4wM4E4d5jB",
+        "location": "Burnaby, CAN",
+        "time": "2-3",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-05-02",
+        "home_team": "Minnesota United FC 2",
+        "home_team_id": "2lqRX1AMr0",
+        "away_team": "North Texas SC",
+        "away_team_id": "ljqE94Vqx0",
+        "location": "Saint Paul, MN",
+        "time": "0-1",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-05-02",
+        "home_team": "Chicago Fire FC II",
+        "home_team_id": "0x5gb3bM7O",
+        "away_team": "Orlando City B",
+        "away_team_id": "kRQaW3L5KZ",
+        "location": "Chicago, IL",
+        "time": "5-1",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-05-02",
+        "home_team": "Austin FC II",
+        "home_team_id": "eV5Dw4EMKn",
+        "away_team": "Sporting Kansas City II",
+        "away_team_id": "2vQ14GKqrA",
+        "location": "Austin, TX",
+        "time": "0-0",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-05-02",
+        "home_team": "Ventura County FC",
+        "home_team_id": "4wM4E4d5jB",
+        "away_team": "Tacoma Defiance",
+        "away_team_id": "KXMe8Z2Q64",
+        "location": "Carson, CA",
+        "time": "1-2",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-05-03",
+        "home_team": "Vancouver Whitecaps FC 2",
+        "home_team_id": "N6MmWV0qEG",
+        "away_team": "Real Monarchs",
+        "away_team_id": "BLMv6m3Mxe",
+        "location": "Vancouver, BC",
+        "time": "1-1",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-05-03",
+        "home_team": "Chattanooga FC",
+        "home_team_id": "raMyeZAMd2",
+        "away_team": "Philadelphia Union II",
+        "away_team_id": "KPqjwN4Q6v",
+        "location": "Chattanooga, TN",
+        "time": "0-0",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-05-03",
+        "home_team": "Huntsville City FC",
+        "home_team_id": "OlMlKDEQLz",
+        "away_team": "Atlanta United 2",
+        "away_team_id": "wvq9jx1QWn",
+        "location": "Huntsville, AL",
+        "time": "2-2",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-05-04",
+        "home_team": "Toronto FC II",
+        "home_team_id": "4JMAkpDqKg",
+        "away_team": "New England Revolution II",
+        "away_team_id": "gpMO1Pyqzy",
+        "location": "Toronto, ON",
+        "time": "3-3",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-05-04",
+        "home_team": "New York Red Bulls II",
+        "home_team_id": "9Yqdwg85vJ",
+        "away_team": "Carolina Core",
+        "away_team_id": "NWMWJezQlz",
+        "location": "Montclair, NJ",
+        "time": "2-2",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-05-04",
+        "home_team": "Saint Louis City SC 2",
+        "home_team_id": "eVq3Z0D5WO",
+        "away_team": "Houston Dynamo FC 2",
+        "away_team_id": "gOMnJnOMwN",
+        "location": "St. Louis, MO",
+        "time": "3-1",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-05-04",
+        "home_team": "Inter Miami CF II",
+        "home_team_id": "vzqowoZqap",
+        "away_team": "New York City FC II",
+        "away_team_id": "jYQJXkP5GR",
+        "location": "Fort Lauderdale, FL",
+        "time": "4-2",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-05-04",
+        "home_team": "The Town FC",
+        "home_team_id": "Oa5wDy8q14",
+        "away_team": "Portland Timbers 2",
+        "away_team_id": "zeQZe4DqKw",
+        "location": "San Jose, CA",
+        "time": "5-0",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-05-04",
+        "home_team": "Los Angeles FC 2",
+        "home_team_id": "2vQ1XzlqrA",
+        "away_team": "Colorado Rapids 2",
+        "away_team_id": "7VqG1oWMvW",
+        "location": "Fullerton, CA",
+        "time": "3-2",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-05-09",
+        "home_team": "Chicago Fire FC II",
+        "home_team_id": "0x5gb3bM7O",
+        "away_team": "FC Cincinnati 2",
+        "away_team_id": "gpMOXy25zy",
+        "location": "Chicago, IL",
+        "time": "2-1",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-05-09",
+        "home_team": "Portland Timbers 2",
+        "home_team_id": "zeQZe4DqKw",
+        "away_team": "Vancouver Whitecaps FC 2",
+        "away_team_id": "N6MmWV0qEG",
+        "location": "Hillsboro, OR",
+        "time": "1-0",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-05-09",
+        "home_team": "Crown Legacy FC",
+        "home_team_id": "a35reDLML6",
+        "away_team": "Inter Miami CF II",
+        "away_team_id": "vzqowoZqap",
+        "location": "Matthews, NC",
+        "time": "4-2",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-05-09",
+        "home_team": "Houston Dynamo FC 2",
+        "home_team_id": "gOMnJnOMwN",
+        "away_team": "Colorado Rapids 2",
+        "away_team_id": "7VqG1oWMvW",
+        "location": "Houston, TX",
+        "time": "0-0",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-05-09",
+        "home_team": "Toronto FC II",
+        "home_team_id": "4JMAkpDqKg",
+        "away_team": "Chattanooga FC",
+        "away_team_id": "raMyeZAMd2",
+        "location": "Toronto, ON",
+        "time": "1-2",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-05-09",
+        "home_team": "New York City FC II",
+        "home_team_id": "jYQJXkP5GR",
+        "away_team": "New York Red Bulls II",
+        "away_team_id": "9Yqdwg85vJ",
+        "location": "New York, NY",
+        "time": "5-2",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-05-09",
+        "home_team": "Ventura County FC",
+        "home_team_id": "4wM4E4d5jB",
+        "away_team": "Los Angeles FC 2",
+        "away_team_id": "2vQ1XzlqrA",
+        "location": "Carson, CA",
+        "time": "2-1",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-05-10",
+        "home_team": "Carolina Core",
+        "home_team_id": "NWMWJezQlz",
+        "away_team": "Huntsville City FC",
+        "away_team_id": "OlMlKDEQLz",
+        "location": "High Point, NC",
+        "time": "0-0",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-05-11",
+        "home_team": "Philadelphia Union II",
+        "home_team_id": "KPqjwN4Q6v",
+        "away_team": "Columbus Crew 2",
+        "away_team_id": "0Oq6Yad56D",
+        "location": "Chester, PA",
+        "time": "3-0",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-05-11",
+        "home_team": "The Town FC",
+        "home_team_id": "Oa5wDy8q14",
+        "away_team": "Saint Louis City SC 2",
+        "away_team_id": "eVq3Z0D5WO",
+        "location": "San Jose, CA",
+        "time": "4-0",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-05-13",
+        "home_team": "Ventura County FC",
+        "home_team_id": "4wM4E4d5jB",
+        "away_team": "Austin FC II",
+        "away_team_id": "eV5Dw4EMKn",
+        "location": "Carson, CA",
+        "time": "0-1",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-05-14",
+        "home_team": "Vancouver Whitecaps FC 2",
+        "home_team_id": "N6MmWV0qEG",
+        "away_team": "Tacoma Defiance",
+        "away_team_id": "KXMe8Z2Q64",
+        "location": "Burnaby, CAN",
+        "time": "5-0",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-05-14",
+        "home_team": "Portland Timbers 2",
+        "home_team_id": "zeQZe4DqKw",
+        "away_team": "Los Angeles FC 2",
+        "away_team_id": "2vQ1XzlqrA",
+        "location": "Hillsboro, OR",
+        "time": "3-0",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-05-15",
+        "home_team": "New York City FC II",
+        "home_team_id": "jYQJXkP5GR",
+        "away_team": "Toronto FC II",
+        "away_team_id": "4JMAkpDqKg",
+        "location": "New York, NY",
+        "time": "3-0",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-05-17",
+        "home_team": "Orlando City B",
+        "home_team_id": "kRQaW3L5KZ",
+        "away_team": "Inter Miami CF II",
+        "away_team_id": "vzqowoZqap",
+        "location": "Kissimmee, FL",
+        "time": "3-0",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-05-17",
+        "home_team": "Huntsville City FC",
+        "home_team_id": "OlMlKDEQLz",
+        "away_team": "Chattanooga FC",
+        "away_team_id": "raMyeZAMd2",
+        "location": "Huntsville, AL",
+        "time": "1-2",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-05-18",
+        "home_team": "Sporting Kansas City II",
+        "home_team_id": "2vQ14GKqrA",
+        "away_team": "The Town FC",
+        "away_team_id": "Oa5wDy8q14",
+        "location": "Lawrence, KS",
+        "time": "0-0",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-05-18",
+        "home_team": "Columbus Crew 2",
+        "home_team_id": "0Oq6Yad56D",
+        "away_team": "FC Cincinnati 2",
+        "away_team_id": "gpMOXy25zy",
+        "location": "Columbus, OH",
+        "time": "1-0",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-05-18",
+        "home_team": "Minnesota United FC 2",
+        "home_team_id": "2lqRX1AMr0",
+        "away_team": "Saint Louis City SC 2",
+        "away_team_id": "eVq3Z0D5WO",
+        "location": "Saint Paul, MN",
+        "time": "2-3",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-05-18",
+        "home_team": "New York Red Bulls II",
+        "home_team_id": "9Yqdwg85vJ",
+        "away_team": "New England Revolution II",
+        "away_team_id": "gpMO1Pyqzy",
+        "location": "Montclair, NJ",
+        "time": "4-1",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-05-18",
+        "home_team": "Vancouver Whitecaps FC 2",
+        "home_team_id": "N6MmWV0qEG",
+        "away_team": "Ventura County FC",
+        "away_team_id": "4wM4E4d5jB",
+        "location": "Burnaby, CAN",
+        "time": "0-2",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-05-18",
+        "home_team": "Colorado Rapids 2",
+        "home_team_id": "7VqG1oWMvW",
+        "away_team": "Real Monarchs",
+        "away_team_id": "BLMv6m3Mxe",
+        "location": "Commerce City, CO",
+        "time": "2-1",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-05-18",
+        "home_team": "North Texas SC",
+        "home_team_id": "ljqE94Vqx0",
+        "away_team": "Houston Dynamo FC 2",
+        "away_team_id": "gOMnJnOMwN",
+        "location": "Arlington, TX",
+        "time": "2-1",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-05-18",
+        "home_team": "Portland Timbers 2",
+        "home_team_id": "zeQZe4DqKw",
+        "away_team": "Tacoma Defiance",
+        "away_team_id": "KXMe8Z2Q64",
+        "location": "Hillsboro, OR",
+        "time": "2-1",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-05-19",
+        "home_team": "Atlanta United 2",
+        "home_team_id": "wvq9jx1QWn",
+        "away_team": "Crown Legacy FC",
+        "away_team_id": "a35reDLML6",
+        "location": "Kennesaw, GA",
+        "time": "2-2",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-05-23",
+        "home_team": "New York City FC II",
+        "home_team_id": "jYQJXkP5GR",
+        "away_team": "Chicago Fire FC II",
+        "away_team_id": "0x5gb3bM7O",
+        "location": "New York, NY",
+        "time": "2-2",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-05-23",
+        "home_team": "Sporting Kansas City II",
+        "home_team_id": "2vQ14GKqrA",
+        "away_team": "Los Angeles FC 2",
+        "away_team_id": "2vQ1XzlqrA",
+        "location": "Lawrence, KS",
+        "time": "0-3",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-05-23",
+        "home_team": "Toronto FC II",
+        "home_team_id": "4JMAkpDqKg",
+        "away_team": "Huntsville City FC",
+        "away_team_id": "OlMlKDEQLz",
+        "location": "Toronto, ON",
+        "time": "1-2",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-05-23",
+        "home_team": "Saint Louis City SC 2",
+        "home_team_id": "eVq3Z0D5WO",
+        "away_team": "Portland Timbers 2",
+        "away_team_id": "zeQZe4DqKw",
+        "location": "St. Louis, MO",
+        "time": "6-3",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-05-23",
+        "home_team": "Austin FC II",
+        "home_team_id": "eV5Dw4EMKn",
+        "away_team": "Minnesota United FC 2",
+        "away_team_id": "2lqRX1AMr0",
+        "location": "Austin, TX",
+        "time": "1-1",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-05-24",
+        "home_team": "Chattanooga FC",
+        "home_team_id": "raMyeZAMd2",
+        "away_team": "New England Revolution II",
+        "away_team_id": "gpMO1Pyqzy",
+        "location": "Chattanooga, TN",
+        "time": "1-0",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-05-25",
+        "home_team": "Philadelphia Union II",
+        "home_team_id": "KPqjwN4Q6v",
+        "away_team": "Inter Miami CF II",
+        "away_team_id": "vzqowoZqap",
+        "location": "Chester, PA",
+        "time": "0-1",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-05-25",
+        "home_team": "Columbus Crew 2",
+        "home_team_id": "0Oq6Yad56D",
+        "away_team": "New York Red Bulls II",
+        "away_team_id": "9Yqdwg85vJ",
+        "location": "Columbus, OH",
+        "time": "0-1",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-05-25",
+        "home_team": "Crown Legacy FC",
+        "home_team_id": "a35reDLML6",
+        "away_team": "FC Cincinnati 2",
+        "away_team_id": "gpMOXy25zy",
+        "location": "Matthews, NC",
+        "time": "2-0",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-05-25",
+        "home_team": "Colorado Rapids 2",
+        "home_team_id": "7VqG1oWMvW",
+        "away_team": "The Town FC",
+        "away_team_id": "Oa5wDy8q14",
+        "location": "Commerce City, CO",
+        "time": "0-3",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-05-25",
+        "home_team": "Atlanta United 2",
+        "home_team_id": "wvq9jx1QWn",
+        "away_team": "Orlando City B",
+        "away_team_id": "kRQaW3L5KZ",
+        "location": "Kennesaw, GA",
+        "time": "3-0",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-05-25",
+        "home_team": "Tacoma Defiance",
+        "home_team_id": "KXMe8Z2Q64",
+        "away_team": "North Texas SC",
+        "away_team_id": "ljqE94Vqx0",
+        "location": "Tukwila, WA",
+        "time": "2-3",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-05-28",
+        "home_team": "Real Monarchs",
+        "home_team_id": "BLMv6m3Mxe",
+        "away_team": "Portland Timbers 2",
+        "away_team_id": "zeQZe4DqKw",
+        "location": "Herriman, UT",
+        "time": "4-1",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-05-28",
+        "home_team": "Minnesota United FC 2",
+        "home_team_id": "2lqRX1AMr0",
+        "away_team": "Vancouver Whitecaps FC 2",
+        "away_team_id": "N6MmWV0qEG",
+        "location": "Saint Paul, MN",
+        "time": "2-3",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-05-30",
+        "home_team": "New York Red Bulls II",
+        "home_team_id": "9Yqdwg85vJ",
+        "away_team": "Atlanta United 2",
+        "away_team_id": "wvq9jx1QWn",
+        "location": "Montclair, NJ",
+        "time": "1-0",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-05-30",
+        "home_team": "Toronto FC II",
+        "home_team_id": "4JMAkpDqKg",
+        "away_team": "Crown Legacy FC",
+        "away_team_id": "a35reDLML6",
+        "location": "Toronto, ON",
+        "time": "1-0",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-05-30",
+        "home_team": "Austin FC II",
+        "home_team_id": "eV5Dw4EMKn",
+        "away_team": "Houston Dynamo FC 2",
+        "away_team_id": "gOMnJnOMwN",
+        "location": "Austin, TX",
+        "time": "1-1",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-05-31",
+        "home_team": "New York City FC II",
+        "home_team_id": "jYQJXkP5GR",
+        "away_team": "New York City FC II",
+        "away_team_id": "jYQJXkP5GR",
+        "location": "New York, NY",
+        "time": "0-1",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-05-31",
+        "home_team": "Tacoma Defiance",
+        "home_team_id": "KXMe8Z2Q64",
+        "away_team": "Minnesota United FC 2",
+        "away_team_id": "2lqRX1AMr0",
+        "location": "Tukwila, WA",
+        "time": "1-1",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-06-01",
+        "home_team": "Sporting Kansas City II",
+        "home_team_id": "2vQ14GKqrA",
+        "away_team": "Colorado Rapids 2",
+        "away_team_id": "7VqG1oWMvW",
+        "location": "Lawrence, KS",
+        "time": "1-4",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-06-01",
+        "home_team": "Chicago Fire FC II",
+        "home_team_id": "0x5gb3bM7O",
+        "away_team": "Columbus Crew 2",
+        "away_team_id": "0Oq6Yad56D",
+        "location": "Chicago, IL",
+        "time": "5-0",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-06-01",
+        "home_team": "FC Cincinnati 2",
+        "home_team_id": "gpMOXy25zy",
+        "away_team": "Philadelphia Union II",
+        "away_team_id": "KPqjwN4Q6v",
+        "location": "Newport, KY",
+        "time": "POSTPONED-",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-06-01",
+        "home_team": "Inter Miami CF II",
+        "home_team_id": "vzqowoZqap",
+        "away_team": "Carolina Core",
+        "away_team_id": "NWMWJezQlz",
+        "location": "Fort Lauderdale, FL",
+        "time": "1-2",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-06-01",
+        "home_team": "Orlando City B",
+        "home_team_id": "kRQaW3L5KZ",
+        "away_team": "Chattanooga FC",
+        "away_team_id": "raMyeZAMd2",
+        "location": "Kissimmee, FL",
+        "time": "2-1",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-06-01",
+        "home_team": "Los Angeles FC 2",
+        "home_team_id": "2vQ1XzlqrA",
+        "away_team": "The Town FC",
+        "away_team_id": "Oa5wDy8q14",
+        "location": "Fullerton, CA",
+        "time": "1-2",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-06-01",
+        "home_team": "Ventura County FC",
+        "home_team_id": "4wM4E4d5jB",
+        "away_team": "Real Monarchs",
+        "away_team_id": "BLMv6m3Mxe",
+        "location": "Carson, CA",
+        "time": "3-3",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-06-03",
+        "home_team": "FC Cincinnati 2",
+        "home_team_id": "gpMOXy25zy",
+        "away_team": "Philadelphia Union II",
+        "away_team_id": "KPqjwN4Q6v",
+        "location": "Newport, KY",
+        "time": "1-4",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-06-04",
+        "home_team": "Crown Legacy FC",
+        "home_team_id": "a35reDLML6",
+        "away_team": "New York Red Bulls II",
+        "away_team_id": "9Yqdwg85vJ",
+        "location": "Matthews, NC",
+        "time": "2-5",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-06-04",
+        "home_team": "Saint Louis City SC 2",
+        "home_team_id": "eVq3Z0D5WO",
+        "away_team": "North Texas SC",
+        "away_team_id": "ljqE94Vqx0",
+        "location": "St. Louis, MO",
+        "time": "2-0",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-06-06",
+        "home_team": "Atlanta United 2",
+        "home_team_id": "wvq9jx1QWn",
+        "away_team": "New York City FC II",
+        "away_team_id": "jYQJXkP5GR",
+        "location": "Kennesaw, GA",
+        "time": "5:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-06-06",
+        "home_team": "Huntsville City FC",
+        "home_team_id": "OlMlKDEQLz",
+        "away_team": "Orlando City B",
+        "away_team_id": "kRQaW3L5KZ",
+        "location": "Huntsville, AL",
+        "time": "12:00AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-06-07",
+        "home_team": "Chattanooga FC",
+        "home_team_id": "raMyeZAMd2",
+        "away_team": "Inter Miami CF II",
+        "away_team_id": "vzqowoZqap",
+        "location": "Chattanooga, TN",
+        "time": "11:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-06-07",
+        "home_team": "Houston Dynamo FC 2",
+        "home_team_id": "gOMnJnOMwN",
+        "away_team": "Sporting Kansas City II",
+        "away_team_id": "2vQ14GKqrA",
+        "location": "Houston, TX",
+        "time": "12:00AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-06-08",
+        "home_team": "Chicago Fire FC II",
+        "home_team_id": "0x5gb3bM7O",
+        "away_team": "New England Revolution II",
+        "away_team_id": "gpMO1Pyqzy",
+        "location": "Chicago, IL",
+        "time": "8:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-06-08",
+        "home_team": "FC Cincinnati 2",
+        "home_team_id": "gpMOXy25zy",
+        "away_team": "Toronto FC II",
+        "away_team_id": "4JMAkpDqKg",
+        "location": "Newport, KY",
+        "time": "10:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-06-08",
+        "home_team": "Colorado Rapids 2",
+        "home_team_id": "7VqG1oWMvW",
+        "away_team": "Austin FC II",
+        "away_team_id": "eV5Dw4EMKn",
+        "location": "Commerce City, CO",
+        "time": "12:00AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-06-08",
+        "home_team": "The Town FC",
+        "home_team_id": "Oa5wDy8q14",
+        "away_team": "Vancouver Whitecaps FC 2",
+        "away_team_id": "N6MmWV0qEG",
+        "location": "San Jose, CA",
+        "time": "12:00AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-06-11",
+        "home_team": "Atlanta United 2",
+        "home_team_id": "wvq9jx1QWn",
+        "away_team": "Huntsville City FC",
+        "away_team_id": "OlMlKDEQLz",
+        "location": "Kennesaw, GA",
+        "time": "9:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-06-11",
+        "home_team": "Carolina Core",
+        "home_team_id": "NWMWJezQlz",
+        "away_team": "Orlando City B",
+        "away_team_id": "kRQaW3L5KZ",
+        "location": "High Point, NC",
+        "time": "11:30PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-06-11",
+        "home_team": "Real Monarchs",
+        "home_team_id": "BLMv6m3Mxe",
+        "away_team": "Tacoma Defiance",
+        "away_team_id": "KXMe8Z2Q64",
+        "location": "Herriman, UT",
+        "time": "1:30AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-06-11",
+        "home_team": "Portland Timbers 2",
+        "home_team_id": "zeQZe4DqKw",
+        "away_team": "Ventura County FC",
+        "away_team_id": "4wM4E4d5jB",
+        "location": "Hillsboro, OR",
+        "time": "2:30AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-06-12",
+        "home_team": "Columbus Crew 2",
+        "home_team_id": "0Oq6Yad56D",
+        "away_team": "Columbus Crew 2",
+        "away_team_id": "0Oq6Yad56D",
+        "location": "Columbus, OH",
+        "time": "10:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-06-12",
+        "home_team": "Toronto FC II",
+        "home_team_id": "4JMAkpDqKg",
+        "away_team": "Inter Miami CF II",
+        "away_team_id": "vzqowoZqap",
+        "location": "Toronto, ON",
+        "time": "11:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-06-12",
+        "home_team": "Minnesota United FC 2",
+        "home_team_id": "2lqRX1AMr0",
+        "away_team": "Houston Dynamo FC 2",
+        "away_team_id": "gOMnJnOMwN",
+        "location": "Saint Paul, MN",
+        "time": "12:00AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-06-12",
+        "home_team": "Vancouver Whitecaps FC 2",
+        "home_team_id": "N6MmWV0qEG",
+        "away_team": "Los Angeles FC 2",
+        "away_team_id": "2vQ1XzlqrA",
+        "location": "Burnaby, CAN",
+        "time": "1:00AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-06-14",
+        "home_team": "Carolina Core",
+        "home_team_id": "NWMWJezQlz",
+        "away_team": "Chicago Fire FC II",
+        "away_team_id": "0x5gb3bM7O",
+        "location": "High Point, NC",
+        "time": "11:30PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-06-14",
+        "home_team": "North Texas SC",
+        "home_team_id": "ljqE94Vqx0",
+        "away_team": "Austin FC II",
+        "away_team_id": "eV5Dw4EMKn",
+        "location": "Arlington, TX",
+        "time": "12:45AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-06-15",
+        "home_team": "New England Revolution II",
+        "home_team_id": "gpMO1Pyqzy",
+        "away_team": "FC Cincinnati 2",
+        "away_team_id": "gpMOXy25zy",
+        "location": "Foxborough, MA",
+        "time": "6:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-06-15",
+        "home_team": "New York Red Bulls II",
+        "home_team_id": "9Yqdwg85vJ",
+        "away_team": "Chattanooga FC",
+        "away_team_id": "raMyeZAMd2",
+        "location": "Montclair, NJ",
+        "time": "6:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-06-15",
+        "home_team": "Philadelphia Union II",
+        "home_team_id": "KPqjwN4Q6v",
+        "away_team": "Crown Legacy FC",
+        "away_team_id": "a35reDLML6",
+        "location": "Chester, PA",
+        "time": "11:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-06-15",
+        "home_team": "Colorado Rapids 2",
+        "home_team_id": "7VqG1oWMvW",
+        "away_team": "Saint Louis City SC 2",
+        "away_team_id": "eVq3Z0D5WO",
+        "location": "Commerce City, CO",
+        "time": "12:00AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-06-15",
+        "home_team": "Minnesota United FC 2",
+        "home_team_id": "2lqRX1AMr0",
+        "away_team": "Ventura County FC",
+        "away_team_id": "4wM4E4d5jB",
+        "location": "Saint Paul, MN",
+        "time": "12:00AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-06-15",
+        "home_team": "Real Monarchs",
+        "home_team_id": "BLMv6m3Mxe",
+        "away_team": "Houston Dynamo FC 2",
+        "away_team_id": "gOMnJnOMwN",
+        "location": "Herriman, UT",
+        "time": "1:30AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-06-18",
+        "home_team": "Colorado Rapids 2",
+        "home_team_id": "7VqG1oWMvW",
+        "away_team": "North Texas SC",
+        "away_team_id": "ljqE94Vqx0",
+        "location": "Commerce City, CO",
+        "time": "12:00AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-06-20",
+        "home_team": "Huntsville City FC",
+        "home_team_id": "OlMlKDEQLz",
+        "away_team": "Crown Legacy FC",
+        "away_team_id": "a35reDLML6",
+        "location": "Huntsville, AL",
+        "time": "12:00AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-06-20",
+        "home_team": "Portland Timbers 2",
+        "home_team_id": "zeQZe4DqKw",
+        "away_team": "Austin FC II",
+        "away_team_id": "eV5Dw4EMKn",
+        "location": "Hillsboro, OR",
+        "time": "3:00AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-06-21",
+        "home_team": "Columbus Crew 2",
+        "home_team_id": "0Oq6Yad56D",
+        "away_team": "Philadelphia Union II",
+        "away_team_id": "KPqjwN4Q6v",
+        "location": "Columbus, OH",
+        "time": "7:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-06-21",
+        "home_team": "Chattanooga FC",
+        "home_team_id": "raMyeZAMd2",
+        "away_team": "FC Cincinnati 2",
+        "away_team_id": "gpMOXy25zy",
+        "location": "Chattanooga, TN",
+        "time": "11:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-06-21",
+        "home_team": "Vancouver Whitecaps FC 2",
+        "home_team_id": "N6MmWV0qEG",
+        "away_team": "North Texas SC",
+        "away_team_id": "ljqE94Vqx0",
+        "location": "--",
+        "time": "11:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-06-21",
+        "home_team": "Carolina Core",
+        "home_team_id": "NWMWJezQlz",
+        "away_team": "New York Red Bulls II",
+        "away_team_id": "9Yqdwg85vJ",
+        "location": "High Point, NC",
+        "time": "11:30PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-06-22",
+        "home_team": "Saint Louis City SC 2",
+        "home_team_id": "eVq3Z0D5WO",
+        "away_team": "The Town FC",
+        "away_team_id": "Oa5wDy8q14",
+        "location": "St. Louis, MO",
+        "time": "11:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-06-25",
+        "home_team": "Inter Miami CF II",
+        "home_team_id": "vzqowoZqap",
+        "away_team": "Chicago Fire FC II",
+        "away_team_id": "0x5gb3bM7O",
+        "location": "Fort Lauderdale, FL",
+        "time": "11:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-06-25",
+        "home_team": "Orlando City B",
+        "home_team_id": "kRQaW3L5KZ",
+        "away_team": "Toronto FC II",
+        "away_team_id": "4JMAkpDqKg",
+        "location": "Kissimmee, FL",
+        "time": "11:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-06-25",
+        "home_team": "Los Angeles FC 2",
+        "home_team_id": "2vQ1XzlqrA",
+        "away_team": "Minnesota United FC 2",
+        "away_team_id": "2lqRX1AMr0",
+        "location": "Fullerton, CA",
+        "time": "2:00AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-06-26",
+        "home_team": "Philadelphia Union II",
+        "home_team_id": "KPqjwN4Q6v",
+        "away_team": "New England Revolution II",
+        "away_team_id": "gpMO1Pyqzy",
+        "location": "Chester, PA",
+        "time": "11:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-06-27",
+        "home_team": "Austin FC II",
+        "home_team_id": "eV5Dw4EMKn",
+        "away_team": "Sporting Kansas City II",
+        "away_team_id": "2vQ14GKqrA",
+        "location": "Austin, TX",
+        "time": "12:30AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-06-28",
+        "home_team": "Columbus Crew 2",
+        "home_team_id": "0Oq6Yad56D",
+        "away_team": "Carolina Core",
+        "away_team_id": "NWMWJezQlz",
+        "location": "Columbus, OH",
+        "time": "10:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-06-28",
+        "home_team": "Saint Louis City SC 2",
+        "home_team_id": "eVq3Z0D5WO",
+        "away_team": "Houston Dynamo FC 2",
+        "away_team_id": "gOMnJnOMwN",
+        "location": "St. Louis, MO",
+        "time": "10:30PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-06-28",
+        "home_team": "Minnesota United FC 2",
+        "home_team_id": "2lqRX1AMr0",
+        "away_team": "Colorado Rapids 2",
+        "away_team_id": "7VqG1oWMvW",
+        "location": "Saint Paul, MN",
+        "time": "12:00AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-06-29",
+        "home_team": "New England Revolution II",
+        "home_team_id": "gpMO1Pyqzy",
+        "away_team": "Huntsville City FC",
+        "away_team_id": "OlMlKDEQLz",
+        "location": "Foxborough, MA",
+        "time": "7:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-06-29",
+        "home_team": "Inter Miami CF II",
+        "home_team_id": "vzqowoZqap",
+        "away_team": "Atlanta United 2",
+        "away_team_id": "wvq9jx1QWn",
+        "location": "Fort Lauderdale, FL",
+        "time": "11:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-06-29",
+        "home_team": "New York Red Bulls II",
+        "home_team_id": "9Yqdwg85vJ",
+        "away_team": "FC Cincinnati 2",
+        "away_team_id": "gpMOXy25zy",
+        "location": "Montclair, NJ",
+        "time": "11:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-06-29",
+        "home_team": "Vancouver Whitecaps FC 2",
+        "home_team_id": "N6MmWV0qEG",
+        "away_team": "Real Monarchs",
+        "away_team_id": "BLMv6m3Mxe",
+        "location": "--",
+        "time": "11:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-06-29",
+        "home_team": "The Town FC",
+        "home_team_id": "Oa5wDy8q14",
+        "away_team": "Ventura County FC",
+        "away_team_id": "4wM4E4d5jB",
+        "location": "San Jose, CA",
+        "time": "12:00AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-06-29",
+        "home_team": "Los Angeles FC 2",
+        "home_team_id": "2vQ1XzlqrA",
+        "away_team": "Tacoma Defiance",
+        "away_team_id": "KXMe8Z2Q64",
+        "location": "Fullerton, CA",
+        "time": "2:00AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-06-30",
+        "home_team": "Philadelphia Union II",
+        "home_team_id": "KPqjwN4Q6v",
+        "away_team": "Orlando City B",
+        "away_team_id": "kRQaW3L5KZ",
+        "location": "Chester, PA",
+        "time": "7:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-06-30",
+        "home_team": "Chicago Fire FC II",
+        "home_team_id": "0x5gb3bM7O",
+        "away_team": "Crown Legacy FC",
+        "away_team_id": "a35reDLML6",
+        "location": "Chicago, IL",
+        "time": "12:30AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-07-03",
+        "home_team": "North Texas SC",
+        "home_team_id": "ljqE94Vqx0",
+        "away_team": "Minnesota United FC 2",
+        "away_team_id": "2lqRX1AMr0",
+        "location": "Arlington, TX",
+        "time": "12:45AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-07-03",
+        "home_team": "Tacoma Defiance",
+        "home_team_id": "KXMe8Z2Q64",
+        "away_team": "The Town FC",
+        "away_team_id": "Oa5wDy8q14",
+        "location": "Tukwila, WA",
+        "time": "2:00AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-07-03",
+        "home_team": "Ventura County FC",
+        "home_team_id": "4wM4E4d5jB",
+        "away_team": "Vancouver Whitecaps FC 2",
+        "away_team_id": "N6MmWV0qEG",
+        "location": "Carson, CA",
+        "time": "2:00AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-07-04",
+        "home_team": "Carolina Core",
+        "home_team_id": "NWMWJezQlz",
+        "away_team": "Inter Miami CF II",
+        "away_team_id": "vzqowoZqap",
+        "location": "High Point, NC",
+        "time": "11:30PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-07-04",
+        "home_team": "Austin FC II",
+        "home_team_id": "eV5Dw4EMKn",
+        "away_team": "Los Angeles FC 2",
+        "away_team_id": "2vQ1XzlqrA",
+        "location": "Austin, TX",
+        "time": "12:30AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-07-05",
+        "home_team": "Sporting Kansas City II",
+        "home_team_id": "2vQ14GKqrA",
+        "away_team": "Portland Timbers 2",
+        "away_team_id": "zeQZe4DqKw",
+        "location": "Lawrence, KS",
+        "time": "5:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-07-05",
+        "home_team": "Columbus Crew 2",
+        "home_team_id": "0Oq6Yad56D",
+        "away_team": "Columbus Crew 2",
+        "away_team_id": "0Oq6Yad56D",
+        "location": "Columbus, OH",
+        "time": "7:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-07-05",
+        "home_team": "Chattanooga FC",
+        "home_team_id": "raMyeZAMd2",
+        "away_team": "Chicago Fire FC II",
+        "away_team_id": "0x5gb3bM7O",
+        "location": "Chattanooga, TN",
+        "time": "11:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-07-06",
+        "home_team": "Philadelphia Union II",
+        "home_team_id": "KPqjwN4Q6v",
+        "away_team": "Toronto FC II",
+        "away_team_id": "4JMAkpDqKg",
+        "location": "Chester, PA",
+        "time": "8:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-07-06",
+        "home_team": "FC Cincinnati 2",
+        "home_team_id": "gpMOXy25zy",
+        "away_team": "New York City FC II",
+        "away_team_id": "jYQJXkP5GR",
+        "location": "Newport, KY",
+        "time": "11:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-07-06",
+        "home_team": "Crown Legacy FC",
+        "home_team_id": "a35reDLML6",
+        "away_team": "Orlando City B",
+        "away_team_id": "kRQaW3L5KZ",
+        "location": "Matthews, NC",
+        "time": "11:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-07-06",
+        "home_team": "New York Red Bulls II",
+        "home_team_id": "9Yqdwg85vJ",
+        "away_team": "Huntsville City FC",
+        "away_team_id": "OlMlKDEQLz",
+        "location": "Montclair, NJ",
+        "time": "11:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-07-06",
+        "home_team": "Colorado Rapids 2",
+        "home_team_id": "7VqG1oWMvW",
+        "away_team": "Houston Dynamo FC 2",
+        "away_team_id": "gOMnJnOMwN",
+        "location": "Commerce City, CO",
+        "time": "12:00AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-07-06",
+        "home_team": "Real Monarchs",
+        "home_team_id": "BLMv6m3Mxe",
+        "away_team": "Saint Louis City SC 2",
+        "away_team_id": "eVq3Z0D5WO",
+        "location": "Herriman, UT",
+        "time": "1:30AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-07-09",
+        "home_team": "Crown Legacy FC",
+        "home_team_id": "a35reDLML6",
+        "away_team": "Carolina Core",
+        "away_team_id": "NWMWJezQlz",
+        "location": "Matthews, NC",
+        "time": "11:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-07-09",
+        "home_team": "Atlanta United 2",
+        "home_team_id": "wvq9jx1QWn",
+        "away_team": "FC Cincinnati 2",
+        "away_team_id": "gpMOXy25zy",
+        "location": "Kennesaw, GA",
+        "time": "11:30PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-07-11",
+        "home_team": "Toronto FC II",
+        "home_team_id": "4JMAkpDqKg",
+        "away_team": "New York Red Bulls II",
+        "away_team_id": "9Yqdwg85vJ",
+        "location": "Toronto, ON",
+        "time": "11:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-07-11",
+        "home_team": "Austin FC II",
+        "home_team_id": "eV5Dw4EMKn",
+        "away_team": "Saint Louis City SC 2",
+        "away_team_id": "eVq3Z0D5WO",
+        "location": "Austin, TX",
+        "time": "12:30AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-07-13",
+        "home_team": "Chicago Fire FC II",
+        "home_team_id": "0x5gb3bM7O",
+        "away_team": "New England Revolution II",
+        "away_team_id": "gpMO1Pyqzy",
+        "location": "Chicago, IL",
+        "time": "6:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-07-13",
+        "home_team": "Philadelphia Union II",
+        "home_team_id": "KPqjwN4Q6v",
+        "away_team": "Chattanooga FC",
+        "away_team_id": "raMyeZAMd2",
+        "location": "Chester, PA",
+        "time": "7:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-07-13",
+        "home_team": "Minnesota United FC 2",
+        "home_team_id": "2lqRX1AMr0",
+        "away_team": "Real Monarchs",
+        "away_team_id": "BLMv6m3Mxe",
+        "location": "Saint Paul, MN",
+        "time": "8:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-07-13",
+        "home_team": "FC Cincinnati 2",
+        "home_team_id": "gpMOXy25zy",
+        "away_team": "Huntsville City FC",
+        "away_team_id": "OlMlKDEQLz",
+        "location": "Newport, KY",
+        "time": "10:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-07-13",
+        "home_team": "Inter Miami CF II",
+        "home_team_id": "vzqowoZqap",
+        "away_team": "Crown Legacy FC",
+        "away_team_id": "a35reDLML6",
+        "location": "Fort Lauderdale, FL",
+        "time": "11:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-07-13",
+        "home_team": "Orlando City B",
+        "home_team_id": "kRQaW3L5KZ",
+        "away_team": "Carolina Core",
+        "away_team_id": "NWMWJezQlz",
+        "location": "Kissimmee, FL",
+        "time": "11:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-07-13",
+        "home_team": "Atlanta United 2",
+        "home_team_id": "wvq9jx1QWn",
+        "away_team": "Columbus Crew 2",
+        "away_team_id": "0Oq6Yad56D",
+        "location": "Kennesaw, GA",
+        "time": "11:30PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-07-13",
+        "home_team": "Colorado Rapids 2",
+        "home_team_id": "7VqG1oWMvW",
+        "away_team": "Vancouver Whitecaps FC 2",
+        "away_team_id": "N6MmWV0qEG",
+        "location": "Commerce City, CO",
+        "time": "12:00AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-07-13",
+        "home_team": "Houston Dynamo FC 2",
+        "home_team_id": "gOMnJnOMwN",
+        "away_team": "North Texas SC",
+        "away_team_id": "ljqE94Vqx0",
+        "location": "Houston, TX",
+        "time": "12:00AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-07-13",
+        "home_team": "The Town FC",
+        "home_team_id": "Oa5wDy8q14",
+        "away_team": "Sporting Kansas City II",
+        "away_team_id": "2vQ14GKqrA",
+        "location": "San Jose, CA",
+        "time": "12:00AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-07-13",
+        "home_team": "Los Angeles FC 2",
+        "home_team_id": "2vQ1XzlqrA",
+        "away_team": "Portland Timbers 2",
+        "away_team_id": "zeQZe4DqKw",
+        "location": "Fullerton, CA",
+        "time": "2:00AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-07-16",
+        "home_team": "New York City FC II",
+        "home_team_id": "jYQJXkP5GR",
+        "away_team": "Toronto FC II",
+        "away_team_id": "4JMAkpDqKg",
+        "location": "New York, NY",
+        "time": "11:30PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-07-16",
+        "home_team": "Saint Louis City SC 2",
+        "home_team_id": "eVq3Z0D5WO",
+        "away_team": "Ventura County FC",
+        "away_team_id": "4wM4E4d5jB",
+        "location": "St. Louis, MO",
+        "time": "12:00AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-07-17",
+        "home_team": "Houston Dynamo FC 2",
+        "home_team_id": "gOMnJnOMwN",
+        "away_team": "Vancouver Whitecaps FC 2",
+        "away_team_id": "N6MmWV0qEG",
+        "location": "Houston, TX",
+        "time": "12:00AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-07-17",
+        "home_team": "Tacoma Defiance",
+        "home_team_id": "KXMe8Z2Q64",
+        "away_team": "Real Monarchs",
+        "away_team_id": "BLMv6m3Mxe",
+        "location": "Tukwila, WA",
+        "time": "2:00AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-07-18",
+        "home_team": "Huntsville City FC",
+        "home_team_id": "OlMlKDEQLz",
+        "away_team": "Columbus Crew 2",
+        "away_team_id": "0Oq6Yad56D",
+        "location": "Huntsville, AL",
+        "time": "12:00AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-07-18",
+        "home_team": "Sporting Kansas City II",
+        "home_team_id": "2vQ14GKqrA",
+        "away_team": "North Texas SC",
+        "away_team_id": "ljqE94Vqx0",
+        "location": "Lawrence, KS",
+        "time": "12:30AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-07-18",
+        "home_team": "Portland Timbers 2",
+        "home_team_id": "zeQZe4DqKw",
+        "away_team": "Minnesota United FC 2",
+        "away_team_id": "2lqRX1AMr0",
+        "location": "Hillsboro, OR",
+        "time": "3:00AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-07-19",
+        "home_team": "Chattanooga FC",
+        "home_team_id": "raMyeZAMd2",
+        "away_team": "Inter Miami CF II",
+        "away_team_id": "vzqowoZqap",
+        "location": "Chattanooga, TN",
+        "time": "11:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-07-19",
+        "home_team": "Carolina Core",
+        "home_team_id": "NWMWJezQlz",
+        "away_team": "Atlanta United 2",
+        "away_team_id": "wvq9jx1QWn",
+        "location": "High Point, NC",
+        "time": "11:30PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-07-19",
+        "home_team": "Crown Legacy FC",
+        "home_team_id": "a35reDLML6",
+        "away_team": "Philadelphia Union II",
+        "away_team_id": "KPqjwN4Q6v",
+        "location": "Matthews, NC",
+        "time": "12:00AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-07-20",
+        "home_team": "New England Revolution II",
+        "home_team_id": "gpMO1Pyqzy",
+        "away_team": "Orlando City B",
+        "away_team_id": "kRQaW3L5KZ",
+        "location": "Foxborough, MA",
+        "time": "7:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-07-20",
+        "home_team": "Toronto FC II",
+        "home_team_id": "4JMAkpDqKg",
+        "away_team": "Chicago Fire FC II",
+        "away_team_id": "0x5gb3bM7O",
+        "location": "Toronto, ON",
+        "time": "7:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-07-20",
+        "home_team": "New York Red Bulls II",
+        "home_team_id": "9Yqdwg85vJ",
+        "away_team": "New York City FC II",
+        "away_team_id": "jYQJXkP5GR",
+        "location": "Montclair, NJ",
+        "time": "11:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-07-20",
+        "home_team": "Colorado Rapids 2",
+        "home_team_id": "7VqG1oWMvW",
+        "away_team": "Tacoma Defiance",
+        "away_team_id": "KXMe8Z2Q64",
+        "location": "Commerce City, CO",
+        "time": "12:00AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-07-20",
+        "home_team": "Real Monarchs",
+        "home_team_id": "BLMv6m3Mxe",
+        "away_team": "Austin FC II",
+        "away_team_id": "eV5Dw4EMKn",
+        "location": "Herriman, UT",
+        "time": "1:30AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-07-20",
+        "home_team": "Ventura County FC",
+        "home_team_id": "4wM4E4d5jB",
+        "away_team": "Los Angeles FC 2",
+        "away_team_id": "2vQ1XzlqrA",
+        "location": "Carson, CA",
+        "time": "2:00AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-07-22",
+        "home_team": "The Town FC",
+        "home_team_id": "Oa5wDy8q14",
+        "away_team": "Minnesota United FC 2",
+        "away_team_id": "2lqRX1AMr0",
+        "location": "San Jose, CA",
+        "time": "12:30AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-07-25",
+        "home_team": "Huntsville City FC",
+        "home_team_id": "OlMlKDEQLz",
+        "away_team": "Orlando City B",
+        "away_team_id": "kRQaW3L5KZ",
+        "location": "Huntsville, AL",
+        "time": "12:00AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-07-25",
+        "home_team": "Austin FC II",
+        "home_team_id": "eV5Dw4EMKn",
+        "away_team": "Houston Dynamo FC 2",
+        "away_team_id": "gOMnJnOMwN",
+        "location": "Austin, TX",
+        "time": "12:30AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-07-26",
+        "home_team": "New York City FC II",
+        "home_team_id": "jYQJXkP5GR",
+        "away_team": "Philadelphia Union II",
+        "away_team_id": "KPqjwN4Q6v",
+        "location": "New York, NY",
+        "time": "8:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-07-26",
+        "home_team": "Chattanooga FC",
+        "home_team_id": "raMyeZAMd2",
+        "away_team": "Crown Legacy FC",
+        "away_team_id": "a35reDLML6",
+        "location": "Chattanooga, TN",
+        "time": "11:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-07-26",
+        "home_team": "Real Monarchs",
+        "home_team_id": "BLMv6m3Mxe",
+        "away_team": "The Town FC",
+        "away_team_id": "Oa5wDy8q14",
+        "location": "Herriman, UT",
+        "time": "2:00AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-07-27",
+        "home_team": "Chicago Fire FC II",
+        "home_team_id": "0x5gb3bM7O",
+        "away_team": "New York Red Bulls II",
+        "away_team_id": "9Yqdwg85vJ",
+        "location": "Chicago, IL",
+        "time": "6:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-07-27",
+        "home_team": "Columbus Crew 2",
+        "home_team_id": "0Oq6Yad56D",
+        "away_team": "Toronto FC II",
+        "away_team_id": "4JMAkpDqKg",
+        "location": "Columbus, OH",
+        "time": "10:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-07-27",
+        "home_team": "Inter Miami CF II",
+        "home_team_id": "vzqowoZqap",
+        "away_team": "FC Cincinnati 2",
+        "away_team_id": "gpMOXy25zy",
+        "location": "Fort Lauderdale, FL",
+        "time": "11:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-07-27",
+        "home_team": "Saint Louis City SC 2",
+        "home_team_id": "eVq3Z0D5WO",
+        "away_team": "Minnesota United FC 2",
+        "away_team_id": "2lqRX1AMr0",
+        "location": "St. Louis, MO",
+        "time": "11:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-07-27",
+        "home_team": "Los Angeles FC 2",
+        "home_team_id": "2vQ1XzlqrA",
+        "away_team": "Sporting Kansas City II",
+        "away_team_id": "2vQ14GKqrA",
+        "location": "Fullerton, CA",
+        "time": "2:00AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-07-27",
+        "home_team": "Tacoma Defiance",
+        "home_team_id": "KXMe8Z2Q64",
+        "away_team": "Portland Timbers 2",
+        "away_team_id": "zeQZe4DqKw",
+        "location": "Tukwila, WA",
+        "time": "2:00AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-07-30",
+        "home_team": "New England Revolution II",
+        "home_team_id": "gpMO1Pyqzy",
+        "away_team": "Atlanta United 2",
+        "away_team_id": "wvq9jx1QWn",
+        "location": "Foxborough, MA",
+        "time": "3:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-07-30",
+        "home_team": "Carolina Core",
+        "home_team_id": "NWMWJezQlz",
+        "away_team": "Philadelphia Union II",
+        "away_team_id": "KPqjwN4Q6v",
+        "location": "High Point, NC",
+        "time": "11:30PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-07-31",
+        "home_team": "Columbus Crew 2",
+        "home_team_id": "0Oq6Yad56D",
+        "away_team": "New York Red Bulls II",
+        "away_team_id": "9Yqdwg85vJ",
+        "location": "Columbus, OH",
+        "time": "10:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-07-31",
+        "home_team": "Vancouver Whitecaps FC 2",
+        "home_team_id": "N6MmWV0qEG",
+        "away_team": "Sporting Kansas City II",
+        "away_team_id": "2vQ14GKqrA",
+        "location": "--",
+        "time": "1:00AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-08-01",
+        "home_team": "Tacoma Defiance",
+        "home_team_id": "KXMe8Z2Q64",
+        "away_team": "Ventura County FC",
+        "away_team_id": "4wM4E4d5jB",
+        "location": "Tukwila, WA",
+        "time": "2:00AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-08-02",
+        "home_team": "Crown Legacy FC",
+        "home_team_id": "a35reDLML6",
+        "away_team": "Huntsville City FC",
+        "away_team_id": "OlMlKDEQLz",
+        "location": "Matthews, NC",
+        "time": "9:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-08-02",
+        "home_team": "Chattanooga FC",
+        "home_team_id": "raMyeZAMd2",
+        "away_team": "Toronto FC II",
+        "away_team_id": "4JMAkpDqKg",
+        "location": "Chattanooga, TN",
+        "time": "11:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-08-02",
+        "home_team": "Carolina Core",
+        "home_team_id": "NWMWJezQlz",
+        "away_team": "New England Revolution II",
+        "away_team_id": "gpMO1Pyqzy",
+        "location": "High Point, NC",
+        "time": "11:30PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-08-02",
+        "home_team": "Minnesota United FC 2",
+        "home_team_id": "2lqRX1AMr0",
+        "away_team": "Houston Dynamo FC 2",
+        "away_team_id": "gOMnJnOMwN",
+        "location": "Saint Paul, MN",
+        "time": "12:00AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-08-02",
+        "home_team": "North Texas SC",
+        "home_team_id": "ljqE94Vqx0",
+        "away_team": "Colorado Rapids 2",
+        "away_team_id": "7VqG1oWMvW",
+        "location": "Arlington, TX",
+        "time": "12:45AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-08-03",
+        "home_team": "Sporting Kansas City II",
+        "home_team_id": "2vQ14GKqrA",
+        "away_team": "Austin FC II",
+        "away_team_id": "eV5Dw4EMKn",
+        "location": "Lawrence, KS",
+        "time": "5:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-08-03",
+        "home_team": "Chicago Fire FC II",
+        "home_team_id": "0x5gb3bM7O",
+        "away_team": "Columbus Crew 2",
+        "away_team_id": "0Oq6Yad56D",
+        "location": "Chicago, IL",
+        "time": "6:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-08-03",
+        "home_team": "Philadelphia Union II",
+        "home_team_id": "KPqjwN4Q6v",
+        "away_team": "FC Cincinnati 2",
+        "away_team_id": "gpMOXy25zy",
+        "location": "Chester, PA",
+        "time": "7:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-08-03",
+        "home_team": "Orlando City B",
+        "home_team_id": "kRQaW3L5KZ",
+        "away_team": "New York City FC II",
+        "away_team_id": "jYQJXkP5GR",
+        "location": "Kissimmee, FL",
+        "time": "11:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-08-03",
+        "home_team": "Los Angeles FC 2",
+        "home_team_id": "2vQ1XzlqrA",
+        "away_team": "The Town FC",
+        "away_team_id": "Oa5wDy8q14",
+        "location": "Fullerton, CA",
+        "time": "2:00AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-08-03",
+        "home_team": "Portland Timbers 2",
+        "home_team_id": "zeQZe4DqKw",
+        "away_team": "Real Monarchs",
+        "away_team_id": "BLMv6m3Mxe",
+        "location": "Hillsboro, OR",
+        "time": "3:00AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-08-06",
+        "home_team": "Vancouver Whitecaps FC 2",
+        "home_team_id": "N6MmWV0qEG",
+        "away_team": "Saint Louis City SC 2",
+        "away_team_id": "eVq3Z0D5WO",
+        "location": "--",
+        "time": "1:00AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-08-08",
+        "home_team": "New England Revolution II",
+        "home_team_id": "gpMO1Pyqzy",
+        "away_team": "New England Revolution II",
+        "away_team_id": "gpMO1Pyqzy",
+        "location": "Foxborough, MA",
+        "time": "11:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-08-08",
+        "home_team": "Toronto FC II",
+        "home_team_id": "4JMAkpDqKg",
+        "away_team": "Atlanta United 2",
+        "away_team_id": "wvq9jx1QWn",
+        "location": "Toronto, ON",
+        "time": "11:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-08-08",
+        "home_team": "New York City FC II",
+        "home_team_id": "jYQJXkP5GR",
+        "away_team": "Chicago Fire FC II",
+        "away_team_id": "0x5gb3bM7O",
+        "location": "New York, NY",
+        "time": "11:30PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-08-08",
+        "home_team": "Minnesota United FC 2",
+        "home_team_id": "2lqRX1AMr0",
+        "away_team": "Sporting Kansas City II",
+        "away_team_id": "2vQ14GKqrA",
+        "location": "Saint Paul, MN",
+        "time": "12:00AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-08-08",
+        "home_team": "Austin FC II",
+        "home_team_id": "eV5Dw4EMKn",
+        "away_team": "North Texas SC",
+        "away_team_id": "ljqE94Vqx0",
+        "location": "Austin, TX",
+        "time": "12:30AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-08-09",
+        "home_team": "Orlando City B",
+        "home_team_id": "kRQaW3L5KZ",
+        "away_team": "Chattanooga FC",
+        "away_team_id": "raMyeZAMd2",
+        "location": "Kissimmee, FL",
+        "time": "11:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-08-09",
+        "home_team": "Houston Dynamo FC 2",
+        "home_team_id": "gOMnJnOMwN",
+        "away_team": "Real Monarchs",
+        "away_team_id": "BLMv6m3Mxe",
+        "location": "Houston, TX",
+        "time": "12:00AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-08-09",
+        "home_team": "Ventura County FC",
+        "home_team_id": "4wM4E4d5jB",
+        "away_team": "Portland Timbers 2",
+        "away_team_id": "zeQZe4DqKw",
+        "location": "Carson, CA",
+        "time": "2:00AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-08-10",
+        "home_team": "Huntsville City FC",
+        "home_team_id": "OlMlKDEQLz",
+        "away_team": "Carolina Core",
+        "away_team_id": "NWMWJezQlz",
+        "location": "Huntsville, AL",
+        "time": "11:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-08-10",
+        "home_team": "Saint Louis City SC 2",
+        "home_team_id": "eVq3Z0D5WO",
+        "away_team": "Colorado Rapids 2",
+        "away_team_id": "7VqG1oWMvW",
+        "location": "St. Louis, MO",
+        "time": "11:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-08-10",
+        "home_team": "The Town FC",
+        "home_team_id": "Oa5wDy8q14",
+        "away_team": "Vancouver Whitecaps FC 2",
+        "away_team_id": "N6MmWV0qEG",
+        "location": "San Jose, CA",
+        "time": "12:00AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-08-10",
+        "home_team": "Tacoma Defiance",
+        "home_team_id": "KXMe8Z2Q64",
+        "away_team": "Los Angeles FC 2",
+        "away_team_id": "2vQ1XzlqrA",
+        "location": "Tukwila, WA",
+        "time": "3:00AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-08-11",
+        "home_team": "FC Cincinnati 2",
+        "home_team_id": "gpMOXy25zy",
+        "away_team": "Crown Legacy FC",
+        "away_team_id": "a35reDLML6",
+        "location": "Newport, KY",
+        "time": "10:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-08-11",
+        "home_team": "New York Red Bulls II",
+        "home_team_id": "9Yqdwg85vJ",
+        "away_team": "Philadelphia Union II",
+        "away_team_id": "KPqjwN4Q6v",
+        "location": "Montclair, NJ",
+        "time": "11:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-08-14",
+        "home_team": "Inter Miami CF II",
+        "home_team_id": "vzqowoZqap",
+        "away_team": "Huntsville City FC",
+        "away_team_id": "OlMlKDEQLz",
+        "location": "Fort Lauderdale, FL",
+        "time": "11:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-08-15",
+        "home_team": "New England Revolution II",
+        "home_team_id": "gpMO1Pyqzy",
+        "away_team": "New York Red Bulls II",
+        "away_team_id": "9Yqdwg85vJ",
+        "location": "Foxborough, MA",
+        "time": "9:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-08-15",
+        "home_team": "Toronto FC II",
+        "home_team_id": "4JMAkpDqKg",
+        "away_team": "FC Cincinnati 2",
+        "away_team_id": "gpMOXy25zy",
+        "location": "Toronto, ON",
+        "time": "11:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-08-15",
+        "home_team": "Chicago Fire FC II",
+        "home_team_id": "0x5gb3bM7O",
+        "away_team": "Philadelphia Union II",
+        "away_team_id": "KPqjwN4Q6v",
+        "location": "Chicago, IL",
+        "time": "12:00AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-08-15",
+        "home_team": "Colorado Rapids 2",
+        "home_team_id": "7VqG1oWMvW",
+        "away_team": "Austin FC II",
+        "away_team_id": "eV5Dw4EMKn",
+        "location": "Commerce City, CO",
+        "time": "12:00AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-08-15",
+        "home_team": "Minnesota United FC 2",
+        "home_team_id": "2lqRX1AMr0",
+        "away_team": "Tacoma Defiance",
+        "away_team_id": "KXMe8Z2Q64",
+        "location": "Saint Paul, MN",
+        "time": "12:00AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-08-16",
+        "home_team": "Carolina Core",
+        "home_team_id": "NWMWJezQlz",
+        "away_team": "Chattanooga FC",
+        "away_team_id": "raMyeZAMd2",
+        "location": "High Point, NC",
+        "time": "11:30PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-08-16",
+        "home_team": "The Town FC",
+        "home_team_id": "Oa5wDy8q14",
+        "away_team": "Ventura County FC",
+        "away_team_id": "4wM4E4d5jB",
+        "location": "San Jose, CA",
+        "time": "12:00AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-08-16",
+        "home_team": "North Texas SC",
+        "home_team_id": "ljqE94Vqx0",
+        "away_team": "Saint Louis City SC 2",
+        "away_team_id": "eVq3Z0D5WO",
+        "location": "Arlington, TX",
+        "time": "12:45AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-08-17",
+        "home_team": "Sporting Kansas City II",
+        "home_team_id": "2vQ14GKqrA",
+        "away_team": "Houston Dynamo FC 2",
+        "away_team_id": "gOMnJnOMwN",
+        "location": "Lawrence, KS",
+        "time": "5:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-08-17",
+        "home_team": "Columbus Crew 2",
+        "home_team_id": "0Oq6Yad56D",
+        "away_team": "Orlando City B",
+        "away_team_id": "kRQaW3L5KZ",
+        "location": "Columbus, OH",
+        "time": "7:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-08-17",
+        "home_team": "Huntsville City FC",
+        "home_team_id": "OlMlKDEQLz",
+        "away_team": "New York City FC II",
+        "away_team_id": "jYQJXkP5GR",
+        "location": "Huntsville, AL",
+        "time": "11:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-08-17",
+        "home_team": "Atlanta United 2",
+        "home_team_id": "wvq9jx1QWn",
+        "away_team": "Crown Legacy FC",
+        "away_team_id": "a35reDLML6",
+        "location": "Kennesaw, GA",
+        "time": "11:30PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-08-17",
+        "home_team": "Real Monarchs",
+        "home_team_id": "BLMv6m3Mxe",
+        "away_team": "Los Angeles FC 2",
+        "away_team_id": "2vQ1XzlqrA",
+        "location": "Herriman, UT",
+        "time": "1:30AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-08-20",
+        "home_team": "Philadelphia Union II",
+        "home_team_id": "KPqjwN4Q6v",
+        "away_team": "Toronto FC II",
+        "away_team_id": "4JMAkpDqKg",
+        "location": "Chester, PA",
+        "time": "11:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-08-20",
+        "home_team": "Colorado Rapids 2",
+        "home_team_id": "7VqG1oWMvW",
+        "away_team": "Portland Timbers 2",
+        "away_team_id": "zeQZe4DqKw",
+        "location": "Commerce City, CO",
+        "time": "12:00AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-08-21",
+        "home_team": "Los Angeles FC 2",
+        "home_team_id": "2vQ1XzlqrA",
+        "away_team": "Vancouver Whitecaps FC 2",
+        "away_team_id": "N6MmWV0qEG",
+        "location": "Fullerton, CA",
+        "time": "2:00AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-08-22",
+        "home_team": "Crown Legacy FC",
+        "home_team_id": "a35reDLML6",
+        "away_team": "Inter Miami CF II",
+        "away_team_id": "vzqowoZqap",
+        "location": "Matthews, NC",
+        "time": "11:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-08-22",
+        "home_team": "New York City FC II",
+        "home_team_id": "jYQJXkP5GR",
+        "away_team": "New York City FC II",
+        "away_team_id": "jYQJXkP5GR",
+        "location": "New York, NY",
+        "time": "11:30PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-08-22",
+        "home_team": "Houston Dynamo FC 2",
+        "home_team_id": "gOMnJnOMwN",
+        "away_team": "The Town FC",
+        "away_team_id": "Oa5wDy8q14",
+        "location": "Houston, TX",
+        "time": "12:00AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-08-22",
+        "home_team": "Austin FC II",
+        "home_team_id": "eV5Dw4EMKn",
+        "away_team": "Ventura County FC",
+        "away_team_id": "4wM4E4d5jB",
+        "location": "Austin, TX",
+        "time": "12:30AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-08-23",
+        "home_team": "Chattanooga FC",
+        "home_team_id": "raMyeZAMd2",
+        "away_team": "Huntsville City FC",
+        "away_team_id": "OlMlKDEQLz",
+        "location": "Chattanooga, TN",
+        "time": "11:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-08-23",
+        "home_team": "Orlando City B",
+        "home_team_id": "kRQaW3L5KZ",
+        "away_team": "Atlanta United 2",
+        "away_team_id": "wvq9jx1QWn",
+        "location": "Kissimmee, FL",
+        "time": "11:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-08-24",
+        "home_team": "Philadelphia Union II",
+        "home_team_id": "KPqjwN4Q6v",
+        "away_team": "New England Revolution II",
+        "away_team_id": "gpMO1Pyqzy",
+        "location": "Chester, PA",
+        "time": "7:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-08-24",
+        "home_team": "FC Cincinnati 2",
+        "home_team_id": "gpMOXy25zy",
+        "away_team": "Carolina Core",
+        "away_team_id": "NWMWJezQlz",
+        "location": "Newport, KY",
+        "time": "10:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-08-24",
+        "home_team": "New York Red Bulls II",
+        "home_team_id": "9Yqdwg85vJ",
+        "away_team": "Chicago Fire FC II",
+        "away_team_id": "0x5gb3bM7O",
+        "location": "Montclair, NJ",
+        "time": "11:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-08-24",
+        "home_team": "Saint Louis City SC 2",
+        "home_team_id": "eVq3Z0D5WO",
+        "away_team": "Sporting Kansas City II",
+        "away_team_id": "2vQ14GKqrA",
+        "location": "St. Louis, MO",
+        "time": "11:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-08-24",
+        "home_team": "North Texas SC",
+        "home_team_id": "ljqE94Vqx0",
+        "away_team": "Los Angeles FC 2",
+        "away_team_id": "2vQ1XzlqrA",
+        "location": "Arlington, TX",
+        "time": "12:45AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-08-24",
+        "home_team": "Real Monarchs",
+        "home_team_id": "BLMv6m3Mxe",
+        "away_team": "Minnesota United FC 2",
+        "away_team_id": "2lqRX1AMr0",
+        "location": "Herriman, UT",
+        "time": "1:30AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-08-24",
+        "home_team": "Portland Timbers 2",
+        "home_team_id": "zeQZe4DqKw",
+        "away_team": "Tacoma Defiance",
+        "away_team_id": "KXMe8Z2Q64",
+        "location": "Hillsboro, OR",
+        "time": "3:00AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-08-27",
+        "home_team": "Atlanta United 2",
+        "home_team_id": "wvq9jx1QWn",
+        "away_team": "Inter Miami CF II",
+        "away_team_id": "vzqowoZqap",
+        "location": "Kennesaw, GA",
+        "time": "11:30PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-08-27",
+        "home_team": "The Town FC",
+        "home_team_id": "Oa5wDy8q14",
+        "away_team": "Real Monarchs",
+        "away_team_id": "BLMv6m3Mxe",
+        "location": "San Jose, CA",
+        "time": "12:00AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-08-29",
+        "home_team": "Los Angeles FC 2",
+        "home_team_id": "2vQ1XzlqrA",
+        "away_team": "Austin FC II",
+        "away_team_id": "eV5Dw4EMKn",
+        "location": "Fullerton, CA",
+        "time": "2:00AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-08-30",
+        "home_team": "Atlanta United 2",
+        "home_team_id": "wvq9jx1QWn",
+        "away_team": "Huntsville City FC",
+        "away_team_id": "OlMlKDEQLz",
+        "location": "Kennesaw, GA",
+        "time": "11:30PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-08-31",
+        "home_team": "Sporting Kansas City II",
+        "home_team_id": "2vQ14GKqrA",
+        "away_team": "Colorado Rapids 2",
+        "away_team_id": "7VqG1oWMvW",
+        "location": "Lawrence, KS",
+        "time": "5:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-08-31",
+        "home_team": "New England Revolution II",
+        "home_team_id": "gpMO1Pyqzy",
+        "away_team": "Chicago Fire FC II",
+        "away_team_id": "0x5gb3bM7O",
+        "location": "Foxborough, MA",
+        "time": "7:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-08-31",
+        "home_team": "Toronto FC II",
+        "home_team_id": "4JMAkpDqKg",
+        "away_team": "New York City FC II",
+        "away_team_id": "jYQJXkP5GR",
+        "location": "Toronto, ON",
+        "time": "7:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-08-31",
+        "home_team": "New York Red Bulls II",
+        "home_team_id": "9Yqdwg85vJ",
+        "away_team": "Columbus Crew 2",
+        "away_team_id": "0Oq6Yad56D",
+        "location": "Montclair, NJ",
+        "time": "9:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-08-31",
+        "home_team": "FC Cincinnati 2",
+        "home_team_id": "gpMOXy25zy",
+        "away_team": "Philadelphia Union II",
+        "away_team_id": "KPqjwN4Q6v",
+        "location": "Newport, KY",
+        "time": "10:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-08-31",
+        "home_team": "Orlando City B",
+        "home_team_id": "kRQaW3L5KZ",
+        "away_team": "Crown Legacy FC",
+        "away_team_id": "a35reDLML6",
+        "location": "Kissimmee, FL",
+        "time": "11:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-08-31",
+        "home_team": "Vancouver Whitecaps FC 2",
+        "home_team_id": "N6MmWV0qEG",
+        "away_team": "Portland Timbers 2",
+        "away_team_id": "zeQZe4DqKw",
+        "location": "--",
+        "time": "11:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-08-31",
+        "home_team": "Houston Dynamo FC 2",
+        "home_team_id": "gOMnJnOMwN",
+        "away_team": "Saint Louis City SC 2",
+        "away_team_id": "eVq3Z0D5WO",
+        "location": "Houston, TX",
+        "time": "12:00AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-08-31",
+        "home_team": "Minnesota United FC 2",
+        "home_team_id": "2lqRX1AMr0",
+        "away_team": "The Town FC",
+        "away_team_id": "Oa5wDy8q14",
+        "location": "Saint Paul, MN",
+        "time": "12:00AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-08-31",
+        "home_team": "Real Monarchs",
+        "home_team_id": "BLMv6m3Mxe",
+        "away_team": "Tacoma Defiance",
+        "away_team_id": "KXMe8Z2Q64",
+        "location": "Herriman, UT",
+        "time": "1:30AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-08-31",
+        "home_team": "Ventura County FC",
+        "home_team_id": "4wM4E4d5jB",
+        "away_team": "North Texas SC",
+        "away_team_id": "ljqE94Vqx0",
+        "location": "Carson, CA",
+        "time": "2:00AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-09-03",
+        "home_team": "Minnesota United FC 2",
+        "home_team_id": "2lqRX1AMr0",
+        "away_team": "Austin FC II",
+        "away_team_id": "eV5Dw4EMKn",
+        "location": "Saint Paul, MN",
+        "time": "8:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-09-04",
+        "home_team": "Crown Legacy FC",
+        "home_team_id": "a35reDLML6",
+        "away_team": "Carolina Core",
+        "away_team_id": "NWMWJezQlz",
+        "location": "Matthews, NC",
+        "time": "11:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-09-04",
+        "home_team": "Tacoma Defiance",
+        "home_team_id": "KXMe8Z2Q64",
+        "away_team": "Vancouver Whitecaps FC 2",
+        "away_team_id": "N6MmWV0qEG",
+        "location": "Tukwila, WA",
+        "time": "2:00AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-09-06",
+        "home_team": "North Texas SC",
+        "home_team_id": "ljqE94Vqx0",
+        "away_team": "Ventura County FC",
+        "away_team_id": "4wM4E4d5jB",
+        "location": "Arlington, TX",
+        "time": "12:30AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-09-06",
+        "home_team": "Sporting Kansas City II",
+        "home_team_id": "2vQ14GKqrA",
+        "away_team": "Real Monarchs",
+        "away_team_id": "BLMv6m3Mxe",
+        "location": "Lawrence, KS",
+        "time": "12:30AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-09-07",
+        "home_team": "Columbus Crew 2",
+        "home_team_id": "0Oq6Yad56D",
+        "away_team": "Inter Miami CF II",
+        "away_team_id": "vzqowoZqap",
+        "location": "Columbus, OH",
+        "time": "7:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-09-07",
+        "home_team": "The Town FC",
+        "home_team_id": "Oa5wDy8q14",
+        "away_team": "Portland Timbers 2",
+        "away_team_id": "zeQZe4DqKw",
+        "location": "San Jose, CA",
+        "time": "12:00AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-09-10",
+        "home_team": "Chicago Fire FC II",
+        "home_team_id": "0x5gb3bM7O",
+        "away_team": "FC Cincinnati 2",
+        "away_team_id": "gpMOXy25zy",
+        "location": "Chicago, IL",
+        "time": "12:00AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-09-12",
+        "home_team": "New England Revolution II",
+        "home_team_id": "gpMO1Pyqzy",
+        "away_team": "Toronto FC II",
+        "away_team_id": "4JMAkpDqKg",
+        "location": "Foxborough, MA",
+        "time": "7:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-09-12",
+        "home_team": "Crown Legacy FC",
+        "home_team_id": "a35reDLML6",
+        "away_team": "Chattanooga FC",
+        "away_team_id": "raMyeZAMd2",
+        "location": "Matthews, NC",
+        "time": "11:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-09-12",
+        "home_team": "Tacoma Defiance",
+        "home_team_id": "KXMe8Z2Q64",
+        "away_team": "Austin FC II",
+        "away_team_id": "eV5Dw4EMKn",
+        "location": "Tukwila, WA",
+        "time": "2:00AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-09-13",
+        "home_team": "Vancouver Whitecaps FC 2",
+        "home_team_id": "N6MmWV0qEG",
+        "away_team": "The Town FC",
+        "away_team_id": "Oa5wDy8q14",
+        "location": "--",
+        "time": "8:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-09-13",
+        "home_team": "Saint Louis City SC 2",
+        "home_team_id": "eVq3Z0D5WO",
+        "away_team": "Minnesota United FC 2",
+        "away_team_id": "2lqRX1AMr0",
+        "location": "St. Louis, MO",
+        "time": "11:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-09-13",
+        "home_team": "Carolina Core",
+        "home_team_id": "NWMWJezQlz",
+        "away_team": "Atlanta United 2",
+        "away_team_id": "wvq9jx1QWn",
+        "location": "High Point, NC",
+        "time": "11:30PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-09-13",
+        "home_team": "Huntsville City FC",
+        "home_team_id": "OlMlKDEQLz",
+        "away_team": "New York Red Bulls II",
+        "away_team_id": "9Yqdwg85vJ",
+        "location": "Huntsville, AL",
+        "time": "12:00AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-09-14",
+        "home_team": "Columbus Crew 2",
+        "home_team_id": "0Oq6Yad56D",
+        "away_team": "Philadelphia Union II",
+        "away_team_id": "KPqjwN4Q6v",
+        "location": "Columbus, OH",
+        "time": "7:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-09-14",
+        "home_team": "Portland Timbers 2",
+        "home_team_id": "zeQZe4DqKw",
+        "away_team": "Los Angeles FC 2",
+        "away_team_id": "2vQ1XzlqrA",
+        "location": "Hillsboro, OR",
+        "time": "8:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-09-14",
+        "home_team": "Inter Miami CF II",
+        "home_team_id": "vzqowoZqap",
+        "away_team": "Orlando City B",
+        "away_team_id": "kRQaW3L5KZ",
+        "location": "Fort Lauderdale, FL",
+        "time": "11:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-09-14",
+        "home_team": "Colorado Rapids 2",
+        "home_team_id": "7VqG1oWMvW",
+        "away_team": "Houston Dynamo FC 2",
+        "away_team_id": "gOMnJnOMwN",
+        "location": "Commerce City, CO",
+        "time": "12:00AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-09-14",
+        "home_team": "North Texas SC",
+        "home_team_id": "ljqE94Vqx0",
+        "away_team": "Sporting Kansas City II",
+        "away_team_id": "2vQ14GKqrA",
+        "location": "Arlington, TX",
+        "time": "12:30AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-09-14",
+        "home_team": "Chicago Fire FC II",
+        "home_team_id": "0x5gb3bM7O",
+        "away_team": "New York City FC II",
+        "away_team_id": "jYQJXkP5GR",
+        "location": "Chicago, IL",
+        "time": "1:00AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-09-14",
+        "home_team": "Real Monarchs",
+        "home_team_id": "BLMv6m3Mxe",
+        "away_team": "Ventura County FC",
+        "away_team_id": "4wM4E4d5jB",
+        "location": "Herriman, UT",
+        "time": "1:30AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-09-18",
+        "home_team": "New York City FC II",
+        "home_team_id": "jYQJXkP5GR",
+        "away_team": "New York City FC II",
+        "away_team_id": "jYQJXkP5GR",
+        "location": "New York, NY",
+        "time": "11:30PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-09-19",
+        "home_team": "Sporting Kansas City II",
+        "home_team_id": "2vQ14GKqrA",
+        "away_team": "Vancouver Whitecaps FC 2",
+        "away_team_id": "N6MmWV0qEG",
+        "location": "Lawrence, KS",
+        "time": "11:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-09-19",
+        "home_team": "Toronto FC II",
+        "home_team_id": "4JMAkpDqKg",
+        "away_team": "Columbus Crew 2",
+        "away_team_id": "0Oq6Yad56D",
+        "location": "Toronto, ON",
+        "time": "11:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-09-19",
+        "home_team": "Los Angeles FC 2",
+        "home_team_id": "2vQ1XzlqrA",
+        "away_team": "Real Monarchs",
+        "away_team_id": "BLMv6m3Mxe",
+        "location": "Fullerton, CA",
+        "time": "2:00AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-09-20",
+        "home_team": "Crown Legacy FC",
+        "home_team_id": "a35reDLML6",
+        "away_team": "Atlanta United 2",
+        "away_team_id": "wvq9jx1QWn",
+        "location": "Matthews, NC",
+        "time": "11:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-09-21",
+        "home_team": "Philadelphia Union II",
+        "home_team_id": "KPqjwN4Q6v",
+        "away_team": "Chicago Fire FC II",
+        "away_team_id": "0x5gb3bM7O",
+        "location": "Chester, PA",
+        "time": "7:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-09-21",
+        "home_team": "Minnesota United FC 2",
+        "home_team_id": "2lqRX1AMr0",
+        "away_team": "North Texas SC",
+        "away_team_id": "ljqE94Vqx0",
+        "location": "Saint Paul, MN",
+        "time": "8:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-09-21",
+        "home_team": "New York Red Bulls II",
+        "home_team_id": "9Yqdwg85vJ",
+        "away_team": "Inter Miami CF II",
+        "away_team_id": "vzqowoZqap",
+        "location": "Montclair, NJ",
+        "time": "9:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-09-21",
+        "home_team": "FC Cincinnati 2",
+        "home_team_id": "gpMOXy25zy",
+        "away_team": "New England Revolution II",
+        "away_team_id": "gpMO1Pyqzy",
+        "location": "Newport, KY",
+        "time": "10:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-09-21",
+        "home_team": "Chattanooga FC",
+        "home_team_id": "raMyeZAMd2",
+        "away_team": "Carolina Core",
+        "away_team_id": "NWMWJezQlz",
+        "location": "Chattanooga, TN",
+        "time": "11:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-09-21",
+        "home_team": "Orlando City B",
+        "home_team_id": "kRQaW3L5KZ",
+        "away_team": "Huntsville City FC",
+        "away_team_id": "OlMlKDEQLz",
+        "location": "Kissimmee, FL",
+        "time": "11:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-09-21",
+        "home_team": "Houston Dynamo FC 2",
+        "home_team_id": "gOMnJnOMwN",
+        "away_team": "Portland Timbers 2",
+        "away_team_id": "zeQZe4DqKw",
+        "location": "Houston, TX",
+        "time": "12:00AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-09-21",
+        "home_team": "Austin FC II",
+        "home_team_id": "eV5Dw4EMKn",
+        "away_team": "Saint Louis City SC 2",
+        "away_team_id": "eVq3Z0D5WO",
+        "location": "Austin, TX",
+        "time": "12:30AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-09-21",
+        "home_team": "Tacoma Defiance",
+        "home_team_id": "KXMe8Z2Q64",
+        "away_team": "Colorado Rapids 2",
+        "away_team_id": "7VqG1oWMvW",
+        "location": "Tukwila, WA",
+        "time": "2:00AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-09-21",
+        "home_team": "Ventura County FC",
+        "home_team_id": "4wM4E4d5jB",
+        "away_team": "The Town FC",
+        "away_team_id": "Oa5wDy8q14",
+        "location": "Carson, CA",
+        "time": "2:00AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-09-24",
+        "home_team": "Atlanta United 2",
+        "home_team_id": "wvq9jx1QWn",
+        "away_team": "Chattanooga FC",
+        "away_team_id": "raMyeZAMd2",
+        "location": "Kennesaw, GA",
+        "time": "11:30PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-09-25",
+        "home_team": "FC Cincinnati 2",
+        "home_team_id": "gpMOXy25zy",
+        "away_team": "Columbus Crew 2",
+        "away_team_id": "0Oq6Yad56D",
+        "location": "Newport, KY",
+        "time": "10:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-09-26",
+        "home_team": "New England Revolution II",
+        "home_team_id": "gpMO1Pyqzy",
+        "away_team": "Crown Legacy FC",
+        "away_team_id": "a35reDLML6",
+        "location": "Foxborough, MA",
+        "time": "7:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-09-26",
+        "home_team": "Toronto FC II",
+        "home_team_id": "4JMAkpDqKg",
+        "away_team": "Philadelphia Union II",
+        "away_team_id": "KPqjwN4Q6v",
+        "location": "Toronto, ON",
+        "time": "11:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-09-26",
+        "home_team": "Austin FC II",
+        "home_team_id": "eV5Dw4EMKn",
+        "away_team": "Portland Timbers 2",
+        "away_team_id": "zeQZe4DqKw",
+        "location": "Austin, TX",
+        "time": "12:30AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-09-27",
+        "home_team": "Colorado Rapids 2",
+        "home_team_id": "7VqG1oWMvW",
+        "away_team": "Minnesota United FC 2",
+        "away_team_id": "2lqRX1AMr0",
+        "location": "Commerce City, CO",
+        "time": "8:30PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-09-27",
+        "home_team": "Carolina Core",
+        "home_team_id": "NWMWJezQlz",
+        "away_team": "Orlando City B",
+        "away_team_id": "kRQaW3L5KZ",
+        "location": "High Point, NC",
+        "time": "11:30PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-09-27",
+        "home_team": "North Texas SC",
+        "home_team_id": "ljqE94Vqx0",
+        "away_team": "Real Monarchs",
+        "away_team_id": "BLMv6m3Mxe",
+        "location": "Arlington, TX",
+        "time": "12:30AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-09-28",
+        "home_team": "Sporting Kansas City II",
+        "home_team_id": "2vQ14GKqrA",
+        "away_team": "Ventura County FC",
+        "away_team_id": "4wM4E4d5jB",
+        "location": "Lawrence, KS",
+        "time": "5:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-09-28",
+        "home_team": "Chicago Fire FC II",
+        "home_team_id": "0x5gb3bM7O",
+        "away_team": "Atlanta United 2",
+        "away_team_id": "wvq9jx1QWn",
+        "location": "Chicago, IL",
+        "time": "6:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-09-28",
+        "home_team": "Saint Louis City SC 2",
+        "home_team_id": "eVq3Z0D5WO",
+        "away_team": "Los Angeles FC 2",
+        "away_team_id": "2vQ1XzlqrA",
+        "location": "St. Louis, MO",
+        "time": "9:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-09-28",
+        "home_team": "FC Cincinnati 2",
+        "home_team_id": "gpMOXy25zy",
+        "away_team": "New York Red Bulls II",
+        "away_team_id": "9Yqdwg85vJ",
+        "location": "Newport, KY",
+        "time": "10:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-09-28",
+        "home_team": "New York City FC II",
+        "home_team_id": "jYQJXkP5GR",
+        "away_team": "Chattanooga FC",
+        "away_team_id": "raMyeZAMd2",
+        "location": "New York, NY",
+        "time": "11:30PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-09-28",
+        "home_team": "Huntsville City FC",
+        "home_team_id": "OlMlKDEQLz",
+        "away_team": "Inter Miami CF II",
+        "away_team_id": "vzqowoZqap",
+        "location": "Huntsville, AL",
+        "time": "12:00AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-09-28",
+        "home_team": "The Town FC",
+        "home_team_id": "Oa5wDy8q14",
+        "away_team": "Tacoma Defiance",
+        "away_team_id": "KXMe8Z2Q64",
+        "location": "San Jose, CA",
+        "time": "12:00AM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-10-05",
+        "home_team": "Chattanooga FC",
+        "home_team_id": "raMyeZAMd2",
+        "away_team": "Atlanta United 2",
+        "away_team_id": "wvq9jx1QWn",
+        "location": "Chattanooga, TN",
+        "time": "5:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-10-05",
+        "home_team": "Columbus Crew 2",
+        "home_team_id": "0Oq6Yad56D",
+        "away_team": "Chicago Fire FC II",
+        "away_team_id": "0x5gb3bM7O",
+        "location": "Columbus, OH",
+        "time": "5:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-10-05",
+        "home_team": "Huntsville City FC",
+        "home_team_id": "OlMlKDEQLz",
+        "away_team": "Carolina Core",
+        "away_team_id": "NWMWJezQlz",
+        "location": "Huntsville, AL",
+        "time": "5:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-10-05",
+        "home_team": "Inter Miami CF II",
+        "home_team_id": "vzqowoZqap",
+        "away_team": "New England Revolution II",
+        "away_team_id": "gpMO1Pyqzy",
+        "location": "Fort Lauderdale, FL",
+        "time": "5:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-10-05",
+        "home_team": "New York Red Bulls II",
+        "home_team_id": "9Yqdwg85vJ",
+        "away_team": "Toronto FC II",
+        "away_team_id": "4JMAkpDqKg",
+        "location": "Montclair, NJ",
+        "time": "5:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-10-05",
+        "home_team": "Orlando City B",
+        "home_team_id": "kRQaW3L5KZ",
+        "away_team": "FC Cincinnati 2",
+        "away_team_id": "gpMOXy25zy",
+        "location": "Kissimmee, FL",
+        "time": "5:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-10-05",
+        "home_team": "Philadelphia Union II",
+        "home_team_id": "KPqjwN4Q6v",
+        "away_team": "New York City FC II",
+        "away_team_id": "jYQJXkP5GR",
+        "location": "Chester, PA",
+        "time": "5:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-10-05",
+        "home_team": "Los Angeles FC 2",
+        "home_team_id": "2vQ1XzlqrA",
+        "away_team": "North Texas SC",
+        "away_team_id": "ljqE94Vqx0",
+        "location": "Fullerton, CA",
+        "time": "8:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-10-05",
+        "home_team": "Minnesota United FC 2",
+        "home_team_id": "2lqRX1AMr0",
+        "away_team": "Sporting Kansas City II",
+        "away_team_id": "2vQ14GKqrA",
+        "location": "Saint Paul, MN",
+        "time": "8:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-10-05",
+        "home_team": "Real Monarchs",
+        "home_team_id": "BLMv6m3Mxe",
+        "away_team": "Vancouver Whitecaps FC 2",
+        "away_team_id": "N6MmWV0qEG",
+        "location": "Herriman, UT",
+        "time": "8:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-10-05",
+        "home_team": "Tacoma Defiance",
+        "home_team_id": "KXMe8Z2Q64",
+        "away_team": "Houston Dynamo FC 2",
+        "away_team_id": "gOMnJnOMwN",
+        "location": "Tukwila, WA",
+        "time": "8:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-10-05",
+        "home_team": "Portland Timbers 2",
+        "home_team_id": "zeQZe4DqKw",
+        "away_team": "Saint Louis City SC 2",
+        "away_team_id": "eVq3Z0D5WO",
+        "location": "Hillsboro, OR",
+        "time": "8:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-10-05",
+        "home_team": "The Town FC",
+        "home_team_id": "Oa5wDy8q14",
+        "away_team": "Austin FC II",
+        "away_team_id": "eV5Dw4EMKn",
+        "location": "San Jose, CA",
+        "time": "8:00PM",
+        "source": "fox_sports"
+    },
+    {
+        "date": "2025-10-05",
+        "home_team": "Ventura County FC",
+        "home_team_id": "4wM4E4d5jB",
+        "away_team": "Colorado Rapids 2",
+        "away_team_id": "7VqG1oWMvW",
+        "location": "Carson, CA",
+        "time": "8:00PM",
+        "source": "fox_sports"
+    }
+]

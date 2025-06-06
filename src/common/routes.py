@@ -468,52 +468,34 @@ async def run_conference_simulation(
         season_year=2025
     )
     
-    # Get conference teams
-    conference_teams = await db_manager.get_conference_teams(conference, 2025)
+    # 1. FETCH: Get all data from DatabaseManager
+    sim_data = await db_manager.get_data_for_simulation(conference, 2025)
     
-    # Creating a new predictor to ensure no shared state between conferences
-    predictor = MLSNPRegSeasonPredictor()
+    # 2. COMPUTE: Run simulation with fetched data
+    predictor = MLSNPRegSeasonPredictor(
+        conference=conference,
+        conference_teams=sim_data["conference_teams"],
+        games_data=sim_data["games_data"],
+        team_performance=sim_data["team_performance"],
+        league_averages=league_averages
+    )
     
-    # Set league averages from shared calculation
-    predictor.league_avg_xgf = league_averages["league_avg_xgf"]
-    predictor.league_avg_xga = league_averages["league_avg_xga"]
-    
-    # Get games only for this conference
-    conference_games = await db_manager.get_games_for_season(2025, conference)
-    
-    # Configure predictor for this specific conference
-    predictor.eastern_teams = set(conference_teams.keys())
-    predictor.team_names = conference_teams
-    
-    # Override get_games_data to return conference-specific games
-    predictor.get_games_data = lambda: conference_games
-    
-    # Run simulations
     summary_df, simulation_results, _, qualification_data = predictor.run_simulations(n_simulations)
     
-    # Store results in database
+    # 3. STORE: Save results to database
     await db_manager.store_simulation_results(
         run_id, summary_df, simulation_results, qualification_data
     )
     
-    # Format results for API response
+    # 4. FORMAT: Prepare API response with ALL required fields
     team_performances = []
     top_8_teams = {}
-    team_records = {}  # Store full season records
+    team_records = {}
     
     for _, row in summary_df.iterrows():
         team_id = row['_team_id']
         
-        # Store complete record for potential playoff use
-        team_records[team_id] = {
-            "team_name": row['Team'],
-            "points": row['Current Points'],
-            "average_final_points": row['Average Points'],
-            "wins": row.get('wins', 0),
-            "goal_difference": row.get('goal_difference', 0),
-            "goals_for": row.get('goals_for', 0)
-        }
-        
+        # Build team performance for API
         performance = TeamPerformance(
             team_id=team_id,
             team_name=row['Team'],
@@ -524,9 +506,20 @@ async def run_conference_simulation(
         )
         team_performances.append(performance)
         
-        # Track top 8 teams by average rank
+        # Build top_8_teams for playoffs
         if row['Average Final Rank'] <= 8:
             top_8_teams[team_id] = int(row['Average Final Rank'])
+        
+        # Build team_records for playoff home field advantage
+        current_standing = predictor.current_standings.get(team_id, {})
+        team_records[team_id] = {
+            "team_name": row['Team'],
+            "points": row['Current Points'],
+            "average_final_points": row['Average Points'],
+            "wins": current_standing.get('wins', 0),
+            "goal_difference": current_standing.get('goal_difference', 0),
+            "goals_for": current_standing.get('goals_for', 0)
+        }
     
     return {
         "run_id": run_id,

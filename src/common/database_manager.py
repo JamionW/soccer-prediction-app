@@ -12,6 +12,7 @@ import asyncio
 import numpy as np
 from collections import defaultdict
 import json
+from src.mlsnp_predictor.constants import EASTERN_CONFERENCE_TEAMS, WESTERN_CONFERENCE_TEAMS
 
 logger = logging.getLogger(__name__)
 
@@ -689,7 +690,67 @@ class DatabaseManager:
             logger.error(f"Error loading historical season {season_year}: {e}")
             raise
     
-    # ==================== Simulation Results Storage ====================
+    # ==================== Simulation Management =======================
+    
+    async def get_data_for_simulation(self, conference: str, season_year: int) -> Dict[str, Any]:
+        """
+        Gathers all necessary data for a regular season simulation run.
+        This method prepares the data required by the MLSNPRegSeasonPredictor.
+
+        Args:
+            conference (str): The conference to get data for ('eastern' or 'western').
+            season_year (int): The season year.
+
+        Returns:
+            A dictionary containing all the data needed for the simulation.
+        """
+        logger.info(f"Gathering all simulation data for {conference} conference, {season_year} season...")
+        
+        # 1. Get all teams for the conference
+        conference_teams = await self.get_conference_teams(conference, season_year)
+        team_ids = list(conference_teams.keys())
+        
+        # 2. Get all games for the season (can be filtered client-side by predictor)
+        all_games = await self.get_games_for_season(season_year, include_incomplete=True)
+        
+        # 3. Get team performance data (xG or goals) for each team
+        team_performance = {}
+        for team_id in team_ids:
+            # First, try to get xG data
+            xg_data = await self.get_or_fetch_team_xg(team_id, season_year)
+            if xg_data and xg_data.get('games_played', 0) > 0:
+                team_performance[team_id] = {
+                    "team_id": team_id,
+                    "games_played": xg_data['games_played'],
+                    "x_goals_for": xg_data.get('x_goals_for', 0.0),
+                    "x_goals_against": xg_data.get('x_goals_against', 0.0)
+                }
+            else:
+                # Fallback to goal-based stats if no xG
+                # This requires fetching standings or game data. We can calculate this from all_games.
+                team_performance[team_id] = {"games_played": 0, "goals_for": 0, "goals_against": 0}
+
+        # Calculate goal-based stats for fallback
+        for game in all_games:
+            if not game.get('is_completed'):
+                continue
+            home_id, away_id = game['home_team_id'], game['away_team_id']
+            if home_id in team_performance:
+                team_performance[home_id]['games_played'] += 1
+                team_performance[home_id]['goals_for'] = team_performance[home_id].get('goals_for', 0) + game['home_score']
+                team_performance[home_id]['goals_against'] = team_performance[home_id].get('goals_against', 0) + game['away_score']
+            if away_id in team_performance:
+                team_performance[away_id]['games_played'] += 1
+                team_performance[away_id]['goals_for'] = team_performance[away_id].get('goals_for', 0) + game['away_score']
+                team_performance[away_id]['goals_against'] = team_performance[away_id].get('goals_against', 0) + game['home_score']
+
+        logger.info(f"Successfully gathered data for {len(conference_teams)} teams.")
+        
+        return {
+            "conference_teams": conference_teams,
+            "games_data": all_games,
+            "team_performance": team_performance
+        }
     
     async def store_simulation_run(self, user_id: int, conference: str, 
                                  n_simulations: int, season_year: int,
