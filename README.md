@@ -25,6 +25,7 @@ The application is built using FastAPI and involves several key components:
     *   Currently this does not have an API endpoint. It can be run locally by an admin, and then the matches may be uploaded to the database.
 
 2.  **ASA API**:
+    *   Thank you to American Soccer Analysis for the public data, allowing this to be possible at all. It can be found at https://www.americansocceranalysis.com/.
     *   The primary source for historical game data, team statistics (including expected goals - xG).
     *   Data is fetched when a new season's data is explicitly loaded (via an admin endpoint) or when simulations require data not yet in the local database.
     *   Relevant functions: `DatabaseManager.load_historical_season()`, `DatabaseManager.get_or_fetch_team_xg()`.
