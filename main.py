@@ -26,9 +26,8 @@ app = FastAPI(lifespan=lifespan)
 
 origins = [
     "http://localhost:3000",
-    "https://*.vercel.app",  # Allow all Vercel subdomains
     "https://pkbipcas.com",
-    "https://*.railway.app"
+    "*"
 ]
 
 app.add_middleware(
