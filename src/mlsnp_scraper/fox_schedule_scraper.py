@@ -51,7 +51,6 @@ class FoxSportsMLSNextProScraper:
         'ATL': 'Atlanta United 2',
         'INT': 'Inter Miami CF II',
         'CAR': 'Carolina Core',
-        'COL': 'Columbus Crew 2',
         'CIN': 'FC Cincinnati 2',
         'SAI': 'Saint Louis City SC 2',
         'SPR': 'Sporting Kansas City II',
@@ -64,16 +63,20 @@ class FoxSportsMLSNextProScraper:
         'SAN': 'The Town FC',
         'VAN': 'Vancouver Whitecaps FC 2',
         'VEN': 'Ventura County FC',
-        'COL': 'Colorado Rapids 2',
         'AUS': 'Austin FC II',
         'HOU': 'Houston Dynamo FC 2',
+        'VII': 'Vancouver Whitecaps FC 2',
+        'COL': 'AMBIGUOUS',  # Will be resolved by logo
         'NEW': 'AMBIGUOUS'  # Will be resolved by logo
     }
     
     # Logo patterns to distinguish between the two "NEW" teams
     LOGO_PATTERNS = {
         'new-york-city-fc-2': 'New York City FC II',
-        'new-england-revolution-2': 'New England Revolution II'
+        'new-england-revolution-2': 'New England Revolution II',
+        'columbus-crew-2': 'Columbus Crew 2',
+        'colorado-rapids-2': 'Colorado Rapids 2'
+
     }
     
     def __init__(self, asa_teams_file_path: str):
@@ -246,7 +249,7 @@ class FoxSportsMLSNextProScraper:
             return self.FOX_ABBREVIATIONS[abbrev]
         
         # Handle the ambiguous "NEW" case by checking logos
-        if abbrev == 'NEW':
+        if abbrev == 'NEW' or abbrev == 'COL':
             # Look for team logo images in the row
             logos = row_element.find_all('img', src=re.compile(r'team-logos'))
             
@@ -256,7 +259,7 @@ class FoxSportsMLSNextProScraper:
                 # Check against our logo patterns
                 for pattern, team_name in self.LOGO_PATTERNS.items():
                     if pattern in logo_src:
-                        logger.debug(f"Resolved NEW to {team_name} based on logo: {logo_src}")
+                        logger.debug(f"Resolved {abbrev} to {team_name} based on logo: {logo_src}")
                         return team_name
             
             # If we can't determine from logo, log it

@@ -22,7 +22,7 @@ def main():
     asa_file = "data/asa_mls_next_pro_teams.json" 
     
     # Date range to scrape; #UPDATE TO USER INPUT
-    start_date = "2025-03-01" 
+    start_date = "2025-03-07" 
     end_date = "2025-10-31"   
     
     try:
