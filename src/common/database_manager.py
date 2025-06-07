@@ -827,10 +827,12 @@ class DatabaseManager:
                     :run_id, :team_id, :games_remaining, :current_points, :current_rank,
                     :avg_final_rank, :median_final_rank, :best_rank, :worst_rank,
                     :rank_25, :rank_75, :playoff_prob_pct, :clinched, :eliminated, NOW()
-                )
+                ) RETURNING summary_id
             """
             
-            await self.db.execute(query, values=values)
+            # Execute the query and retrieve the generated summary_id
+            summary_record = await self.db.fetch_one(query, values=values)
+            summary_id = summary_record['summary_id']
             
             # Store shootout analysis
             shootout_impact = qualification_data.get(team_id, {}).get('shootout_win_impact', {})
@@ -847,6 +849,7 @@ class DatabaseManager:
             
             if shootout_impact:
                 shootout_values = {
+                    "summary_id": summary_id,
                     "run_id": run_id,
                     "team_id": team_id,
                     "games_remaining": qualification_data.get(team_id, {}).get('games_remaining', 0),
@@ -857,10 +860,10 @@ class DatabaseManager:
                 
                 shootout_query = """
                     INSERT INTO shootout_analysis (
-                        run_id, team_id, games_remaining, wins_for_50_odds,
+                        summary_id, run_id, team_id, games_remaining, wins_for_50_odds,
                         wins_for_75_odds, current_odds
                     ) VALUES (
-                        :run_id, :team_id, :games_remaining, :wins_for_50_odds,
+                        :summary_id, :run_id, :team_id, :games_remaining, :wins_for_50_odds,
                         :wins_for_75_odds, :current_odds
                     )
                 """
