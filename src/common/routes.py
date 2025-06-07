@@ -61,19 +61,28 @@ async def get_conference_teams(conference: str):
     }
 
 @router.get("/health")
-async def health_check():
-    """
-    Returns a simple OK status without checking the database.
-    This allows the health check to pass even if DATABASE_URL is not set
-    in the health check environment, or if the database is temporarily unavailable.
-    The actual database connection is checked during application startup in main.py.
-    """
-    return {
-        "status": "healthy",
-        "message": "Application is running.",
-        "environment": os.getenv("ENVIRONMENT", "development"),
-        "railway_environment": os.getenv("RAILWAY_ENVIRONMENT")
-    }
+async def health_check(request: Request): # Added request: Request
+    """Health check endpoint for Railway and monitoring"""
+    if getattr(request.app.state, 'db_connected', False):
+        return {
+            "status": "healthy",
+            "message": "Application is running and database is connected.",
+            "database": "connected",
+            "environment": os.getenv("ENVIRONMENT", "development"),
+            "railway_environment": os.getenv("RAILWAY_ENVIRONMENT")
+        }
+    else:
+        # Return a 503 status code if the database is not connected
+        return JSONResponse(
+            status_code=503,
+            content={
+                "status": "unhealthy",
+                "message": "Application is running but database connection failed or is not established.",
+                "database": "disconnected",
+                "environment": os.getenv("ENVIRONMENT", "development"),
+                "railway_environment": os.getenv("RAILWAY_ENVIRONMENT")
+            }
+        )
 
 
 # ==================== Authentication Routes ====================
