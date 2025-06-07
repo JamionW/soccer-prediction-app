@@ -1,6 +1,6 @@
 # Soccer Table and Playoff Predictor API (Updated: 2025-06-06)
 
-This API provides services for simulating soccer league seasons (specifically only MLS Next Pro at the moment), predicting standings, and running playoff simulations.
+This API provides a method for simulating soccer league seasons (specifically only MLS Next Pro at the moment), predicting standings, and running playoff simulations.
 
 ## Overview
 
