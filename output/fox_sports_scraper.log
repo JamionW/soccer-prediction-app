@@ -1,0 +1,1090 @@
+2025-06-08 23:56:16,746 - INFO - 
+Step 1: Scraping fixtures from Fox Sports...
+2025-06-08 23:56:16,747 - INFO - Running: Fox Sports scraper
+2025-06-08 23:56:16,747 - INFO - Command: /home/codespace/.python/current/bin/python -m src.mlsnp_scraper.run_fox_scraper
+2025-06-08 23:56:17,326 - INFO - Starting Fox Sports MLS Next Pro Scraper execution...
+2025-06-08 23:56:17,326 - INFO - Loaded 30 valid ASA teams
+2025-06-08 23:56:17,327 - INFO - Created 92 team name patterns for ASA matching
+2025-06-08 23:56:17,327 - INFO - Initialized Fox Sports scraper with 30 ASA teams
+2025-06-08 23:56:17,327 - INFO - Scraping fixtures from 2025-03-07 to 2025-10-31
+2025-06-08 23:56:17,327 - INFO - Starting scraping from 2025-03-07 to 2025-10-31
+2025-06-08 23:56:17,327 - INFO - Scraping date: 2025-03-07 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-03-07)
+2025-06-08 23:56:19,923 - INFO - Found fixture: Austin FC II vs Colorado Rapids 2 on 2025-03-07 at 4-2
+2025-06-08 23:56:19,924 - INFO - Found fixture: Crown Legacy FC vs New York City FC II on 2025-03-07 at 2-2
+2025-06-08 23:56:19,924 - INFO - Found fixture: Inter Miami CF II vs Chattanooga FC on 2025-03-07 at 1-2
+2025-06-08 23:56:19,924 - INFO - Found fixture: Atlanta United 2 vs New York Red Bulls II on 2025-03-07 at 0-1
+2025-06-08 23:56:19,924 - INFO - Found fixture: Ventura County FC vs Tacoma Defiance on 2025-03-07 at 3-2
+2025-06-08 23:56:19,925 - INFO - Found fixture: Houston Dynamo FC 2 vs Sporting Kansas City II on 2025-03-08 at 3-1
+2025-06-08 23:56:19,925 - INFO - Found fixture: New England Revolution II vs Philadelphia Union II on 2025-03-09 at 0-0
+2025-06-08 23:56:19,926 - INFO - Found fixture: Chicago Fire FC II vs Huntsville City FC on 2025-03-09 at 1-4
+2025-06-08 23:56:19,926 - INFO - Found fixture: FC Cincinnati 2 vs Toronto FC II on 2025-03-09 at 0-1
+2025-06-08 23:56:19,926 - INFO - Found fixture: Orlando City B vs Columbus Crew 2 on 2025-03-09 at 2-1
+2025-06-08 23:56:19,938 - INFO - Found fixture: North Texas SC vs Saint Louis City SC 2 on 2025-03-09 at 0-3
+2025-06-08 23:56:19,938 - INFO - Found fixture: Los Angeles FC 2 vs Vancouver Whitecaps FC 2 on 2025-03-09 at 3-3
+2025-06-08 23:56:19,938 - INFO - Found 12 fixtures on 2025-03-07 (and possibly surrounding dates).
+2025-06-08 23:56:19,940 - INFO - Found 3 dates with games on the current page: ['2025-03-07', '2025-03-08', '2025-03-09']
+2025-06-08 23:56:20,940 - INFO - Scraping date: 2025-03-08 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-03-08)
+2025-06-08 23:56:22,820 - INFO - Found fixture: Houston Dynamo FC 2 vs Sporting Kansas City II on 2025-03-08 at 3-1
+2025-06-08 23:56:22,821 - INFO - Found fixture: New England Revolution II vs Philadelphia Union II on 2025-03-09 at 0-0
+2025-06-08 23:56:22,821 - INFO - Found fixture: Chicago Fire FC II vs Huntsville City FC on 2025-03-09 at 1-4
+2025-06-08 23:56:22,822 - INFO - Found fixture: FC Cincinnati 2 vs Toronto FC II on 2025-03-09 at 0-1
+2025-06-08 23:56:22,822 - INFO - Found fixture: Orlando City B vs Columbus Crew 2 on 2025-03-09 at 2-1
+2025-06-08 23:56:22,822 - INFO - Found fixture: North Texas SC vs Saint Louis City SC 2 on 2025-03-09 at 0-3
+2025-06-08 23:56:22,823 - INFO - Found fixture: Los Angeles FC 2 vs Vancouver Whitecaps FC 2 on 2025-03-09 at 3-3
+2025-06-08 23:56:22,823 - INFO - Found fixture: New England Revolution II vs FC Cincinnati 2 on 2025-03-13 at 2-0
+2025-06-08 23:56:22,823 - INFO - Found fixture: Inter Miami CF II vs Carolina Core on 2025-03-13 at 1-1
+2025-06-08 23:56:22,824 - INFO - Found fixture: Chicago Fire FC II vs Toronto FC II on 2025-03-13 at 1-0
+2025-06-08 23:56:22,824 - INFO - Found 10 fixtures on 2025-03-08 (and possibly surrounding dates).
+2025-06-08 23:56:22,825 - INFO - Found 3 dates with games on the current page: ['2025-03-08', '2025-03-09', '2025-03-13']
+2025-06-08 23:56:23,825 - INFO - Scraping date: 2025-03-09 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-03-09)
+2025-06-08 23:56:25,301 - INFO - Found fixture: New England Revolution II vs Philadelphia Union II on 2025-03-09 at 0-0
+2025-06-08 23:56:25,301 - INFO - Found fixture: Chicago Fire FC II vs Huntsville City FC on 2025-03-09 at 1-4
+2025-06-08 23:56:25,301 - INFO - Found fixture: FC Cincinnati 2 vs Toronto FC II on 2025-03-09 at 0-1
+2025-06-08 23:56:25,302 - INFO - Found fixture: Orlando City B vs Columbus Crew 2 on 2025-03-09 at 2-1
+2025-06-08 23:56:25,302 - INFO - Found fixture: North Texas SC vs Saint Louis City SC 2 on 2025-03-09 at 0-3
+2025-06-08 23:56:25,302 - INFO - Found fixture: Los Angeles FC 2 vs Vancouver Whitecaps FC 2 on 2025-03-09 at 3-3
+2025-06-08 23:56:25,303 - INFO - Found fixture: New England Revolution II vs FC Cincinnati 2 on 2025-03-13 at 2-0
+2025-06-08 23:56:25,303 - INFO - Found fixture: Inter Miami CF II vs Carolina Core on 2025-03-13 at 1-1
+2025-06-08 23:56:25,303 - INFO - Found fixture: Chicago Fire FC II vs Toronto FC II on 2025-03-13 at 1-0
+2025-06-08 23:56:25,304 - INFO - Found fixture: Austin FC II vs Minnesota United FC 2 on 2025-03-14 at 0-1
+2025-06-08 23:56:25,304 - INFO - Found fixture: Sporting Kansas City II vs Saint Louis City SC 2 on 2025-03-14 at 0-1
+2025-06-08 23:56:25,304 - INFO - Found fixture: New York City FC II vs New York City FC II on 2025-03-14 at 2-0
+2025-06-08 23:56:25,304 - INFO - Found fixture: North Texas SC vs Vancouver Whitecaps FC 2 on 2025-03-14 at 3-2
+2025-06-08 23:56:25,305 - INFO - Found fixture: Los Angeles FC 2 vs Ventura County FC on 2025-03-14 at 3-1
+2025-06-08 23:56:25,305 - INFO - Found fixture: Tacoma Defiance vs The Town FC on 2025-03-14 at 3-1
+2025-06-08 23:56:25,305 - INFO - Found 15 fixtures on 2025-03-09 (and possibly surrounding dates).
+2025-06-08 23:56:25,306 - INFO - Found 3 dates with games on the current page: ['2025-03-09', '2025-03-13', '2025-03-14']
+2025-06-08 23:56:26,307 - INFO - Scraping date: 2025-03-13 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-03-13)
+2025-06-08 23:56:27,977 - INFO - Found fixture: New England Revolution II vs FC Cincinnati 2 on 2025-03-13 at 2-0
+2025-06-08 23:56:27,978 - INFO - Found fixture: Inter Miami CF II vs Carolina Core on 2025-03-13 at 1-1
+2025-06-08 23:56:27,978 - INFO - Found fixture: Chicago Fire FC II vs Toronto FC II on 2025-03-13 at 1-0
+2025-06-08 23:56:27,979 - INFO - Found fixture: Austin FC II vs Minnesota United FC 2 on 2025-03-14 at 0-1
+2025-06-08 23:56:27,979 - INFO - Found fixture: Sporting Kansas City II vs Saint Louis City SC 2 on 2025-03-14 at 0-1
+2025-06-08 23:56:27,979 - INFO - Found fixture: New York City FC II vs New York City FC II on 2025-03-14 at 2-0
+2025-06-08 23:56:27,980 - INFO - Found fixture: North Texas SC vs Vancouver Whitecaps FC 2 on 2025-03-14 at 3-2
+2025-06-08 23:56:27,980 - INFO - Found fixture: Los Angeles FC 2 vs Ventura County FC on 2025-03-14 at 3-1
+2025-06-08 23:56:27,980 - INFO - Found fixture: Tacoma Defiance vs The Town FC on 2025-03-14 at 3-1
+2025-06-08 23:56:27,980 - INFO - Found fixture: Chattanooga FC vs Huntsville City FC on 2025-03-15 at 1-0
+2025-06-08 23:56:27,981 - INFO - Found fixture: Portland Timbers 2 vs Real Monarchs on 2025-03-15 at 2-3
+2025-06-08 23:56:27,981 - INFO - Found 11 fixtures on 2025-03-13 (and possibly surrounding dates).
+2025-06-08 23:56:27,982 - INFO - Found 3 dates with games on the current page: ['2025-03-13', '2025-03-14', '2025-03-15']
+2025-06-08 23:56:28,982 - INFO - Scraping date: 2025-03-14 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-03-14)
+2025-06-08 23:56:30,659 - INFO - Found fixture: Austin FC II vs Minnesota United FC 2 on 2025-03-14 at 0-1
+2025-06-08 23:56:30,660 - INFO - Found fixture: Sporting Kansas City II vs Saint Louis City SC 2 on 2025-03-14 at 0-1
+2025-06-08 23:56:30,660 - INFO - Found fixture: New York City FC II vs New York City FC II on 2025-03-14 at 2-0
+2025-06-08 23:56:30,660 - INFO - Found fixture: North Texas SC vs Vancouver Whitecaps FC 2 on 2025-03-14 at 3-2
+2025-06-08 23:56:30,661 - INFO - Found fixture: Los Angeles FC 2 vs Ventura County FC on 2025-03-14 at 3-1
+2025-06-08 23:56:30,661 - INFO - Found fixture: Tacoma Defiance vs The Town FC on 2025-03-14 at 3-1
+2025-06-08 23:56:30,661 - INFO - Found fixture: Chattanooga FC vs Huntsville City FC on 2025-03-15 at 1-0
+2025-06-08 23:56:30,662 - INFO - Found fixture: Portland Timbers 2 vs Real Monarchs on 2025-03-15 at 2-3
+2025-06-08 23:56:30,662 - INFO - Found fixture: Orlando City B vs Atlanta United 2 on 2025-03-16 at 2-2
+2025-06-08 23:56:30,662 - INFO - Found 9 fixtures on 2025-03-14 (and possibly surrounding dates).
+2025-06-08 23:56:30,663 - INFO - Found 3 dates with games on the current page: ['2025-03-14', '2025-03-15', '2025-03-16']
+2025-06-08 23:56:31,664 - INFO - Scraping date: 2025-03-15 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-03-15)
+2025-06-08 23:56:33,134 - INFO - Found fixture: Chattanooga FC vs Huntsville City FC on 2025-03-15 at 1-0
+2025-06-08 23:56:33,134 - INFO - Found fixture: Portland Timbers 2 vs Real Monarchs on 2025-03-15 at 2-3
+2025-06-08 23:56:33,134 - INFO - Found fixture: Orlando City B vs Atlanta United 2 on 2025-03-16 at 2-2
+2025-06-08 23:56:33,135 - INFO - Found fixture: Philadelphia Union II vs New York Red Bulls II on 2025-03-17 at 1-1
+2025-06-08 23:56:33,135 - INFO - Found 4 fixtures on 2025-03-15 (and possibly surrounding dates).
+2025-06-08 23:56:33,136 - INFO - Found 3 dates with games on the current page: ['2025-03-15', '2025-03-16', '2025-03-17']
+2025-06-08 23:56:34,136 - INFO - Scraping date: 2025-03-16 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-03-16)
+2025-06-08 23:56:35,434 - INFO - Found fixture: Orlando City B vs Atlanta United 2 on 2025-03-16 at 2-2
+2025-06-08 23:56:35,434 - INFO - Found fixture: Philadelphia Union II vs New York Red Bulls II on 2025-03-17 at 1-1
+2025-06-08 23:56:35,435 - INFO - Found fixture: Houston Dynamo FC 2 vs North Texas SC on 2025-03-20 at POSTPONED-
+2025-06-08 23:56:35,435 - INFO - Found 3 fixtures on 2025-03-16 (and possibly surrounding dates).
+2025-06-08 23:56:35,436 - INFO - Found 3 dates with games on the current page: ['2025-03-16', '2025-03-17', '2025-03-20']
+2025-06-08 23:56:36,436 - INFO - Scraping date: 2025-03-17 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-03-17)
+2025-06-08 23:56:37,702 - INFO - Found fixture: Philadelphia Union II vs New York Red Bulls II on 2025-03-17 at 1-1
+2025-06-08 23:56:37,703 - INFO - Found fixture: Houston Dynamo FC 2 vs North Texas SC on 2025-03-20 at POSTPONED-
+2025-06-08 23:56:37,703 - INFO - Found fixture: Philadelphia Union II vs Inter Miami CF II on 2025-03-23 at POSTPONED-
+2025-06-08 23:56:37,704 - INFO - Found fixture: Saint Louis City SC 2 vs Sporting Kansas City II on 2025-03-23 at 2-0
+2025-06-08 23:56:37,704 - INFO - Found fixture: Inter Miami CF II vs Columbus Crew 2 on 2025-03-23 at 4-2
+2025-06-08 23:56:37,704 - INFO - Found fixture: Houston Dynamo FC 2 vs North Texas SC on 2025-03-23 at 5-1
+2025-06-08 23:56:37,704 - INFO - Found fixture: Real Monarchs vs Colorado Rapids 2 on 2025-03-23 at 2-2
+2025-06-08 23:56:37,705 - INFO - Found 7 fixtures on 2025-03-17 (and possibly surrounding dates).
+2025-06-08 23:56:37,705 - INFO - Found 3 dates with games on the current page: ['2025-03-17', '2025-03-20', '2025-03-23']
+2025-06-08 23:56:38,706 - INFO - Scraping date: 2025-03-20 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-03-20)
+2025-06-08 23:56:39,965 - INFO - Found fixture: Houston Dynamo FC 2 vs North Texas SC on 2025-03-20 at POSTPONED-
+2025-06-08 23:56:39,966 - INFO - Found fixture: Philadelphia Union II vs Inter Miami CF II on 2025-03-23 at POSTPONED-
+2025-06-08 23:56:39,966 - INFO - Found fixture: Saint Louis City SC 2 vs Sporting Kansas City II on 2025-03-23 at 2-0
+2025-06-08 23:56:39,967 - INFO - Found fixture: Inter Miami CF II vs Columbus Crew 2 on 2025-03-23 at 4-2
+2025-06-08 23:56:39,967 - INFO - Found fixture: Houston Dynamo FC 2 vs North Texas SC on 2025-03-23 at 5-1
+2025-06-08 23:56:39,967 - INFO - Found fixture: Real Monarchs vs Colorado Rapids 2 on 2025-03-23 at 2-2
+2025-06-08 23:56:39,968 - INFO - Found fixture: New York City FC II vs Carolina Core on 2025-03-24 at 2-1
+2025-06-08 23:56:39,968 - INFO - Found 7 fixtures on 2025-03-20 (and possibly surrounding dates).
+2025-06-08 23:56:39,969 - INFO - Found 3 dates with games on the current page: ['2025-03-20', '2025-03-23', '2025-03-24']
+2025-06-08 23:56:40,969 - INFO - Scraping date: 2025-03-23 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-03-23)
+2025-06-08 23:56:42,242 - INFO - Found fixture: Philadelphia Union II vs Inter Miami CF II on 2025-03-23 at POSTPONED-
+2025-06-08 23:56:42,242 - INFO - Found fixture: Saint Louis City SC 2 vs Sporting Kansas City II on 2025-03-23 at 2-0
+2025-06-08 23:56:42,242 - INFO - Found fixture: Inter Miami CF II vs Columbus Crew 2 on 2025-03-23 at 4-2
+2025-06-08 23:56:42,243 - INFO - Found fixture: Houston Dynamo FC 2 vs North Texas SC on 2025-03-23 at 5-1
+2025-06-08 23:56:42,243 - INFO - Found fixture: Real Monarchs vs Colorado Rapids 2 on 2025-03-23 at 2-2
+2025-06-08 23:56:42,243 - INFO - Found fixture: New York City FC II vs Carolina Core on 2025-03-24 at 2-1
+2025-06-08 23:56:42,244 - INFO - Found fixture: Crown Legacy FC vs Orlando City B on 2025-03-26 at 0-1
+2025-06-08 23:56:42,244 - INFO - Found fixture: Ventura County FC vs Houston Dynamo FC 2 on 2025-03-26 at 1-0
+2025-06-08 23:56:42,244 - INFO - Found fixture: Portland Timbers 2 vs The Town FC on 2025-03-26 at 1-1
+2025-06-08 23:56:42,244 - INFO - Found 9 fixtures on 2025-03-23 (and possibly surrounding dates).
+2025-06-08 23:56:42,245 - INFO - Found 3 dates with games on the current page: ['2025-03-23', '2025-03-24', '2025-03-26']
+2025-06-08 23:56:43,246 - INFO - Scraping date: 2025-03-24 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-03-24)
+2025-06-08 23:56:44,546 - INFO - Found fixture: New York City FC II vs Carolina Core on 2025-03-24 at 2-1
+2025-06-08 23:56:44,547 - INFO - Found fixture: Crown Legacy FC vs Orlando City B on 2025-03-26 at 0-1
+2025-06-08 23:56:44,547 - INFO - Found fixture: Ventura County FC vs Houston Dynamo FC 2 on 2025-03-26 at 1-0
+2025-06-08 23:56:44,548 - INFO - Found fixture: Portland Timbers 2 vs The Town FC on 2025-03-26 at 1-1
+2025-06-08 23:56:44,548 - INFO - Found fixture: New England Revolution II vs Toronto FC II on 2025-03-28 at 4-0
+2025-06-08 23:56:44,548 - INFO - Found fixture: Huntsville City FC vs Philadelphia Union II on 2025-03-28 at 2-2
+2025-06-08 23:56:44,549 - INFO - Found fixture: North Texas SC vs Sporting Kansas City II on 2025-03-28 at 3-3
+2025-06-08 23:56:44,549 - INFO - Found 7 fixtures on 2025-03-24 (and possibly surrounding dates).
+2025-06-08 23:56:44,550 - INFO - Found 3 dates with games on the current page: ['2025-03-24', '2025-03-26', '2025-03-28']
+2025-06-08 23:56:45,550 - INFO - Scraping date: 2025-03-26 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-03-26)
+2025-06-08 23:56:46,818 - INFO - Found fixture: Crown Legacy FC vs Orlando City B on 2025-03-26 at 0-1
+2025-06-08 23:56:46,818 - INFO - Found fixture: Ventura County FC vs Houston Dynamo FC 2 on 2025-03-26 at 1-0
+2025-06-08 23:56:46,818 - INFO - Found fixture: Portland Timbers 2 vs The Town FC on 2025-03-26 at 1-1
+2025-06-08 23:56:46,819 - INFO - Found fixture: New England Revolution II vs Toronto FC II on 2025-03-28 at 4-0
+2025-06-08 23:56:46,819 - INFO - Found fixture: Huntsville City FC vs Philadelphia Union II on 2025-03-28 at 2-2
+2025-06-08 23:56:46,819 - INFO - Found fixture: North Texas SC vs Sporting Kansas City II on 2025-03-28 at 3-3
+2025-06-08 23:56:46,820 - INFO - Found fixture: Vancouver Whitecaps FC 2 vs Portland Timbers 2 on 2025-03-29 at 1-1
+2025-06-08 23:56:46,820 - INFO - Found 7 fixtures on 2025-03-26 (and possibly surrounding dates).
+2025-06-08 23:56:46,821 - INFO - Found 3 dates with games on the current page: ['2025-03-26', '2025-03-28', '2025-03-29']
+2025-06-08 23:56:47,821 - INFO - Scraping date: 2025-03-28 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-03-28)
+2025-06-08 23:56:49,697 - INFO - Found fixture: New England Revolution II vs Toronto FC II on 2025-03-28 at 4-0
+2025-06-08 23:56:49,698 - INFO - Found fixture: Huntsville City FC vs Philadelphia Union II on 2025-03-28 at 2-2
+2025-06-08 23:56:49,698 - INFO - Found fixture: North Texas SC vs Sporting Kansas City II on 2025-03-28 at 3-3
+2025-06-08 23:56:49,699 - INFO - Found fixture: Vancouver Whitecaps FC 2 vs Portland Timbers 2 on 2025-03-29 at 1-1
+2025-06-08 23:56:49,730 - INFO - Found fixture: New York Red Bulls II vs New York City FC II on 2025-03-30 at 3-2
+2025-06-08 23:56:49,730 - INFO - Found fixture: Atlanta United 2 vs Chattanooga FC on 2025-03-30 at 2-2
+2025-06-08 23:56:49,731 - INFO - Found fixture: FC Cincinnati 2 vs Chicago Fire FC II on 2025-03-30 at 1-2
+2025-06-08 23:56:49,731 - INFO - Found fixture: Saint Louis City SC 2 vs Austin FC II on 2025-03-30 at 0-0
+2025-06-08 23:56:49,731 - INFO - Found fixture: Houston Dynamo FC 2 vs Minnesota United FC 2 on 2025-03-30 at 1-3
+2025-06-08 23:56:49,731 - INFO - Found 9 fixtures on 2025-03-28 (and possibly surrounding dates).
+2025-06-08 23:56:49,732 - INFO - Found 3 dates with games on the current page: ['2025-03-28', '2025-03-29', '2025-03-30']
+2025-06-08 23:56:50,733 - INFO - Scraping date: 2025-03-29 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-03-29)
+2025-06-08 23:56:52,630 - INFO - Found fixture: Vancouver Whitecaps FC 2 vs Portland Timbers 2 on 2025-03-29 at 1-1
+2025-06-08 23:56:52,631 - INFO - Found fixture: New York Red Bulls II vs New York City FC II on 2025-03-30 at 3-2
+2025-06-08 23:56:52,631 - INFO - Found fixture: Atlanta United 2 vs Chattanooga FC on 2025-03-30 at 2-2
+2025-06-08 23:56:52,631 - INFO - Found fixture: FC Cincinnati 2 vs Chicago Fire FC II on 2025-03-30 at 1-2
+2025-06-08 23:56:52,632 - INFO - Found fixture: Saint Louis City SC 2 vs Austin FC II on 2025-03-30 at 0-0
+2025-06-08 23:56:52,632 - INFO - Found fixture: Houston Dynamo FC 2 vs Minnesota United FC 2 on 2025-03-30 at 1-3
+2025-06-08 23:56:52,633 - INFO - Found fixture: Portland Timbers 2 vs North Texas SC on 2025-04-05 at 1-2
+2025-06-08 23:56:52,633 - INFO - Found fixture: Carolina Core vs New York City FC II on 2025-04-05 at 5-0
+2025-06-08 23:56:52,634 - INFO - Found fixture: Chattanooga FC vs Orlando City B on 2025-04-05 at 2-0
+2025-06-08 23:56:52,634 - INFO - Found 9 fixtures on 2025-03-29 (and possibly surrounding dates).
+2025-06-08 23:56:52,636 - INFO - Found 3 dates with games on the current page: ['2025-03-29', '2025-03-30', '2025-04-05']
+2025-06-08 23:56:53,636 - INFO - Scraping date: 2025-03-30 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-03-30)
+2025-06-08 23:56:55,102 - INFO - Found fixture: New York Red Bulls II vs New York City FC II on 2025-03-30 at 3-2
+2025-06-08 23:56:55,102 - INFO - Found fixture: Atlanta United 2 vs Chattanooga FC on 2025-03-30 at 2-2
+2025-06-08 23:56:55,102 - INFO - Found fixture: FC Cincinnati 2 vs Chicago Fire FC II on 2025-03-30 at 1-2
+2025-06-08 23:56:55,103 - INFO - Found fixture: Saint Louis City SC 2 vs Austin FC II on 2025-03-30 at 0-0
+2025-06-08 23:56:55,103 - INFO - Found fixture: Houston Dynamo FC 2 vs Minnesota United FC 2 on 2025-03-30 at 1-3
+2025-06-08 23:56:55,103 - INFO - Found fixture: Portland Timbers 2 vs North Texas SC on 2025-04-05 at 1-2
+2025-06-08 23:56:55,104 - INFO - Found fixture: Carolina Core vs New York City FC II on 2025-04-05 at 5-0
+2025-06-08 23:56:55,104 - INFO - Found fixture: Chattanooga FC vs Orlando City B on 2025-04-05 at 2-0
+2025-06-08 23:56:55,104 - INFO - Found fixture: Atlanta United 2 vs Inter Miami CF II on 2025-04-06 at 3-2
+2025-06-08 23:56:55,105 - INFO - Found fixture: New York Red Bulls II vs Chicago Fire FC II on 2025-04-06 at 3-2
+2025-06-08 23:56:55,105 - INFO - Found fixture: Saint Louis City SC 2 vs Colorado Rapids 2 on 2025-04-06 at 0-1
+2025-06-08 23:56:55,105 - INFO - Found fixture: Columbus Crew 2 vs Crown Legacy FC on 2025-04-06 at 1-1
+2025-06-08 23:56:55,106 - INFO - Found fixture: Houston Dynamo FC 2 vs Los Angeles FC 2 on 2025-04-06 at 1-0
+2025-06-08 23:56:55,106 - INFO - Found fixture: Real Monarchs vs Ventura County FC on 2025-04-06 at 1-2
+2025-06-08 23:56:55,106 - INFO - Found fixture: Tacoma Defiance vs Vancouver Whitecaps FC 2 on 2025-04-06 at 5-3
+2025-06-08 23:56:55,106 - INFO - Found 15 fixtures on 2025-03-30 (and possibly surrounding dates).
+2025-06-08 23:56:55,107 - INFO - Found 3 dates with games on the current page: ['2025-03-30', '2025-04-05', '2025-04-06']
+2025-06-08 23:56:56,108 - INFO - Scraping date: 2025-04-05 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-04-05)
+2025-06-08 23:56:57,580 - INFO - Found fixture: Portland Timbers 2 vs North Texas SC on 2025-04-05 at 1-2
+2025-06-08 23:56:57,580 - INFO - Found fixture: Carolina Core vs New York City FC II on 2025-04-05 at 5-0
+2025-06-08 23:56:57,580 - INFO - Found fixture: Chattanooga FC vs Orlando City B on 2025-04-05 at 2-0
+2025-06-08 23:56:57,581 - INFO - Found fixture: Atlanta United 2 vs Inter Miami CF II on 2025-04-06 at 3-2
+2025-06-08 23:56:57,581 - INFO - Found fixture: New York Red Bulls II vs Chicago Fire FC II on 2025-04-06 at 3-2
+2025-06-08 23:56:57,581 - INFO - Found fixture: Saint Louis City SC 2 vs Colorado Rapids 2 on 2025-04-06 at 0-1
+2025-06-08 23:56:57,582 - INFO - Found fixture: Columbus Crew 2 vs Crown Legacy FC on 2025-04-06 at 1-1
+2025-06-08 23:56:57,582 - INFO - Found fixture: Houston Dynamo FC 2 vs Los Angeles FC 2 on 2025-04-06 at 1-0
+2025-06-08 23:56:57,582 - INFO - Found fixture: Real Monarchs vs Ventura County FC on 2025-04-06 at 1-2
+2025-06-08 23:56:57,582 - INFO - Found fixture: Tacoma Defiance vs Vancouver Whitecaps FC 2 on 2025-04-06 at 5-3
+2025-06-08 23:56:57,583 - INFO - Found fixture: Orlando City B vs New England Revolution II on 2025-04-09 at 1-0
+2025-06-08 23:56:57,583 - INFO - Found fixture: Sporting Kansas City II vs Minnesota United FC 2 on 2025-04-09 at 2-4
+2025-06-08 23:56:57,583 - INFO - Found fixture: New York City FC II vs FC Cincinnati 2 on 2025-04-09 at 2-2
+2025-06-08 23:56:57,584 - INFO - Found 13 fixtures on 2025-04-05 (and possibly surrounding dates).
+2025-06-08 23:56:57,585 - INFO - Found 3 dates with games on the current page: ['2025-04-05', '2025-04-06', '2025-04-09']
+2025-06-08 23:56:58,585 - INFO - Scraping date: 2025-04-06 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-04-06)
+2025-06-08 23:56:59,856 - INFO - Found fixture: Atlanta United 2 vs Inter Miami CF II on 2025-04-06 at 3-2
+2025-06-08 23:56:59,856 - INFO - Found fixture: New York Red Bulls II vs Chicago Fire FC II on 2025-04-06 at 3-2
+2025-06-08 23:56:59,856 - INFO - Found fixture: Saint Louis City SC 2 vs Colorado Rapids 2 on 2025-04-06 at 0-1
+2025-06-08 23:56:59,857 - INFO - Found fixture: Columbus Crew 2 vs Crown Legacy FC on 2025-04-06 at 1-1
+2025-06-08 23:56:59,857 - INFO - Found fixture: Houston Dynamo FC 2 vs Los Angeles FC 2 on 2025-04-06 at 1-0
+2025-06-08 23:56:59,857 - INFO - Found fixture: Real Monarchs vs Ventura County FC on 2025-04-06 at 1-2
+2025-06-08 23:56:59,857 - INFO - Found fixture: Tacoma Defiance vs Vancouver Whitecaps FC 2 on 2025-04-06 at 5-3
+2025-06-08 23:56:59,858 - INFO - Found fixture: Orlando City B vs New England Revolution II on 2025-04-09 at 1-0
+2025-06-08 23:56:59,858 - INFO - Found fixture: Sporting Kansas City II vs Minnesota United FC 2 on 2025-04-09 at 2-4
+2025-06-08 23:56:59,858 - INFO - Found fixture: New York City FC II vs FC Cincinnati 2 on 2025-04-09 at 2-2
+2025-06-08 23:56:59,859 - INFO - Found fixture: Inter Miami CF II vs Toronto FC II on 2025-04-10 at 0-1
+2025-06-08 23:56:59,859 - INFO - Found fixture: Philadelphia Union II vs Atlanta United 2 on 2025-04-10 at 5-1
+2025-06-08 23:56:59,859 - INFO - Found fixture: Real Monarchs vs The Town FC on 2025-04-10 at 2-1
+2025-06-08 23:56:59,860 - INFO - Found fixture: Los Angeles FC 2 vs Tacoma Defiance on 2025-04-10 at 3-2
+2025-06-08 23:56:59,860 - INFO - Found 14 fixtures on 2025-04-06 (and possibly surrounding dates).
+2025-06-08 23:56:59,861 - INFO - Found 3 dates with games on the current page: ['2025-04-06', '2025-04-09', '2025-04-10']
+2025-06-08 23:57:00,861 - INFO - Scraping date: 2025-04-09 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-04-09)
+2025-06-08 23:57:01,962 - INFO - Found fixture: Orlando City B vs New England Revolution II on 2025-04-09 at 1-0
+2025-06-08 23:57:01,962 - INFO - Found fixture: Sporting Kansas City II vs Minnesota United FC 2 on 2025-04-09 at 2-4
+2025-06-08 23:57:01,963 - INFO - Found fixture: New York City FC II vs FC Cincinnati 2 on 2025-04-09 at 2-2
+2025-06-08 23:57:01,963 - INFO - Found fixture: Inter Miami CF II vs Toronto FC II on 2025-04-10 at 0-1
+2025-06-08 23:57:01,964 - INFO - Found fixture: Philadelphia Union II vs Atlanta United 2 on 2025-04-10 at 5-1
+2025-06-08 23:57:01,964 - INFO - Found fixture: Real Monarchs vs The Town FC on 2025-04-10 at 2-1
+2025-06-08 23:57:01,964 - INFO - Found fixture: Los Angeles FC 2 vs Tacoma Defiance on 2025-04-10 at 3-2
+2025-06-08 23:57:01,964 - INFO - Found fixture: Austin FC II vs North Texas SC on 2025-04-11 at 1-1
+2025-06-08 23:57:01,965 - INFO - Found 8 fixtures on 2025-04-09 (and possibly surrounding dates).
+2025-06-08 23:57:01,966 - INFO - Found 3 dates with games on the current page: ['2025-04-09', '2025-04-10', '2025-04-11']
+2025-06-08 23:57:02,966 - INFO - Scraping date: 2025-04-10 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-04-10)
+2025-06-08 23:57:04,438 - INFO - Found fixture: Inter Miami CF II vs Toronto FC II on 2025-04-10 at 0-1
+2025-06-08 23:57:04,439 - INFO - Found fixture: Philadelphia Union II vs Atlanta United 2 on 2025-04-10 at 5-1
+2025-06-08 23:57:04,439 - INFO - Found fixture: Real Monarchs vs The Town FC on 2025-04-10 at 2-1
+2025-06-08 23:57:04,439 - INFO - Found fixture: Los Angeles FC 2 vs Tacoma Defiance on 2025-04-10 at 3-2
+2025-06-08 23:57:04,440 - INFO - Found fixture: Austin FC II vs North Texas SC on 2025-04-11 at 1-1
+2025-06-08 23:57:04,440 - INFO - Found fixture: Chicago Fire FC II vs New England Revolution II on 2025-04-12 at POSTPONED-
+2025-06-08 23:57:04,440 - INFO - Found 6 fixtures on 2025-04-10 (and possibly surrounding dates).
+2025-06-08 23:57:04,441 - INFO - Found 3 dates with games on the current page: ['2025-04-10', '2025-04-11', '2025-04-12']
+2025-06-08 23:57:05,442 - INFO - Scraping date: 2025-04-11 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-04-11)
+2025-06-08 23:57:06,718 - INFO - Found fixture: Austin FC II vs North Texas SC on 2025-04-11 at 1-1
+2025-06-08 23:57:06,719 - INFO - Found fixture: Chicago Fire FC II vs New England Revolution II on 2025-04-12 at POSTPONED-
+2025-06-08 23:57:06,719 - INFO - Found fixture: Carolina Core vs Chattanooga FC on 2025-04-13 at 1-4
+2025-06-08 23:57:06,719 - INFO - Found fixture: Portland Timbers 2 vs Colorado Rapids 2 on 2025-04-13 at 1-2
+2025-06-08 23:57:06,720 - INFO - Found fixture: FC Cincinnati 2 vs Columbus Crew 2 on 2025-04-13 at POSTPONED-
+2025-06-08 23:57:06,720 - INFO - Found fixture: Crown Legacy FC vs Huntsville City FC on 2025-04-13 at 1-1
+2025-06-08 23:57:06,720 - INFO - Found fixture: Ventura County FC vs Saint Louis City SC 2 on 2025-04-13 at 3-1
+2025-06-08 23:57:06,720 - INFO - Found 7 fixtures on 2025-04-11 (and possibly surrounding dates).
+2025-06-08 23:57:06,721 - INFO - Found 3 dates with games on the current page: ['2025-04-11', '2025-04-12', '2025-04-13']
+2025-06-08 23:57:07,722 - INFO - Scraping date: 2025-04-12 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-04-12)
+2025-06-08 23:57:09,190 - INFO - Found fixture: Chicago Fire FC II vs New England Revolution II on 2025-04-12 at POSTPONED-
+2025-06-08 23:57:09,190 - INFO - Found fixture: Carolina Core vs Chattanooga FC on 2025-04-13 at 1-4
+2025-06-08 23:57:09,190 - INFO - Found fixture: Portland Timbers 2 vs Colorado Rapids 2 on 2025-04-13 at 1-2
+2025-06-08 23:57:09,191 - INFO - Found fixture: FC Cincinnati 2 vs Columbus Crew 2 on 2025-04-13 at POSTPONED-
+2025-06-08 23:57:09,191 - INFO - Found fixture: Crown Legacy FC vs Huntsville City FC on 2025-04-13 at 1-1
+2025-06-08 23:57:09,191 - INFO - Found fixture: Ventura County FC vs Saint Louis City SC 2 on 2025-04-13 at 3-1
+2025-06-08 23:57:09,192 - INFO - Found fixture: Inter Miami CF II vs Orlando City B on 2025-04-15 at 3-2
+2025-06-08 23:57:09,192 - INFO - Found fixture: Houston Dynamo FC 2 vs Tacoma Defiance on 2025-04-15 at POSTPONED-
+2025-06-08 23:57:09,192 - INFO - Found 8 fixtures on 2025-04-12 (and possibly surrounding dates).
+2025-06-08 23:57:09,193 - INFO - Found 3 dates with games on the current page: ['2025-04-12', '2025-04-13', '2025-04-15']
+2025-06-08 23:57:10,193 - INFO - Scraping date: 2025-04-13 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-04-13)
+2025-06-08 23:57:11,664 - INFO - Found fixture: Carolina Core vs Chattanooga FC on 2025-04-13 at 1-4
+2025-06-08 23:57:11,664 - INFO - Found fixture: Portland Timbers 2 vs Colorado Rapids 2 on 2025-04-13 at 1-2
+2025-06-08 23:57:11,665 - INFO - Found fixture: FC Cincinnati 2 vs Columbus Crew 2 on 2025-04-13 at POSTPONED-
+2025-06-08 23:57:11,665 - INFO - Found fixture: Crown Legacy FC vs Huntsville City FC on 2025-04-13 at 1-1
+2025-06-08 23:57:11,665 - INFO - Found fixture: Ventura County FC vs Saint Louis City SC 2 on 2025-04-13 at 3-1
+2025-06-08 23:57:11,666 - INFO - Found fixture: Inter Miami CF II vs Orlando City B on 2025-04-15 at 3-2
+2025-06-08 23:57:11,666 - INFO - Found fixture: Houston Dynamo FC 2 vs Tacoma Defiance on 2025-04-15 at POSTPONED-
+2025-06-08 23:57:11,666 - INFO - Found fixture: Toronto FC II vs Carolina Core on 2025-04-18 at 1-1
+2025-06-08 23:57:11,666 - INFO - Found 8 fixtures on 2025-04-13 (and possibly surrounding dates).
+2025-06-08 23:57:11,667 - INFO - Found 3 dates with games on the current page: ['2025-04-13', '2025-04-15', '2025-04-18']
+2025-06-08 23:57:12,668 - INFO - Scraping date: 2025-04-15 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-04-15)
+2025-06-08 23:57:13,931 - INFO - Found fixture: Inter Miami CF II vs Orlando City B on 2025-04-15 at 3-2
+2025-06-08 23:57:13,931 - INFO - Found fixture: Houston Dynamo FC 2 vs Tacoma Defiance on 2025-04-15 at POSTPONED-
+2025-06-08 23:57:13,932 - INFO - Found fixture: Toronto FC II vs Carolina Core on 2025-04-18 at 1-1
+2025-06-08 23:57:13,932 - INFO - Found fixture: Chattanooga FC vs Crown Legacy FC on 2025-04-19 at 2-1
+2025-06-08 23:57:13,932 - INFO - Found fixture: Vancouver Whitecaps FC 2 vs Austin FC II on 2025-04-19 at 4-0
+2025-06-08 23:57:13,933 - INFO - Found fixture: The Town FC vs Minnesota United FC 2 on 2025-04-19 at POSTPONED-
+2025-06-08 23:57:13,933 - INFO - Found 6 fixtures on 2025-04-15 (and possibly surrounding dates).
+2025-06-08 23:57:13,934 - INFO - Found 3 dates with games on the current page: ['2025-04-15', '2025-04-18', '2025-04-19']
+2025-06-08 23:57:14,934 - INFO - Scraping date: 2025-04-18 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-04-18)
+2025-06-08 23:57:16,196 - INFO - Found fixture: Toronto FC II vs Carolina Core on 2025-04-18 at 1-1
+2025-06-08 23:57:16,196 - INFO - Found fixture: Chattanooga FC vs Crown Legacy FC on 2025-04-19 at 2-1
+2025-06-08 23:57:16,197 - INFO - Found fixture: Vancouver Whitecaps FC 2 vs Austin FC II on 2025-04-19 at 4-0
+2025-06-08 23:57:16,197 - INFO - Found fixture: The Town FC vs Minnesota United FC 2 on 2025-04-19 at POSTPONED-
+2025-06-08 23:57:16,197 - INFO - Found fixture: FC Cincinnati 2 vs New York Red Bulls II on 2025-04-20 at 3-1
+2025-06-08 23:57:16,198 - INFO - Found fixture: Huntsville City FC vs Chicago Fire FC II on 2025-04-20 at 5-0
+2025-06-08 23:57:16,198 - INFO - Found fixture: North Texas SC vs Colorado Rapids 2 on 2025-04-20 at 2-3
+2025-06-08 23:57:16,198 - INFO - Found 7 fixtures on 2025-04-18 (and possibly surrounding dates).
+2025-06-08 23:57:16,199 - INFO - Found 3 dates with games on the current page: ['2025-04-18', '2025-04-19', '2025-04-20']
+2025-06-08 23:57:17,199 - INFO - Scraping date: 2025-04-19 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-04-19)
+2025-06-08 23:57:18,682 - INFO - Found fixture: Chattanooga FC vs Crown Legacy FC on 2025-04-19 at 2-1
+2025-06-08 23:57:18,683 - INFO - Found fixture: Vancouver Whitecaps FC 2 vs Austin FC II on 2025-04-19 at 4-0
+2025-06-08 23:57:18,684 - INFO - Found fixture: The Town FC vs Minnesota United FC 2 on 2025-04-19 at POSTPONED-
+2025-06-08 23:57:18,684 - INFO - Found fixture: FC Cincinnati 2 vs New York Red Bulls II on 2025-04-20 at 3-1
+2025-06-08 23:57:18,685 - INFO - Found fixture: Huntsville City FC vs Chicago Fire FC II on 2025-04-20 at 5-0
+2025-06-08 23:57:18,685 - INFO - Found fixture: North Texas SC vs Colorado Rapids 2 on 2025-04-20 at 2-3
+2025-06-08 23:57:18,686 - INFO - Found fixture: New England Revolution II vs New England Revolution II on 2025-04-23 at 2-2
+2025-06-08 23:57:18,687 - INFO - Found fixture: Real Monarchs vs Los Angeles FC 2 on 2025-04-23 at 1-1
+2025-06-08 23:57:18,687 - INFO - Found fixture: Sporting Kansas City II vs Tacoma Defiance on 2025-04-23 at 1-4
+2025-06-08 23:57:18,688 - INFO - Found fixture: Atlanta United 2 vs Carolina Core on 2025-04-23 at 2-2
+2025-06-08 23:57:18,688 - INFO - Found fixture: New York City FC II vs Philadelphia Union II on 2025-04-23 at 1-4
+2025-06-08 23:57:18,688 - INFO - Found fixture: North Texas SC vs The Town FC on 2025-04-23 at 2-0
+2025-06-08 23:57:18,689 - INFO - Found fixture: Vancouver Whitecaps FC 2 vs Houston Dynamo FC 2 on 2025-04-23 at 1-3
+2025-06-08 23:57:18,689 - INFO - Found fixture: Ventura County FC vs Portland Timbers 2 on 2025-04-23 at 2-3
+2025-06-08 23:57:18,690 - INFO - Found 14 fixtures on 2025-04-19 (and possibly surrounding dates).
+2025-06-08 23:57:18,691 - INFO - Found 3 dates with games on the current page: ['2025-04-19', '2025-04-20', '2025-04-23']
+2025-06-08 23:57:19,692 - INFO - Scraping date: 2025-04-20 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-04-20)
+2025-06-08 23:57:21,378 - INFO - Found fixture: FC Cincinnati 2 vs New York Red Bulls II on 2025-04-20 at 3-1
+2025-06-08 23:57:21,378 - INFO - Found fixture: Huntsville City FC vs Chicago Fire FC II on 2025-04-20 at 5-0
+2025-06-08 23:57:21,378 - INFO - Found fixture: North Texas SC vs Colorado Rapids 2 on 2025-04-20 at 2-3
+2025-06-08 23:57:21,379 - INFO - Found fixture: New England Revolution II vs New England Revolution II on 2025-04-23 at 2-2
+2025-06-08 23:57:21,379 - INFO - Found fixture: Real Monarchs vs Los Angeles FC 2 on 2025-04-23 at 1-1
+2025-06-08 23:57:21,380 - INFO - Found fixture: Sporting Kansas City II vs Tacoma Defiance on 2025-04-23 at 1-4
+2025-06-08 23:57:21,380 - INFO - Found fixture: Atlanta United 2 vs Carolina Core on 2025-04-23 at 2-2
+2025-06-08 23:57:21,380 - INFO - Found fixture: New York City FC II vs Philadelphia Union II on 2025-04-23 at 1-4
+2025-06-08 23:57:21,380 - INFO - Found fixture: North Texas SC vs The Town FC on 2025-04-23 at 2-0
+2025-06-08 23:57:21,381 - INFO - Found fixture: Vancouver Whitecaps FC 2 vs Houston Dynamo FC 2 on 2025-04-23 at 1-3
+2025-06-08 23:57:21,381 - INFO - Found fixture: Ventura County FC vs Portland Timbers 2 on 2025-04-23 at 2-3
+2025-06-08 23:57:21,381 - INFO - Found fixture: Colorado Rapids 2 vs Minnesota United FC 2 on 2025-04-24 at 0-2
+2025-06-08 23:57:21,381 - INFO - Found 12 fixtures on 2025-04-20 (and possibly surrounding dates).
+2025-06-08 23:57:21,383 - INFO - Found 3 dates with games on the current page: ['2025-04-20', '2025-04-23', '2025-04-24']
+2025-06-08 23:57:22,383 - INFO - Scraping date: 2025-04-23 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-04-23)
+2025-06-08 23:57:23,670 - INFO - Found fixture: New England Revolution II vs New England Revolution II on 2025-04-23 at 2-2
+2025-06-08 23:57:23,671 - INFO - Found fixture: Real Monarchs vs Los Angeles FC 2 on 2025-04-23 at 1-1
+2025-06-08 23:57:23,671 - INFO - Found fixture: Sporting Kansas City II vs Tacoma Defiance on 2025-04-23 at 1-4
+2025-06-08 23:57:23,671 - INFO - Found fixture: Atlanta United 2 vs Carolina Core on 2025-04-23 at 2-2
+2025-06-08 23:57:23,672 - INFO - Found fixture: New York City FC II vs Philadelphia Union II on 2025-04-23 at 1-4
+2025-06-08 23:57:23,672 - INFO - Found fixture: North Texas SC vs The Town FC on 2025-04-23 at 2-0
+2025-06-08 23:57:23,672 - INFO - Found fixture: Vancouver Whitecaps FC 2 vs Houston Dynamo FC 2 on 2025-04-23 at 1-3
+2025-06-08 23:57:23,672 - INFO - Found fixture: Ventura County FC vs Portland Timbers 2 on 2025-04-23 at 2-3
+2025-06-08 23:57:23,673 - INFO - Found fixture: Colorado Rapids 2 vs Minnesota United FC 2 on 2025-04-24 at 0-2
+2025-06-08 23:57:23,673 - INFO - Found fixture: Toronto FC II vs Chicago Fire FC II on 2025-04-25 at 2-0
+2025-06-08 23:57:23,673 - INFO - Found 10 fixtures on 2025-04-23 (and possibly surrounding dates).
+2025-06-08 23:57:23,674 - INFO - Found 3 dates with games on the current page: ['2025-04-23', '2025-04-24', '2025-04-25']
+2025-06-08 23:57:24,675 - INFO - Scraping date: 2025-04-24 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-04-24)
+2025-06-08 23:57:26,753 - INFO - Found fixture: Colorado Rapids 2 vs Minnesota United FC 2 on 2025-04-24 at 0-2
+2025-06-08 23:57:26,754 - INFO - Found fixture: Toronto FC II vs Chicago Fire FC II on 2025-04-25 at 2-0
+2025-06-08 23:57:26,754 - INFO - Found fixture: New England Revolution II vs New England Revolution II on 2025-04-26 at 2-1
+2025-06-08 23:57:26,755 - INFO - Found fixture: Carolina Core vs Crown Legacy FC on 2025-04-26 at 1-2
+2025-06-08 23:57:26,755 - INFO - Found fixture: Tacoma Defiance vs Saint Louis City SC 2 on 2025-04-26 at 4-1
+2025-06-08 23:57:26,755 - INFO - Found 5 fixtures on 2025-04-24 (and possibly surrounding dates).
+2025-06-08 23:57:26,756 - INFO - Found 3 dates with games on the current page: ['2025-04-24', '2025-04-25', '2025-04-26']
+2025-06-08 23:57:27,756 - INFO - Scraping date: 2025-04-25 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-04-25)
+2025-06-08 23:57:29,436 - INFO - Found fixture: Toronto FC II vs Chicago Fire FC II on 2025-04-25 at 2-0
+2025-06-08 23:57:29,437 - INFO - Found fixture: New England Revolution II vs New England Revolution II on 2025-04-26 at 2-1
+2025-06-08 23:57:29,437 - INFO - Found fixture: Carolina Core vs Crown Legacy FC on 2025-04-26 at 1-2
+2025-06-08 23:57:29,437 - INFO - Found fixture: Tacoma Defiance vs Saint Louis City SC 2 on 2025-04-26 at 4-1
+2025-06-08 23:57:29,438 - INFO - Found fixture: FC Cincinnati 2 vs Atlanta United 2 on 2025-04-27 at 0-0
+2025-06-08 23:57:29,438 - INFO - Found fixture: Colorado Rapids 2 vs Sporting Kansas City II on 2025-04-27 at 3-0
+2025-06-08 23:57:29,439 - INFO - Found fixture: Columbus Crew 2 vs Chattanooga FC on 2025-04-27 at 3-0
+2025-06-08 23:57:29,439 - INFO - Found fixture: Houston Dynamo FC 2 vs Austin FC II on 2025-04-27 at 2-1
+2025-06-08 23:57:29,439 - INFO - Found fixture: Huntsville City FC vs Inter Miami CF II on 2025-04-27 at 4-0
+2025-06-08 23:57:29,439 - INFO - Found fixture: Orlando City B vs New York Red Bulls II on 2025-04-27 at 2-4
+2025-06-08 23:57:29,440 - INFO - Found fixture: The Town FC vs Los Angeles FC 2 on 2025-04-27 at 5-1
+2025-06-08 23:57:29,440 - INFO - Found fixture: Vancouver Whitecaps FC 2 vs Ventura County FC on 2025-04-27 at 2-3
+2025-06-08 23:57:29,440 - INFO - Found 12 fixtures on 2025-04-25 (and possibly surrounding dates).
+2025-06-08 23:57:29,441 - INFO - Found 3 dates with games on the current page: ['2025-04-25', '2025-04-26', '2025-04-27']
+2025-06-08 23:57:30,441 - INFO - Scraping date: 2025-04-26 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-04-26)
+2025-06-08 23:57:32,151 - INFO - Found fixture: New England Revolution II vs New England Revolution II on 2025-04-26 at 2-1
+2025-06-08 23:57:32,151 - INFO - Found fixture: Carolina Core vs Crown Legacy FC on 2025-04-26 at 1-2
+2025-06-08 23:57:32,152 - INFO - Found fixture: Tacoma Defiance vs Saint Louis City SC 2 on 2025-04-26 at 4-1
+2025-06-08 23:57:32,152 - INFO - Found fixture: FC Cincinnati 2 vs Atlanta United 2 on 2025-04-27 at 0-0
+2025-06-08 23:57:32,153 - INFO - Found fixture: Colorado Rapids 2 vs Sporting Kansas City II on 2025-04-27 at 3-0
+2025-06-08 23:57:32,153 - INFO - Found fixture: Columbus Crew 2 vs Chattanooga FC on 2025-04-27 at 3-0
+2025-06-08 23:57:32,153 - INFO - Found fixture: Houston Dynamo FC 2 vs Austin FC II on 2025-04-27 at 2-1
+2025-06-08 23:57:32,153 - INFO - Found fixture: Huntsville City FC vs Inter Miami CF II on 2025-04-27 at 4-0
+2025-06-08 23:57:32,154 - INFO - Found fixture: Orlando City B vs New York Red Bulls II on 2025-04-27 at 2-4
+2025-06-08 23:57:32,154 - INFO - Found fixture: The Town FC vs Los Angeles FC 2 on 2025-04-27 at 5-1
+2025-06-08 23:57:32,154 - INFO - Found fixture: Vancouver Whitecaps FC 2 vs Ventura County FC on 2025-04-27 at 2-3
+2025-06-08 23:57:32,155 - INFO - Found fixture: Minnesota United FC 2 vs North Texas SC on 2025-05-02 at 0-1
+2025-06-08 23:57:32,155 - INFO - Found fixture: Chicago Fire FC II vs Orlando City B on 2025-05-02 at 5-1
+2025-06-08 23:57:32,155 - INFO - Found fixture: Austin FC II vs Sporting Kansas City II on 2025-05-02 at 0-0
+2025-06-08 23:57:32,155 - INFO - Found fixture: Ventura County FC vs Tacoma Defiance on 2025-05-02 at 1-2
+2025-06-08 23:57:32,156 - INFO - Found 15 fixtures on 2025-04-26 (and possibly surrounding dates).
+2025-06-08 23:57:32,157 - INFO - Found 3 dates with games on the current page: ['2025-04-26', '2025-04-27', '2025-05-02']
+2025-06-08 23:57:33,157 - INFO - Scraping date: 2025-04-27 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-04-27)
+2025-06-08 23:57:35,044 - INFO - Found fixture: FC Cincinnati 2 vs Atlanta United 2 on 2025-04-27 at 0-0
+2025-06-08 23:57:35,045 - INFO - Found fixture: Colorado Rapids 2 vs Sporting Kansas City II on 2025-04-27 at 3-0
+2025-06-08 23:57:35,045 - INFO - Found fixture: Columbus Crew 2 vs Chattanooga FC on 2025-04-27 at 3-0
+2025-06-08 23:57:35,045 - INFO - Found fixture: Houston Dynamo FC 2 vs Austin FC II on 2025-04-27 at 2-1
+2025-06-08 23:57:35,045 - INFO - Found fixture: Huntsville City FC vs Inter Miami CF II on 2025-04-27 at 4-0
+2025-06-08 23:57:35,046 - INFO - Found fixture: Orlando City B vs New York Red Bulls II on 2025-04-27 at 2-4
+2025-06-08 23:57:35,046 - INFO - Found fixture: The Town FC vs Los Angeles FC 2 on 2025-04-27 at 5-1
+2025-06-08 23:57:35,046 - INFO - Found fixture: Vancouver Whitecaps FC 2 vs Ventura County FC on 2025-04-27 at 2-3
+2025-06-08 23:57:35,047 - INFO - Found fixture: Minnesota United FC 2 vs North Texas SC on 2025-05-02 at 0-1
+2025-06-08 23:57:35,047 - INFO - Found fixture: Chicago Fire FC II vs Orlando City B on 2025-05-02 at 5-1
+2025-06-08 23:57:35,047 - INFO - Found fixture: Austin FC II vs Sporting Kansas City II on 2025-05-02 at 0-0
+2025-06-08 23:57:35,047 - INFO - Found fixture: Ventura County FC vs Tacoma Defiance on 2025-05-02 at 1-2
+2025-06-08 23:57:35,048 - INFO - Found fixture: Vancouver Whitecaps FC 2 vs Real Monarchs on 2025-05-03 at 1-1
+2025-06-08 23:57:35,048 - INFO - Found fixture: Chattanooga FC vs Philadelphia Union II on 2025-05-03 at 0-0
+2025-06-08 23:57:35,049 - INFO - Found fixture: Huntsville City FC vs Atlanta United 2 on 2025-05-03 at 2-2
+2025-06-08 23:57:35,049 - INFO - Found 15 fixtures on 2025-04-27 (and possibly surrounding dates).
+2025-06-08 23:57:35,050 - INFO - Found 3 dates with games on the current page: ['2025-04-27', '2025-05-02', '2025-05-03']
+2025-06-08 23:57:36,051 - INFO - Scraping date: 2025-05-02 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-05-02)
+2025-06-08 23:57:37,396 - INFO - Found fixture: Minnesota United FC 2 vs North Texas SC on 2025-05-02 at 0-1
+2025-06-08 23:57:37,396 - INFO - Found fixture: Chicago Fire FC II vs Orlando City B on 2025-05-02 at 5-1
+2025-06-08 23:57:37,396 - INFO - Found fixture: Austin FC II vs Sporting Kansas City II on 2025-05-02 at 0-0
+2025-06-08 23:57:37,397 - INFO - Found fixture: Ventura County FC vs Tacoma Defiance on 2025-05-02 at 1-2
+2025-06-08 23:57:37,397 - INFO - Found fixture: Vancouver Whitecaps FC 2 vs Real Monarchs on 2025-05-03 at 1-1
+2025-06-08 23:57:37,397 - INFO - Found fixture: Chattanooga FC vs Philadelphia Union II on 2025-05-03 at 0-0
+2025-06-08 23:57:37,398 - INFO - Found fixture: Huntsville City FC vs Atlanta United 2 on 2025-05-03 at 2-2
+2025-06-08 23:57:37,398 - INFO - Found fixture: Toronto FC II vs New England Revolution II on 2025-05-04 at 3-3
+2025-06-08 23:57:37,398 - INFO - Found fixture: New York Red Bulls II vs Carolina Core on 2025-05-04 at 2-2
+2025-06-08 23:57:37,399 - INFO - Found fixture: Saint Louis City SC 2 vs Houston Dynamo FC 2 on 2025-05-04 at 3-1
+2025-06-08 23:57:37,399 - INFO - Found fixture: Inter Miami CF II vs New York City FC II on 2025-05-04 at 4-2
+2025-06-08 23:57:37,399 - INFO - Found fixture: The Town FC vs Portland Timbers 2 on 2025-05-04 at 5-0
+2025-06-08 23:57:37,400 - INFO - Found fixture: Los Angeles FC 2 vs Colorado Rapids 2 on 2025-05-04 at 3-2
+2025-06-08 23:57:37,400 - INFO - Found 13 fixtures on 2025-05-02 (and possibly surrounding dates).
+2025-06-08 23:57:37,401 - INFO - Found 3 dates with games on the current page: ['2025-05-02', '2025-05-03', '2025-05-04']
+2025-06-08 23:57:38,401 - INFO - Scraping date: 2025-05-03 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-05-03)
+2025-06-08 23:57:40,074 - INFO - Found fixture: Vancouver Whitecaps FC 2 vs Real Monarchs on 2025-05-03 at 1-1
+2025-06-08 23:57:40,074 - INFO - Found fixture: Chattanooga FC vs Philadelphia Union II on 2025-05-03 at 0-0
+2025-06-08 23:57:40,075 - INFO - Found fixture: Huntsville City FC vs Atlanta United 2 on 2025-05-03 at 2-2
+2025-06-08 23:57:40,075 - INFO - Found fixture: Toronto FC II vs New England Revolution II on 2025-05-04 at 3-3
+2025-06-08 23:57:40,076 - INFO - Found fixture: New York Red Bulls II vs Carolina Core on 2025-05-04 at 2-2
+2025-06-08 23:57:40,076 - INFO - Found fixture: Saint Louis City SC 2 vs Houston Dynamo FC 2 on 2025-05-04 at 3-1
+2025-06-08 23:57:40,076 - INFO - Found fixture: Inter Miami CF II vs New York City FC II on 2025-05-04 at 4-2
+2025-06-08 23:57:40,076 - INFO - Found fixture: The Town FC vs Portland Timbers 2 on 2025-05-04 at 5-0
+2025-06-08 23:57:40,077 - INFO - Found fixture: Los Angeles FC 2 vs Colorado Rapids 2 on 2025-05-04 at 3-2
+2025-06-08 23:57:40,077 - INFO - Found fixture: Chicago Fire FC II vs FC Cincinnati 2 on 2025-05-09 at 2-1
+2025-06-08 23:57:40,078 - INFO - Found fixture: Portland Timbers 2 vs Vancouver Whitecaps FC 2 on 2025-05-09 at 1-0
+2025-06-08 23:57:40,078 - INFO - Found fixture: Crown Legacy FC vs Inter Miami CF II on 2025-05-09 at 4-2
+2025-06-08 23:57:40,078 - INFO - Found fixture: Houston Dynamo FC 2 vs Colorado Rapids 2 on 2025-05-09 at 0-0
+2025-06-08 23:57:40,078 - INFO - Found fixture: Toronto FC II vs Chattanooga FC on 2025-05-09 at 1-2
+2025-06-08 23:57:40,079 - INFO - Found fixture: New York City FC II vs New York Red Bulls II on 2025-05-09 at 5-2
+2025-06-08 23:57:40,079 - INFO - Found fixture: Ventura County FC vs Los Angeles FC 2 on 2025-05-09 at 2-1
+2025-06-08 23:57:40,079 - INFO - Found 16 fixtures on 2025-05-03 (and possibly surrounding dates).
+2025-06-08 23:57:40,080 - INFO - Found 3 dates with games on the current page: ['2025-05-03', '2025-05-04', '2025-05-09']
+2025-06-08 23:57:41,081 - INFO - Scraping date: 2025-05-04 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-05-04)
+2025-06-08 23:57:42,750 - INFO - Found fixture: Toronto FC II vs New England Revolution II on 2025-05-04 at 3-3
+2025-06-08 23:57:42,750 - INFO - Found fixture: New York Red Bulls II vs Carolina Core on 2025-05-04 at 2-2
+2025-06-08 23:57:42,750 - INFO - Found fixture: Saint Louis City SC 2 vs Houston Dynamo FC 2 on 2025-05-04 at 3-1
+2025-06-08 23:57:42,751 - INFO - Found fixture: Inter Miami CF II vs New York City FC II on 2025-05-04 at 4-2
+2025-06-08 23:57:42,751 - INFO - Found fixture: The Town FC vs Portland Timbers 2 on 2025-05-04 at 5-0
+2025-06-08 23:57:42,751 - INFO - Found fixture: Los Angeles FC 2 vs Colorado Rapids 2 on 2025-05-04 at 3-2
+2025-06-08 23:57:42,752 - INFO - Found fixture: Chicago Fire FC II vs FC Cincinnati 2 on 2025-05-09 at 2-1
+2025-06-08 23:57:42,752 - INFO - Found fixture: Portland Timbers 2 vs Vancouver Whitecaps FC 2 on 2025-05-09 at 1-0
+2025-06-08 23:57:42,752 - INFO - Found fixture: Crown Legacy FC vs Inter Miami CF II on 2025-05-09 at 4-2
+2025-06-08 23:57:42,753 - INFO - Found fixture: Houston Dynamo FC 2 vs Colorado Rapids 2 on 2025-05-09 at 0-0
+2025-06-08 23:57:42,753 - INFO - Found fixture: Toronto FC II vs Chattanooga FC on 2025-05-09 at 1-2
+2025-06-08 23:57:42,753 - INFO - Found fixture: New York City FC II vs New York Red Bulls II on 2025-05-09 at 5-2
+2025-06-08 23:57:42,754 - INFO - Found fixture: Ventura County FC vs Los Angeles FC 2 on 2025-05-09 at 2-1
+2025-06-08 23:57:42,754 - INFO - Found fixture: Carolina Core vs Huntsville City FC on 2025-05-10 at 0-0
+2025-06-08 23:57:42,754 - INFO - Found 14 fixtures on 2025-05-04 (and possibly surrounding dates).
+2025-06-08 23:57:42,755 - INFO - Found 3 dates with games on the current page: ['2025-05-04', '2025-05-09', '2025-05-10']
+2025-06-08 23:57:43,756 - INFO - Scraping date: 2025-05-09 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-05-09)
+2025-06-08 23:57:45,445 - INFO - Found fixture: Chicago Fire FC II vs FC Cincinnati 2 on 2025-05-09 at 2-1
+2025-06-08 23:57:45,445 - INFO - Found fixture: Portland Timbers 2 vs Vancouver Whitecaps FC 2 on 2025-05-09 at 1-0
+2025-06-08 23:57:45,446 - INFO - Found fixture: Crown Legacy FC vs Inter Miami CF II on 2025-05-09 at 4-2
+2025-06-08 23:57:45,446 - INFO - Found fixture: Houston Dynamo FC 2 vs Colorado Rapids 2 on 2025-05-09 at 0-0
+2025-06-08 23:57:45,446 - INFO - Found fixture: Toronto FC II vs Chattanooga FC on 2025-05-09 at 1-2
+2025-06-08 23:57:45,447 - INFO - Found fixture: New York City FC II vs New York Red Bulls II on 2025-05-09 at 5-2
+2025-06-08 23:57:45,447 - INFO - Found fixture: Ventura County FC vs Los Angeles FC 2 on 2025-05-09 at 2-1
+2025-06-08 23:57:45,447 - INFO - Found fixture: Carolina Core vs Huntsville City FC on 2025-05-10 at 0-0
+2025-06-08 23:57:45,448 - INFO - Found fixture: Philadelphia Union II vs Columbus Crew 2 on 2025-05-11 at 3-0
+2025-06-08 23:57:45,448 - INFO - Found fixture: The Town FC vs Saint Louis City SC 2 on 2025-05-11 at 4-0
+2025-06-08 23:57:45,448 - INFO - Found 10 fixtures on 2025-05-09 (and possibly surrounding dates).
+2025-06-08 23:57:45,449 - INFO - Found 3 dates with games on the current page: ['2025-05-09', '2025-05-10', '2025-05-11']
+2025-06-08 23:57:46,450 - INFO - Scraping date: 2025-05-10 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-05-10)
+2025-06-08 23:57:47,500 - INFO - Found fixture: Carolina Core vs Huntsville City FC on 2025-05-10 at 0-0
+2025-06-08 23:57:47,500 - INFO - Found fixture: Philadelphia Union II vs Columbus Crew 2 on 2025-05-11 at 3-0
+2025-06-08 23:57:47,501 - INFO - Found fixture: The Town FC vs Saint Louis City SC 2 on 2025-05-11 at 4-0
+2025-06-08 23:57:47,501 - INFO - Found fixture: Ventura County FC vs Austin FC II on 2025-05-13 at 0-1
+2025-06-08 23:57:47,501 - INFO - Found 4 fixtures on 2025-05-10 (and possibly surrounding dates).
+2025-06-08 23:57:47,502 - INFO - Found 3 dates with games on the current page: ['2025-05-10', '2025-05-11', '2025-05-13']
+2025-06-08 23:57:48,502 - INFO - Scraping date: 2025-05-11 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-05-11)
+2025-06-08 23:57:49,583 - INFO - Found fixture: Philadelphia Union II vs Columbus Crew 2 on 2025-05-11 at 3-0
+2025-06-08 23:57:49,584 - INFO - Found fixture: The Town FC vs Saint Louis City SC 2 on 2025-05-11 at 4-0
+2025-06-08 23:57:49,584 - INFO - Found fixture: Ventura County FC vs Austin FC II on 2025-05-13 at 0-1
+2025-06-08 23:57:49,585 - INFO - Found fixture: Vancouver Whitecaps FC 2 vs Tacoma Defiance on 2025-05-14 at 5-0
+2025-06-08 23:57:49,585 - INFO - Found fixture: Portland Timbers 2 vs Los Angeles FC 2 on 2025-05-14 at 3-0
+2025-06-08 23:57:49,585 - INFO - Found 5 fixtures on 2025-05-11 (and possibly surrounding dates).
+2025-06-08 23:57:49,586 - INFO - Found 3 dates with games on the current page: ['2025-05-11', '2025-05-13', '2025-05-14']
+2025-06-08 23:57:50,586 - INFO - Scraping date: 2025-05-13 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-05-13)
+2025-06-08 23:57:51,865 - INFO - Found fixture: Ventura County FC vs Austin FC II on 2025-05-13 at 0-1
+2025-06-08 23:57:51,866 - INFO - Found fixture: Vancouver Whitecaps FC 2 vs Tacoma Defiance on 2025-05-14 at 5-0
+2025-06-08 23:57:51,866 - INFO - Found fixture: Portland Timbers 2 vs Los Angeles FC 2 on 2025-05-14 at 3-0
+2025-06-08 23:57:51,866 - INFO - Found fixture: New York City FC II vs Toronto FC II on 2025-05-15 at 3-0
+2025-06-08 23:57:51,867 - INFO - Found 4 fixtures on 2025-05-13 (and possibly surrounding dates).
+2025-06-08 23:57:51,867 - INFO - Found 3 dates with games on the current page: ['2025-05-13', '2025-05-14', '2025-05-15']
+2025-06-08 23:57:52,868 - INFO - Scraping date: 2025-05-14 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-05-14)
+2025-06-08 23:57:54,140 - INFO - Found fixture: Vancouver Whitecaps FC 2 vs Tacoma Defiance on 2025-05-14 at 5-0
+2025-06-08 23:57:54,140 - INFO - Found fixture: Portland Timbers 2 vs Los Angeles FC 2 on 2025-05-14 at 3-0
+2025-06-08 23:57:54,140 - INFO - Found fixture: New York City FC II vs Toronto FC II on 2025-05-15 at 3-0
+2025-06-08 23:57:54,141 - INFO - Found fixture: Orlando City B vs Inter Miami CF II on 2025-05-17 at 3-0
+2025-06-08 23:57:54,141 - INFO - Found fixture: Huntsville City FC vs Chattanooga FC on 2025-05-17 at 1-2
+2025-06-08 23:57:54,141 - INFO - Found 5 fixtures on 2025-05-14 (and possibly surrounding dates).
+2025-06-08 23:57:54,143 - INFO - Found 3 dates with games on the current page: ['2025-05-14', '2025-05-15', '2025-05-17']
+2025-06-08 23:57:55,143 - INFO - Scraping date: 2025-05-15 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-05-15)
+2025-06-08 23:57:56,442 - INFO - Found fixture: New York City FC II vs Toronto FC II on 2025-05-15 at 3-0
+2025-06-08 23:57:56,443 - INFO - Found fixture: Orlando City B vs Inter Miami CF II on 2025-05-17 at 3-0
+2025-06-08 23:57:56,443 - INFO - Found fixture: Huntsville City FC vs Chattanooga FC on 2025-05-17 at 1-2
+2025-06-08 23:57:56,444 - INFO - Found fixture: Sporting Kansas City II vs The Town FC on 2025-05-18 at 0-0
+2025-06-08 23:57:56,444 - INFO - Found fixture: Columbus Crew 2 vs FC Cincinnati 2 on 2025-05-18 at 1-0
+2025-06-08 23:57:56,445 - INFO - Found fixture: Minnesota United FC 2 vs Saint Louis City SC 2 on 2025-05-18 at 2-3
+2025-06-08 23:57:56,445 - INFO - Found fixture: New York Red Bulls II vs New England Revolution II on 2025-05-18 at 4-1
+2025-06-08 23:57:56,445 - INFO - Found fixture: Vancouver Whitecaps FC 2 vs Ventura County FC on 2025-05-18 at 0-2
+2025-06-08 23:57:56,445 - INFO - Found fixture: Colorado Rapids 2 vs Real Monarchs on 2025-05-18 at 2-1
+2025-06-08 23:57:56,446 - INFO - Found fixture: North Texas SC vs Houston Dynamo FC 2 on 2025-05-18 at 2-1
+2025-06-08 23:57:56,446 - INFO - Found fixture: Portland Timbers 2 vs Tacoma Defiance on 2025-05-18 at 2-1
+2025-06-08 23:57:56,446 - INFO - Found 11 fixtures on 2025-05-15 (and possibly surrounding dates).
+2025-06-08 23:57:56,447 - INFO - Found 3 dates with games on the current page: ['2025-05-15', '2025-05-17', '2025-05-18']
+2025-06-08 23:57:57,448 - INFO - Scraping date: 2025-05-17 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-05-17)
+2025-06-08 23:57:58,719 - INFO - Found fixture: Orlando City B vs Inter Miami CF II on 2025-05-17 at 3-0
+2025-06-08 23:57:58,719 - INFO - Found fixture: Huntsville City FC vs Chattanooga FC on 2025-05-17 at 1-2
+2025-06-08 23:57:58,720 - INFO - Found fixture: Sporting Kansas City II vs The Town FC on 2025-05-18 at 0-0
+2025-06-08 23:57:58,720 - INFO - Found fixture: Columbus Crew 2 vs FC Cincinnati 2 on 2025-05-18 at 1-0
+2025-06-08 23:57:58,721 - INFO - Found fixture: Minnesota United FC 2 vs Saint Louis City SC 2 on 2025-05-18 at 2-3
+2025-06-08 23:57:58,721 - INFO - Found fixture: New York Red Bulls II vs New England Revolution II on 2025-05-18 at 4-1
+2025-06-08 23:57:58,721 - INFO - Found fixture: Vancouver Whitecaps FC 2 vs Ventura County FC on 2025-05-18 at 0-2
+2025-06-08 23:57:58,722 - INFO - Found fixture: Colorado Rapids 2 vs Real Monarchs on 2025-05-18 at 2-1
+2025-06-08 23:57:58,722 - INFO - Found fixture: North Texas SC vs Houston Dynamo FC 2 on 2025-05-18 at 2-1
+2025-06-08 23:57:58,722 - INFO - Found fixture: Portland Timbers 2 vs Tacoma Defiance on 2025-05-18 at 2-1
+2025-06-08 23:57:58,722 - INFO - Found fixture: Atlanta United 2 vs Crown Legacy FC on 2025-05-19 at 2-2
+2025-06-08 23:57:58,723 - INFO - Found 11 fixtures on 2025-05-17 (and possibly surrounding dates).
+2025-06-08 23:57:58,724 - INFO - Found 3 dates with games on the current page: ['2025-05-17', '2025-05-18', '2025-05-19']
+2025-06-08 23:57:59,724 - INFO - Scraping date: 2025-05-18 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-05-18)
+2025-06-08 23:58:00,798 - INFO - Found fixture: Sporting Kansas City II vs The Town FC on 2025-05-18 at 0-0
+2025-06-08 23:58:00,799 - INFO - Found fixture: Columbus Crew 2 vs FC Cincinnati 2 on 2025-05-18 at 1-0
+2025-06-08 23:58:00,799 - INFO - Found fixture: Minnesota United FC 2 vs Saint Louis City SC 2 on 2025-05-18 at 2-3
+2025-06-08 23:58:00,799 - INFO - Found fixture: New York Red Bulls II vs New England Revolution II on 2025-05-18 at 4-1
+2025-06-08 23:58:00,799 - INFO - Found fixture: Vancouver Whitecaps FC 2 vs Ventura County FC on 2025-05-18 at 0-2
+2025-06-08 23:58:00,800 - INFO - Found fixture: Colorado Rapids 2 vs Real Monarchs on 2025-05-18 at 2-1
+2025-06-08 23:58:00,800 - INFO - Found fixture: North Texas SC vs Houston Dynamo FC 2 on 2025-05-18 at 2-1
+2025-06-08 23:58:00,800 - INFO - Found fixture: Portland Timbers 2 vs Tacoma Defiance on 2025-05-18 at 2-1
+2025-06-08 23:58:00,801 - INFO - Found fixture: Atlanta United 2 vs Crown Legacy FC on 2025-05-19 at 2-2
+2025-06-08 23:58:00,801 - INFO - Found fixture: New York City FC II vs Chicago Fire FC II on 2025-05-23 at 2-2
+2025-06-08 23:58:00,801 - INFO - Found fixture: Sporting Kansas City II vs Los Angeles FC 2 on 2025-05-23 at 0-3
+2025-06-08 23:58:00,802 - INFO - Found fixture: Toronto FC II vs Huntsville City FC on 2025-05-23 at 1-2
+2025-06-08 23:58:00,802 - INFO - Found fixture: Saint Louis City SC 2 vs Portland Timbers 2 on 2025-05-23 at 6-3
+2025-06-08 23:58:00,802 - INFO - Found fixture: Austin FC II vs Minnesota United FC 2 on 2025-05-23 at 1-1
+2025-06-08 23:58:00,802 - INFO - Found 14 fixtures on 2025-05-18 (and possibly surrounding dates).
+2025-06-08 23:58:00,804 - INFO - Found 3 dates with games on the current page: ['2025-05-18', '2025-05-19', '2025-05-23']
+2025-06-08 23:58:01,804 - INFO - Scraping date: 2025-05-19 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-05-19)
+2025-06-08 23:58:03,974 - INFO - Found fixture: Atlanta United 2 vs Crown Legacy FC on 2025-05-19 at 2-2
+2025-06-08 23:58:03,977 - INFO - Found fixture: New York City FC II vs Chicago Fire FC II on 2025-05-23 at 2-2
+2025-06-08 23:58:03,979 - INFO - Found fixture: Sporting Kansas City II vs Los Angeles FC 2 on 2025-05-23 at 0-3
+2025-06-08 23:58:03,980 - INFO - Found fixture: Toronto FC II vs Huntsville City FC on 2025-05-23 at 1-2
+2025-06-08 23:58:03,980 - INFO - Found fixture: Saint Louis City SC 2 vs Portland Timbers 2 on 2025-05-23 at 6-3
+2025-06-08 23:58:03,982 - INFO - Found fixture: Austin FC II vs Minnesota United FC 2 on 2025-05-23 at 1-1
+2025-06-08 23:58:03,983 - INFO - Found fixture: Chattanooga FC vs New England Revolution II on 2025-05-24 at 1-0
+2025-06-08 23:58:03,983 - INFO - Found 7 fixtures on 2025-05-19 (and possibly surrounding dates).
+2025-06-08 23:58:03,984 - INFO - Found 3 dates with games on the current page: ['2025-05-19', '2025-05-23', '2025-05-24']
+2025-06-08 23:58:04,987 - INFO - Scraping date: 2025-05-23 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-05-23)
+2025-06-08 23:58:06,591 - INFO - Found fixture: New York City FC II vs Chicago Fire FC II on 2025-05-23 at 2-2
+2025-06-08 23:58:06,594 - INFO - Found fixture: Sporting Kansas City II vs Los Angeles FC 2 on 2025-05-23 at 0-3
+2025-06-08 23:58:06,595 - INFO - Found fixture: Toronto FC II vs Huntsville City FC on 2025-05-23 at 1-2
+2025-06-08 23:58:06,595 - INFO - Found fixture: Saint Louis City SC 2 vs Portland Timbers 2 on 2025-05-23 at 6-3
+2025-06-08 23:58:06,596 - INFO - Found fixture: Austin FC II vs Minnesota United FC 2 on 2025-05-23 at 1-1
+2025-06-08 23:58:06,600 - INFO - Found fixture: Chattanooga FC vs New England Revolution II on 2025-05-24 at 1-0
+2025-06-08 23:58:06,601 - INFO - Found fixture: Philadelphia Union II vs Inter Miami CF II on 2025-05-25 at 0-1
+2025-06-08 23:58:06,602 - INFO - Found fixture: Columbus Crew 2 vs New York Red Bulls II on 2025-05-25 at 0-1
+2025-06-08 23:58:06,603 - INFO - Found fixture: Crown Legacy FC vs FC Cincinnati 2 on 2025-05-25 at 2-0
+2025-06-08 23:58:06,609 - INFO - Found fixture: Colorado Rapids 2 vs The Town FC on 2025-05-25 at 0-3
+2025-06-08 23:58:06,610 - INFO - Found fixture: Atlanta United 2 vs Orlando City B on 2025-05-25 at 3-0
+2025-06-08 23:58:06,610 - INFO - Found fixture: Tacoma Defiance vs North Texas SC on 2025-05-25 at 2-3
+2025-06-08 23:58:06,610 - INFO - Found 12 fixtures on 2025-05-23 (and possibly surrounding dates).
+2025-06-08 23:58:06,616 - INFO - Found 3 dates with games on the current page: ['2025-05-23', '2025-05-24', '2025-05-25']
+2025-06-08 23:58:07,618 - INFO - Scraping date: 2025-05-24 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-05-24)
+2025-06-08 23:58:10,701 - INFO - Found fixture: Chattanooga FC vs New England Revolution II on 2025-05-24 at 1-0
+2025-06-08 23:58:10,702 - INFO - Found fixture: Philadelphia Union II vs Inter Miami CF II on 2025-05-25 at 0-1
+2025-06-08 23:58:10,702 - INFO - Found fixture: Columbus Crew 2 vs New York Red Bulls II on 2025-05-25 at 0-1
+2025-06-08 23:58:10,702 - INFO - Found fixture: Crown Legacy FC vs FC Cincinnati 2 on 2025-05-25 at 2-0
+2025-06-08 23:58:10,703 - INFO - Found fixture: Colorado Rapids 2 vs The Town FC on 2025-05-25 at 0-3
+2025-06-08 23:58:10,703 - INFO - Found fixture: Atlanta United 2 vs Orlando City B on 2025-05-25 at 3-0
+2025-06-08 23:58:10,703 - INFO - Found fixture: Tacoma Defiance vs North Texas SC on 2025-05-25 at 2-3
+2025-06-08 23:58:10,704 - INFO - Found fixture: Real Monarchs vs Portland Timbers 2 on 2025-05-28 at 4-1
+2025-06-08 23:58:10,704 - INFO - Found fixture: Minnesota United FC 2 vs Vancouver Whitecaps FC 2 on 2025-05-28 at 2-3
+2025-06-08 23:58:10,704 - INFO - Found 9 fixtures on 2025-05-24 (and possibly surrounding dates).
+2025-06-08 23:58:10,705 - INFO - Found 3 dates with games on the current page: ['2025-05-24', '2025-05-25', '2025-05-28']
+2025-06-08 23:58:11,705 - INFO - Scraping date: 2025-05-25 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-05-25)
+2025-06-08 23:58:13,606 - INFO - Found fixture: Philadelphia Union II vs Inter Miami CF II on 2025-05-25 at 0-1
+2025-06-08 23:58:13,607 - INFO - Found fixture: Columbus Crew 2 vs New York Red Bulls II on 2025-05-25 at 0-1
+2025-06-08 23:58:13,607 - INFO - Found fixture: Crown Legacy FC vs FC Cincinnati 2 on 2025-05-25 at 2-0
+2025-06-08 23:58:13,607 - INFO - Found fixture: Colorado Rapids 2 vs The Town FC on 2025-05-25 at 0-3
+2025-06-08 23:58:13,608 - INFO - Found fixture: Atlanta United 2 vs Orlando City B on 2025-05-25 at 3-0
+2025-06-08 23:58:13,608 - INFO - Found fixture: Tacoma Defiance vs North Texas SC on 2025-05-25 at 2-3
+2025-06-08 23:58:13,608 - INFO - Found fixture: Real Monarchs vs Portland Timbers 2 on 2025-05-28 at 4-1
+2025-06-08 23:58:13,609 - INFO - Found fixture: Minnesota United FC 2 vs Vancouver Whitecaps FC 2 on 2025-05-28 at 2-3
+2025-06-08 23:58:13,609 - INFO - Found fixture: New York Red Bulls II vs Atlanta United 2 on 2025-05-30 at 1-0
+2025-06-08 23:58:13,609 - INFO - Found fixture: Toronto FC II vs Crown Legacy FC on 2025-05-30 at 1-0
+2025-06-08 23:58:13,610 - INFO - Found fixture: Austin FC II vs Houston Dynamo FC 2 on 2025-05-30 at 1-1
+2025-06-08 23:58:13,610 - INFO - Found 11 fixtures on 2025-05-25 (and possibly surrounding dates).
+2025-06-08 23:58:13,611 - INFO - Found 3 dates with games on the current page: ['2025-05-25', '2025-05-28', '2025-05-30']
+2025-06-08 23:58:14,611 - INFO - Scraping date: 2025-05-28 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-05-28)
+2025-06-08 23:58:15,671 - INFO - Found fixture: Real Monarchs vs Portland Timbers 2 on 2025-05-28 at 4-1
+2025-06-08 23:58:15,671 - INFO - Found fixture: Minnesota United FC 2 vs Vancouver Whitecaps FC 2 on 2025-05-28 at 2-3
+2025-06-08 23:58:15,672 - INFO - Found fixture: New York Red Bulls II vs Atlanta United 2 on 2025-05-30 at 1-0
+2025-06-08 23:58:15,672 - INFO - Found fixture: Toronto FC II vs Crown Legacy FC on 2025-05-30 at 1-0
+2025-06-08 23:58:15,672 - INFO - Found fixture: Austin FC II vs Houston Dynamo FC 2 on 2025-05-30 at 1-1
+2025-06-08 23:58:15,673 - INFO - Found fixture: New York City FC II vs New York City FC II on 2025-05-31 at 0-1
+2025-06-08 23:58:15,673 - INFO - Found fixture: Tacoma Defiance vs Minnesota United FC 2 on 2025-05-31 at 1-1
+2025-06-08 23:58:15,673 - INFO - Found 7 fixtures on 2025-05-28 (and possibly surrounding dates).
+2025-06-08 23:58:15,674 - INFO - Found 3 dates with games on the current page: ['2025-05-28', '2025-05-30', '2025-05-31']
+2025-06-08 23:58:16,674 - INFO - Scraping date: 2025-05-30 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-05-30)
+2025-06-08 23:58:17,941 - INFO - Found fixture: New York Red Bulls II vs Atlanta United 2 on 2025-05-30 at 1-0
+2025-06-08 23:58:17,942 - INFO - Found fixture: Toronto FC II vs Crown Legacy FC on 2025-05-30 at 1-0
+2025-06-08 23:58:17,942 - INFO - Found fixture: Austin FC II vs Houston Dynamo FC 2 on 2025-05-30 at 1-1
+2025-06-08 23:58:17,942 - INFO - Found fixture: New York City FC II vs New York City FC II on 2025-05-31 at 0-1
+2025-06-08 23:58:17,943 - INFO - Found fixture: Tacoma Defiance vs Minnesota United FC 2 on 2025-05-31 at 1-1
+2025-06-08 23:58:17,943 - INFO - Found fixture: Sporting Kansas City II vs Colorado Rapids 2 on 2025-06-01 at 1-4
+2025-06-08 23:58:17,943 - INFO - Found fixture: Chicago Fire FC II vs Columbus Crew 2 on 2025-06-01 at 5-0
+2025-06-08 23:58:17,944 - INFO - Found fixture: FC Cincinnati 2 vs Philadelphia Union II on 2025-06-01 at POSTPONED-
+2025-06-08 23:58:17,944 - INFO - Found fixture: Inter Miami CF II vs Carolina Core on 2025-06-01 at 1-2
+2025-06-08 23:58:17,944 - INFO - Found fixture: Orlando City B vs Chattanooga FC on 2025-06-01 at 2-1
+2025-06-08 23:58:17,944 - INFO - Found fixture: Los Angeles FC 2 vs The Town FC on 2025-06-01 at 1-2
+2025-06-08 23:58:17,945 - INFO - Found fixture: Ventura County FC vs Real Monarchs on 2025-06-01 at 3-3
+2025-06-08 23:58:17,945 - INFO - Found 12 fixtures on 2025-05-30 (and possibly surrounding dates).
+2025-06-08 23:58:17,946 - INFO - Found 3 dates with games on the current page: ['2025-05-30', '2025-05-31', '2025-06-01']
+2025-06-08 23:58:18,946 - INFO - Scraping date: 2025-05-31 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-05-31)
+2025-06-08 23:58:20,207 - INFO - Found fixture: New York City FC II vs New York City FC II on 2025-05-31 at 0-1
+2025-06-08 23:58:20,207 - INFO - Found fixture: Tacoma Defiance vs Minnesota United FC 2 on 2025-05-31 at 1-1
+2025-06-08 23:58:20,207 - INFO - Found fixture: Sporting Kansas City II vs Colorado Rapids 2 on 2025-06-01 at 1-4
+2025-06-08 23:58:20,208 - INFO - Found fixture: Chicago Fire FC II vs Columbus Crew 2 on 2025-06-01 at 5-0
+2025-06-08 23:58:20,208 - INFO - Found fixture: FC Cincinnati 2 vs Philadelphia Union II on 2025-06-01 at POSTPONED-
+2025-06-08 23:58:20,208 - INFO - Found fixture: Inter Miami CF II vs Carolina Core on 2025-06-01 at 1-2
+2025-06-08 23:58:20,209 - INFO - Found fixture: Orlando City B vs Chattanooga FC on 2025-06-01 at 2-1
+2025-06-08 23:58:20,209 - INFO - Found fixture: Los Angeles FC 2 vs The Town FC on 2025-06-01 at 1-2
+2025-06-08 23:58:20,209 - INFO - Found fixture: Ventura County FC vs Real Monarchs on 2025-06-01 at 3-3
+2025-06-08 23:58:20,209 - INFO - Found fixture: FC Cincinnati 2 vs Philadelphia Union II on 2025-06-03 at 1-4
+2025-06-08 23:58:20,210 - INFO - Found 10 fixtures on 2025-05-31 (and possibly surrounding dates).
+2025-06-08 23:58:20,211 - INFO - Found 3 dates with games on the current page: ['2025-05-31', '2025-06-01', '2025-06-03']
+2025-06-08 23:58:21,211 - INFO - Scraping date: 2025-06-01 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-06-01)
+2025-06-08 23:58:22,287 - INFO - Found fixture: Sporting Kansas City II vs Colorado Rapids 2 on 2025-06-01 at 1-4
+2025-06-08 23:58:22,287 - INFO - Found fixture: Chicago Fire FC II vs Columbus Crew 2 on 2025-06-01 at 5-0
+2025-06-08 23:58:22,288 - INFO - Found fixture: FC Cincinnati 2 vs Philadelphia Union II on 2025-06-01 at POSTPONED-
+2025-06-08 23:58:22,288 - INFO - Found fixture: Inter Miami CF II vs Carolina Core on 2025-06-01 at 1-2
+2025-06-08 23:58:22,288 - INFO - Found fixture: Orlando City B vs Chattanooga FC on 2025-06-01 at 2-1
+2025-06-08 23:58:22,288 - INFO - Found fixture: Los Angeles FC 2 vs The Town FC on 2025-06-01 at 1-2
+2025-06-08 23:58:22,289 - INFO - Found fixture: Ventura County FC vs Real Monarchs on 2025-06-01 at 3-3
+2025-06-08 23:58:22,289 - INFO - Found fixture: FC Cincinnati 2 vs Philadelphia Union II on 2025-06-03 at 1-4
+2025-06-08 23:58:22,289 - INFO - Found fixture: Crown Legacy FC vs New York Red Bulls II on 2025-06-04 at 2-5
+2025-06-08 23:58:22,290 - INFO - Found fixture: Saint Louis City SC 2 vs North Texas SC on 2025-06-04 at 2-0
+2025-06-08 23:58:22,290 - INFO - Found 10 fixtures on 2025-06-01 (and possibly surrounding dates).
+2025-06-08 23:58:22,291 - INFO - Found 3 dates with games on the current page: ['2025-06-01', '2025-06-03', '2025-06-04']
+2025-06-08 23:58:23,291 - INFO - Scraping date: 2025-06-03 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-06-03)
+2025-06-08 23:58:24,564 - INFO - Found fixture: FC Cincinnati 2 vs Philadelphia Union II on 2025-06-03 at 1-4
+2025-06-08 23:58:24,565 - INFO - Found fixture: Crown Legacy FC vs New York Red Bulls II on 2025-06-04 at 2-5
+2025-06-08 23:58:24,565 - INFO - Found fixture: Saint Louis City SC 2 vs North Texas SC on 2025-06-04 at 2-0
+2025-06-08 23:58:24,566 - INFO - Found fixture: Atlanta United 2 vs New York City FC II on 2025-06-06 at 2-3
+2025-06-08 23:58:24,566 - INFO - Found fixture: Huntsville City FC vs Orlando City B on 2025-06-06 at 2-3
+2025-06-08 23:58:24,566 - INFO - Found 5 fixtures on 2025-06-03 (and possibly surrounding dates).
+2025-06-08 23:58:24,567 - INFO - Found 3 dates with games on the current page: ['2025-06-03', '2025-06-04', '2025-06-06']
+2025-06-08 23:58:25,567 - INFO - Scraping date: 2025-06-04 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-06-04)
+2025-06-08 23:58:26,694 - INFO - Found fixture: Crown Legacy FC vs New York Red Bulls II on 2025-06-04 at 2-5
+2025-06-08 23:58:26,694 - INFO - Found fixture: Saint Louis City SC 2 vs North Texas SC on 2025-06-04 at 2-0
+2025-06-08 23:58:26,695 - INFO - Found fixture: Atlanta United 2 vs New York City FC II on 2025-06-06 at 2-3
+2025-06-08 23:58:26,695 - INFO - Found fixture: Huntsville City FC vs Orlando City B on 2025-06-06 at 2-3
+2025-06-08 23:58:26,696 - INFO - Found fixture: Chattanooga FC vs Inter Miami CF II on 2025-06-07 at 3-3
+2025-06-08 23:58:26,696 - INFO - Found fixture: Houston Dynamo FC 2 vs Sporting Kansas City II on 2025-06-07 at 1-1
+2025-06-08 23:58:26,696 - INFO - Found 6 fixtures on 2025-06-04 (and possibly surrounding dates).
+2025-06-08 23:58:26,698 - INFO - Found 3 dates with games on the current page: ['2025-06-04', '2025-06-06', '2025-06-07']
+2025-06-08 23:58:27,698 - INFO - Scraping date: 2025-06-06 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-06-06)
+2025-06-08 23:58:29,161 - INFO - Found fixture: Atlanta United 2 vs New York City FC II on 2025-06-06 at 2-3
+2025-06-08 23:58:29,162 - INFO - Found fixture: Huntsville City FC vs Orlando City B on 2025-06-06 at 2-3
+2025-06-08 23:58:29,162 - INFO - Found fixture: Chattanooga FC vs Inter Miami CF II on 2025-06-07 at 3-3
+2025-06-08 23:58:29,162 - INFO - Found fixture: Houston Dynamo FC 2 vs Sporting Kansas City II on 2025-06-07 at 1-1
+2025-06-08 23:58:29,163 - INFO - Found fixture: Chicago Fire FC II vs New England Revolution II on 2025-06-08 at 8:00PM
+2025-06-08 23:58:29,163 - INFO - Found fixture: FC Cincinnati 2 vs Toronto FC II on 2025-06-08 at 10:00PM
+2025-06-08 23:58:29,163 - INFO - Found fixture: Colorado Rapids 2 vs Austin FC II on 2025-06-08 at 12:00AM
+2025-06-08 23:58:29,164 - INFO - Found fixture: The Town FC vs Vancouver Whitecaps FC 2 on 2025-06-08 at 12:00AM
+2025-06-08 23:58:29,164 - INFO - Found 8 fixtures on 2025-06-06 (and possibly surrounding dates).
+2025-06-08 23:58:29,165 - INFO - Found 3 dates with games on the current page: ['2025-06-06', '2025-06-07', '2025-06-08']
+2025-06-08 23:58:30,165 - INFO - Scraping date: 2025-06-07 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-06-07)
+2025-06-08 23:58:31,630 - INFO - Found fixture: Chattanooga FC vs Inter Miami CF II on 2025-06-07 at 3-3
+2025-06-08 23:58:31,631 - INFO - Found fixture: Houston Dynamo FC 2 vs Sporting Kansas City II on 2025-06-07 at 1-1
+2025-06-08 23:58:31,631 - INFO - Found fixture: Chicago Fire FC II vs New England Revolution II on 2025-06-08 at 8:00PM
+2025-06-08 23:58:31,631 - INFO - Found fixture: FC Cincinnati 2 vs Toronto FC II on 2025-06-08 at 10:00PM
+2025-06-08 23:58:31,632 - INFO - Found fixture: Colorado Rapids 2 vs Austin FC II on 2025-06-08 at 12:00AM
+2025-06-08 23:58:31,632 - INFO - Found fixture: The Town FC vs Vancouver Whitecaps FC 2 on 2025-06-08 at 12:00AM
+2025-06-08 23:58:31,632 - INFO - Found fixture: Atlanta United 2 vs Huntsville City FC on 2025-06-11 at 9:00PM
+2025-06-08 23:58:31,633 - INFO - Found fixture: Carolina Core vs Orlando City B on 2025-06-11 at 11:30PM
+2025-06-08 23:58:31,633 - INFO - Found fixture: Real Monarchs vs Tacoma Defiance on 2025-06-11 at 1:30AM
+2025-06-08 23:58:31,633 - INFO - Found fixture: Portland Timbers 2 vs Ventura County FC on 2025-06-11 at 2:30AM
+2025-06-08 23:58:31,633 - INFO - Found 10 fixtures on 2025-06-07 (and possibly surrounding dates).
+2025-06-08 23:58:31,634 - INFO - Found 3 dates with games on the current page: ['2025-06-07', '2025-06-08', '2025-06-11']
+2025-06-08 23:58:32,635 - INFO - Scraping date: 2025-06-08 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-06-08)
+2025-06-08 23:58:33,704 - INFO - Found fixture: Chicago Fire FC II vs New England Revolution II on 2025-06-08 at 8:00PM
+2025-06-08 23:58:33,704 - INFO - Found fixture: FC Cincinnati 2 vs Toronto FC II on 2025-06-08 at 10:00PM
+2025-06-08 23:58:33,705 - INFO - Found fixture: Colorado Rapids 2 vs Austin FC II on 2025-06-08 at 12:00AM
+2025-06-08 23:58:33,706 - INFO - Found fixture: The Town FC vs Vancouver Whitecaps FC 2 on 2025-06-08 at 12:00AM
+2025-06-08 23:58:33,707 - INFO - Found fixture: Atlanta United 2 vs Huntsville City FC on 2025-06-11 at 9:00PM
+2025-06-08 23:58:33,707 - INFO - Found fixture: Carolina Core vs Orlando City B on 2025-06-11 at 11:30PM
+2025-06-08 23:58:33,707 - INFO - Found fixture: Real Monarchs vs Tacoma Defiance on 2025-06-11 at 1:30AM
+2025-06-08 23:58:33,708 - INFO - Found fixture: Portland Timbers 2 vs Ventura County FC on 2025-06-11 at 2:30AM
+2025-06-08 23:58:33,709 - INFO - Found fixture: Columbus Crew 2 vs Columbus Crew 2 on 2025-06-12 at 10:00PM
+2025-06-08 23:58:33,709 - INFO - Found fixture: Toronto FC II vs Inter Miami CF II on 2025-06-12 at 11:00PM
+2025-06-08 23:58:33,709 - INFO - Found fixture: Minnesota United FC 2 vs Houston Dynamo FC 2 on 2025-06-12 at 12:00AM
+2025-06-08 23:58:33,709 - INFO - Found fixture: Vancouver Whitecaps FC 2 vs Los Angeles FC 2 on 2025-06-12 at 1:00AM
+2025-06-08 23:58:33,710 - INFO - Found 12 fixtures on 2025-06-08 (and possibly surrounding dates).
+2025-06-08 23:58:33,711 - INFO - Found 3 dates with games on the current page: ['2025-06-08', '2025-06-11', '2025-06-12']
+2025-06-08 23:58:34,711 - INFO - Scraping date: 2025-06-11 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-06-11)
+2025-06-08 23:58:35,787 - INFO - Found fixture: Atlanta United 2 vs Huntsville City FC on 2025-06-11 at 9:00PM
+2025-06-08 23:58:35,788 - INFO - Found fixture: Carolina Core vs Orlando City B on 2025-06-11 at 11:30PM
+2025-06-08 23:58:35,788 - INFO - Found fixture: Real Monarchs vs Tacoma Defiance on 2025-06-11 at 1:30AM
+2025-06-08 23:58:35,788 - INFO - Found fixture: Portland Timbers 2 vs Ventura County FC on 2025-06-11 at 2:30AM
+2025-06-08 23:58:35,789 - INFO - Found fixture: Columbus Crew 2 vs Columbus Crew 2 on 2025-06-12 at 10:00PM
+2025-06-08 23:58:35,789 - INFO - Found fixture: Toronto FC II vs Inter Miami CF II on 2025-06-12 at 11:00PM
+2025-06-08 23:58:35,789 - INFO - Found fixture: Minnesota United FC 2 vs Houston Dynamo FC 2 on 2025-06-12 at 12:00AM
+2025-06-08 23:58:35,790 - INFO - Found fixture: Vancouver Whitecaps FC 2 vs Los Angeles FC 2 on 2025-06-12 at 1:00AM
+2025-06-08 23:58:35,790 - INFO - Found fixture: Carolina Core vs Chicago Fire FC II on 2025-06-14 at 11:30PM
+2025-06-08 23:58:35,790 - INFO - Found fixture: North Texas SC vs Austin FC II on 2025-06-14 at 12:45AM
+2025-06-08 23:58:35,790 - INFO - Found 10 fixtures on 2025-06-11 (and possibly surrounding dates).
+2025-06-08 23:58:35,792 - INFO - Found 3 dates with games on the current page: ['2025-06-11', '2025-06-12', '2025-06-14']
+2025-06-08 23:58:36,793 - INFO - Scraping date: 2025-06-12 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-06-12)
+2025-06-08 23:58:38,065 - INFO - Found fixture: Columbus Crew 2 vs Columbus Crew 2 on 2025-06-12 at 10:00PM
+2025-06-08 23:58:38,066 - INFO - Found fixture: Toronto FC II vs Inter Miami CF II on 2025-06-12 at 11:00PM
+2025-06-08 23:58:38,066 - INFO - Found fixture: Minnesota United FC 2 vs Houston Dynamo FC 2 on 2025-06-12 at 12:00AM
+2025-06-08 23:58:38,066 - INFO - Found fixture: Vancouver Whitecaps FC 2 vs Los Angeles FC 2 on 2025-06-12 at 1:00AM
+2025-06-08 23:58:38,067 - INFO - Found fixture: Carolina Core vs Chicago Fire FC II on 2025-06-14 at 11:30PM
+2025-06-08 23:58:38,067 - INFO - Found fixture: North Texas SC vs Austin FC II on 2025-06-14 at 12:45AM
+2025-06-08 23:58:38,068 - INFO - Found fixture: New England Revolution II vs FC Cincinnati 2 on 2025-06-15 at 6:00PM
+2025-06-08 23:58:38,068 - INFO - Found fixture: New York Red Bulls II vs Chattanooga FC on 2025-06-15 at 6:00PM
+2025-06-08 23:58:38,068 - INFO - Found fixture: Philadelphia Union II vs Crown Legacy FC on 2025-06-15 at 11:00PM
+2025-06-08 23:58:38,068 - INFO - Found fixture: Colorado Rapids 2 vs Saint Louis City SC 2 on 2025-06-15 at 12:00AM
+2025-06-08 23:58:38,069 - INFO - Found fixture: Minnesota United FC 2 vs Ventura County FC on 2025-06-15 at 12:00AM
+2025-06-08 23:58:38,069 - INFO - Found fixture: Real Monarchs vs Houston Dynamo FC 2 on 2025-06-15 at 1:30AM
+2025-06-08 23:58:38,069 - INFO - Found 12 fixtures on 2025-06-12 (and possibly surrounding dates).
+2025-06-08 23:58:38,070 - INFO - Found 3 dates with games on the current page: ['2025-06-12', '2025-06-14', '2025-06-15']
+2025-06-08 23:58:39,070 - INFO - Scraping date: 2025-06-14 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-06-14)
+2025-06-08 23:58:40,535 - INFO - Found fixture: Carolina Core vs Chicago Fire FC II on 2025-06-14 at 11:30PM
+2025-06-08 23:58:40,535 - INFO - Found fixture: North Texas SC vs Austin FC II on 2025-06-14 at 12:45AM
+2025-06-08 23:58:40,536 - INFO - Found fixture: New England Revolution II vs FC Cincinnati 2 on 2025-06-15 at 6:00PM
+2025-06-08 23:58:40,536 - INFO - Found fixture: New York Red Bulls II vs Chattanooga FC on 2025-06-15 at 6:00PM
+2025-06-08 23:58:40,537 - INFO - Found fixture: Philadelphia Union II vs Crown Legacy FC on 2025-06-15 at 11:00PM
+2025-06-08 23:58:40,537 - INFO - Found fixture: Colorado Rapids 2 vs Saint Louis City SC 2 on 2025-06-15 at 12:00AM
+2025-06-08 23:58:40,537 - INFO - Found fixture: Minnesota United FC 2 vs Ventura County FC on 2025-06-15 at 12:00AM
+2025-06-08 23:58:40,537 - INFO - Found fixture: Real Monarchs vs Houston Dynamo FC 2 on 2025-06-15 at 1:30AM
+2025-06-08 23:58:40,538 - INFO - Found fixture: Colorado Rapids 2 vs North Texas SC on 2025-06-18 at 12:00AM
+2025-06-08 23:58:40,538 - INFO - Found 9 fixtures on 2025-06-14 (and possibly surrounding dates).
+2025-06-08 23:58:40,539 - INFO - Found 3 dates with games on the current page: ['2025-06-14', '2025-06-15', '2025-06-18']
+2025-06-08 23:58:41,539 - INFO - Scraping date: 2025-06-15 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-06-15)
+2025-06-08 23:58:42,522 - INFO - Found fixture: New England Revolution II vs FC Cincinnati 2 on 2025-06-15 at 6:00PM
+2025-06-08 23:58:42,523 - INFO - Found fixture: New York Red Bulls II vs Chattanooga FC on 2025-06-15 at 6:00PM
+2025-06-08 23:58:42,523 - INFO - Found fixture: Philadelphia Union II vs Crown Legacy FC on 2025-06-15 at 11:00PM
+2025-06-08 23:58:42,523 - INFO - Found fixture: Colorado Rapids 2 vs Saint Louis City SC 2 on 2025-06-15 at 12:00AM
+2025-06-08 23:58:42,524 - INFO - Found fixture: Minnesota United FC 2 vs Ventura County FC on 2025-06-15 at 12:00AM
+2025-06-08 23:58:42,524 - INFO - Found fixture: Real Monarchs vs Houston Dynamo FC 2 on 2025-06-15 at 1:30AM
+2025-06-08 23:58:42,524 - INFO - Found fixture: Colorado Rapids 2 vs North Texas SC on 2025-06-18 at 12:00AM
+2025-06-08 23:58:42,525 - INFO - Found fixture: Huntsville City FC vs Crown Legacy FC on 2025-06-20 at 12:00AM
+2025-06-08 23:58:42,525 - INFO - Found fixture: Portland Timbers 2 vs Austin FC II on 2025-06-20 at 3:00AM
+2025-06-08 23:58:42,525 - INFO - Found 9 fixtures on 2025-06-15 (and possibly surrounding dates).
+2025-06-08 23:58:42,526 - INFO - Found 3 dates with games on the current page: ['2025-06-15', '2025-06-18', '2025-06-20']
+2025-06-08 23:58:43,527 - INFO - Scraping date: 2025-06-18 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-06-18)
+2025-06-08 23:58:44,491 - INFO - Found fixture: Colorado Rapids 2 vs North Texas SC on 2025-06-18 at 12:00AM
+2025-06-08 23:58:44,491 - INFO - Found fixture: Huntsville City FC vs Crown Legacy FC on 2025-06-20 at 12:00AM
+2025-06-08 23:58:44,492 - INFO - Found fixture: Portland Timbers 2 vs Austin FC II on 2025-06-20 at 3:00AM
+2025-06-08 23:58:44,492 - INFO - Found fixture: Columbus Crew 2 vs Philadelphia Union II on 2025-06-21 at 7:00PM
+2025-06-08 23:58:44,492 - INFO - Found fixture: Chattanooga FC vs FC Cincinnati 2 on 2025-06-21 at 11:00PM
+2025-06-08 23:58:44,493 - INFO - Found fixture: Vancouver Whitecaps FC 2 vs North Texas SC on 2025-06-21 at 11:00PM
+2025-06-08 23:58:44,493 - INFO - Found fixture: Carolina Core vs New York Red Bulls II on 2025-06-21 at 11:30PM
+2025-06-08 23:58:44,493 - INFO - Found 7 fixtures on 2025-06-18 (and possibly surrounding dates).
+2025-06-08 23:58:44,494 - INFO - Found 3 dates with games on the current page: ['2025-06-18', '2025-06-20', '2025-06-21']
+2025-06-08 23:58:45,497 - INFO - Scraping date: 2025-06-20 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-06-20)
+2025-06-08 23:58:46,765 - INFO - Found fixture: Huntsville City FC vs Crown Legacy FC on 2025-06-20 at 12:00AM
+2025-06-08 23:58:46,765 - INFO - Found fixture: Portland Timbers 2 vs Austin FC II on 2025-06-20 at 3:00AM
+2025-06-08 23:58:46,766 - INFO - Found fixture: Columbus Crew 2 vs Philadelphia Union II on 2025-06-21 at 7:00PM
+2025-06-08 23:58:46,766 - INFO - Found fixture: Chattanooga FC vs FC Cincinnati 2 on 2025-06-21 at 11:00PM
+2025-06-08 23:58:46,766 - INFO - Found fixture: Vancouver Whitecaps FC 2 vs North Texas SC on 2025-06-21 at 11:00PM
+2025-06-08 23:58:46,767 - INFO - Found fixture: Carolina Core vs New York Red Bulls II on 2025-06-21 at 11:30PM
+2025-06-08 23:58:46,767 - INFO - Found fixture: Saint Louis City SC 2 vs The Town FC on 2025-06-22 at 11:00PM
+2025-06-08 23:58:46,767 - INFO - Found 7 fixtures on 2025-06-20 (and possibly surrounding dates).
+2025-06-08 23:58:46,768 - INFO - Found 3 dates with games on the current page: ['2025-06-20', '2025-06-21', '2025-06-22']
+2025-06-08 23:58:47,769 - INFO - Scraping date: 2025-06-21 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-06-21)
+2025-06-08 23:58:49,036 - INFO - Found fixture: Columbus Crew 2 vs Philadelphia Union II on 2025-06-21 at 7:00PM
+2025-06-08 23:58:49,036 - INFO - Found fixture: Chattanooga FC vs FC Cincinnati 2 on 2025-06-21 at 11:00PM
+2025-06-08 23:58:49,036 - INFO - Found fixture: Vancouver Whitecaps FC 2 vs North Texas SC on 2025-06-21 at 11:00PM
+2025-06-08 23:58:49,037 - INFO - Found fixture: Carolina Core vs New York Red Bulls II on 2025-06-21 at 11:30PM
+2025-06-08 23:58:49,037 - INFO - Found fixture: Saint Louis City SC 2 vs The Town FC on 2025-06-22 at 11:00PM
+2025-06-08 23:58:49,038 - INFO - Found fixture: Inter Miami CF II vs Chicago Fire FC II on 2025-06-25 at 11:00PM
+2025-06-08 23:58:49,038 - INFO - Found fixture: Orlando City B vs Toronto FC II on 2025-06-25 at 11:00PM
+2025-06-08 23:58:49,038 - INFO - Found fixture: Los Angeles FC 2 vs Minnesota United FC 2 on 2025-06-25 at 2:00AM
+2025-06-08 23:58:49,038 - INFO - Found 8 fixtures on 2025-06-21 (and possibly surrounding dates).
+2025-06-08 23:58:49,039 - INFO - Found 3 dates with games on the current page: ['2025-06-21', '2025-06-22', '2025-06-25']
+2025-06-08 23:58:50,039 - INFO - Scraping date: 2025-06-22 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-06-22)
+2025-06-08 23:58:51,099 - INFO - Found fixture: Saint Louis City SC 2 vs The Town FC on 2025-06-22 at 11:00PM
+2025-06-08 23:58:51,099 - INFO - Found fixture: Inter Miami CF II vs Chicago Fire FC II on 2025-06-25 at 11:00PM
+2025-06-08 23:58:51,100 - INFO - Found fixture: Orlando City B vs Toronto FC II on 2025-06-25 at 11:00PM
+2025-06-08 23:58:51,100 - INFO - Found fixture: Los Angeles FC 2 vs Minnesota United FC 2 on 2025-06-25 at 2:00AM
+2025-06-08 23:58:51,100 - INFO - Found fixture: Philadelphia Union II vs New England Revolution II on 2025-06-26 at 11:00PM
+2025-06-08 23:58:51,100 - INFO - Found 5 fixtures on 2025-06-22 (and possibly surrounding dates).
+2025-06-08 23:58:51,101 - INFO - Found 3 dates with games on the current page: ['2025-06-22', '2025-06-25', '2025-06-26']
+2025-06-08 23:58:52,102 - INFO - Scraping date: 2025-06-25 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-06-25)
+2025-06-08 23:58:52,880 - INFO - Found fixture: Inter Miami CF II vs Chicago Fire FC II on 2025-06-25 at 11:00PM
+2025-06-08 23:58:52,880 - INFO - Found fixture: Orlando City B vs Toronto FC II on 2025-06-25 at 11:00PM
+2025-06-08 23:58:52,880 - INFO - Found fixture: Los Angeles FC 2 vs Minnesota United FC 2 on 2025-06-25 at 2:00AM
+2025-06-08 23:58:52,881 - INFO - Found fixture: Philadelphia Union II vs New England Revolution II on 2025-06-26 at 11:00PM
+2025-06-08 23:58:52,881 - INFO - Found fixture: Austin FC II vs Sporting Kansas City II on 2025-06-27 at 12:30AM
+2025-06-08 23:58:52,881 - INFO - Found 5 fixtures on 2025-06-25 (and possibly surrounding dates).
+2025-06-08 23:58:52,882 - INFO - Found 3 dates with games on the current page: ['2025-06-25', '2025-06-26', '2025-06-27']
+2025-06-08 23:58:53,883 - INFO - Scraping date: 2025-06-26 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-06-26)
+2025-06-08 23:58:54,551 - INFO - Found fixture: Philadelphia Union II vs New England Revolution II on 2025-06-26 at 11:00PM
+2025-06-08 23:58:54,552 - INFO - Found fixture: Austin FC II vs Sporting Kansas City II on 2025-06-27 at 12:30AM
+2025-06-08 23:58:54,552 - INFO - Found fixture: Columbus Crew 2 vs Carolina Core on 2025-06-28 at 10:00PM
+2025-06-08 23:58:54,553 - INFO - Found fixture: Saint Louis City SC 2 vs Houston Dynamo FC 2 on 2025-06-28 at 10:30PM
+2025-06-08 23:58:54,553 - INFO - Found fixture: Minnesota United FC 2 vs Colorado Rapids 2 on 2025-06-28 at 12:00AM
+2025-06-08 23:58:54,554 - INFO - Found 5 fixtures on 2025-06-26 (and possibly surrounding dates).
+2025-06-08 23:58:54,555 - INFO - Found 3 dates with games on the current page: ['2025-06-26', '2025-06-27', '2025-06-28']
+2025-06-08 23:58:55,556 - INFO - Scraping date: 2025-06-27 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-06-27)
+2025-06-08 23:58:56,420 - INFO - Found fixture: Austin FC II vs Sporting Kansas City II on 2025-06-27 at 12:30AM
+2025-06-08 23:58:56,421 - INFO - Found fixture: Columbus Crew 2 vs Carolina Core on 2025-06-28 at 10:00PM
+2025-06-08 23:58:56,421 - INFO - Found fixture: Saint Louis City SC 2 vs Houston Dynamo FC 2 on 2025-06-28 at 10:30PM
+2025-06-08 23:58:56,422 - INFO - Found fixture: Minnesota United FC 2 vs Colorado Rapids 2 on 2025-06-28 at 12:00AM
+2025-06-08 23:58:56,422 - INFO - Found fixture: New England Revolution II vs Huntsville City FC on 2025-06-29 at 7:00PM
+2025-06-08 23:58:56,422 - INFO - Found fixture: Inter Miami CF II vs Atlanta United 2 on 2025-06-29 at 11:00PM
+2025-06-08 23:58:56,423 - INFO - Found fixture: New York Red Bulls II vs FC Cincinnati 2 on 2025-06-29 at 11:00PM
+2025-06-08 23:58:56,423 - INFO - Found fixture: Vancouver Whitecaps FC 2 vs Real Monarchs on 2025-06-29 at 11:00PM
+2025-06-08 23:58:56,423 - INFO - Found fixture: The Town FC vs Ventura County FC on 2025-06-29 at 12:00AM
+2025-06-08 23:58:56,423 - INFO - Found fixture: Los Angeles FC 2 vs Tacoma Defiance on 2025-06-29 at 2:00AM
+2025-06-08 23:58:56,424 - INFO - Found 10 fixtures on 2025-06-27 (and possibly surrounding dates).
+2025-06-08 23:58:56,425 - INFO - Found 3 dates with games on the current page: ['2025-06-27', '2025-06-28', '2025-06-29']
+2025-06-08 23:58:57,425 - INFO - Scraping date: 2025-06-28 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-06-28)
+2025-06-08 23:58:58,299 - INFO - Found fixture: Columbus Crew 2 vs Carolina Core on 2025-06-28 at 10:00PM
+2025-06-08 23:58:58,299 - INFO - Found fixture: Saint Louis City SC 2 vs Houston Dynamo FC 2 on 2025-06-28 at 10:30PM
+2025-06-08 23:58:58,299 - INFO - Found fixture: Minnesota United FC 2 vs Colorado Rapids 2 on 2025-06-28 at 12:00AM
+2025-06-08 23:58:58,300 - INFO - Found fixture: New England Revolution II vs Huntsville City FC on 2025-06-29 at 7:00PM
+2025-06-08 23:58:58,300 - INFO - Found fixture: Inter Miami CF II vs Atlanta United 2 on 2025-06-29 at 11:00PM
+2025-06-08 23:58:58,300 - INFO - Found fixture: New York Red Bulls II vs FC Cincinnati 2 on 2025-06-29 at 11:00PM
+2025-06-08 23:58:58,301 - INFO - Found fixture: Vancouver Whitecaps FC 2 vs Real Monarchs on 2025-06-29 at 11:00PM
+2025-06-08 23:58:58,301 - INFO - Found fixture: The Town FC vs Ventura County FC on 2025-06-29 at 12:00AM
+2025-06-08 23:58:58,301 - INFO - Found fixture: Los Angeles FC 2 vs Tacoma Defiance on 2025-06-29 at 2:00AM
+2025-06-08 23:58:58,302 - INFO - Found fixture: Philadelphia Union II vs Orlando City B on 2025-06-30 at 7:00PM
+2025-06-08 23:58:58,302 - INFO - Found fixture: Chicago Fire FC II vs Crown Legacy FC on 2025-06-30 at 12:30AM
+2025-06-08 23:58:58,302 - INFO - Found 11 fixtures on 2025-06-28 (and possibly surrounding dates).
+2025-06-08 23:58:58,303 - INFO - Found 3 dates with games on the current page: ['2025-06-28', '2025-06-29', '2025-06-30']
+2025-06-08 23:58:59,304 - INFO - Scraping date: 2025-06-29 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-06-29)
+2025-06-08 23:59:00,066 - INFO - Found fixture: New England Revolution II vs Huntsville City FC on 2025-06-29 at 7:00PM
+2025-06-08 23:59:00,066 - INFO - Found fixture: Inter Miami CF II vs Atlanta United 2 on 2025-06-29 at 11:00PM
+2025-06-08 23:59:00,068 - INFO - Found fixture: New York Red Bulls II vs FC Cincinnati 2 on 2025-06-29 at 11:00PM
+2025-06-08 23:59:00,068 - INFO - Found fixture: Vancouver Whitecaps FC 2 vs Real Monarchs on 2025-06-29 at 11:00PM
+2025-06-08 23:59:00,068 - INFO - Found fixture: The Town FC vs Ventura County FC on 2025-06-29 at 12:00AM
+2025-06-08 23:59:00,069 - INFO - Found fixture: Los Angeles FC 2 vs Tacoma Defiance on 2025-06-29 at 2:00AM
+2025-06-08 23:59:00,069 - INFO - Found fixture: Philadelphia Union II vs Orlando City B on 2025-06-30 at 7:00PM
+2025-06-08 23:59:00,070 - INFO - Found fixture: Chicago Fire FC II vs Crown Legacy FC on 2025-06-30 at 12:30AM
+2025-06-08 23:59:00,070 - INFO - Found fixture: North Texas SC vs Minnesota United FC 2 on 2025-07-03 at 12:45AM
+2025-06-08 23:59:00,070 - INFO - Found fixture: Tacoma Defiance vs The Town FC on 2025-07-03 at 2:00AM
+2025-06-08 23:59:00,071 - INFO - Found fixture: Ventura County FC vs Vancouver Whitecaps FC 2 on 2025-07-03 at 2:00AM
+2025-06-08 23:59:00,071 - INFO - Found 11 fixtures on 2025-06-29 (and possibly surrounding dates).
+2025-06-08 23:59:00,072 - INFO - Found 3 dates with games on the current page: ['2025-06-29', '2025-06-30', '2025-07-03']
+2025-06-08 23:59:01,072 - INFO - Scraping date: 2025-06-30 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-06-30)
+2025-06-08 23:59:02,078 - INFO - Found fixture: Philadelphia Union II vs Orlando City B on 2025-06-30 at 7:00PM
+2025-06-08 23:59:02,078 - INFO - Found fixture: Chicago Fire FC II vs Crown Legacy FC on 2025-06-30 at 12:30AM
+2025-06-08 23:59:02,079 - INFO - Found fixture: North Texas SC vs Minnesota United FC 2 on 2025-07-03 at 12:45AM
+2025-06-08 23:59:02,079 - INFO - Found fixture: Tacoma Defiance vs The Town FC on 2025-07-03 at 2:00AM
+2025-06-08 23:59:02,079 - INFO - Found fixture: Ventura County FC vs Vancouver Whitecaps FC 2 on 2025-07-03 at 2:00AM
+2025-06-08 23:59:02,080 - INFO - Found fixture: Carolina Core vs Inter Miami CF II on 2025-07-04 at 11:30PM
+2025-06-08 23:59:02,080 - INFO - Found fixture: Austin FC II vs Los Angeles FC 2 on 2025-07-04 at 12:30AM
+2025-06-08 23:59:02,080 - INFO - Found 7 fixtures on 2025-06-30 (and possibly surrounding dates).
+2025-06-08 23:59:02,081 - INFO - Found 3 dates with games on the current page: ['2025-06-30', '2025-07-03', '2025-07-04']
+2025-06-08 23:59:03,081 - INFO - Scraping date: 2025-07-03 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-07-03)
+2025-06-08 23:59:03,941 - INFO - Found fixture: North Texas SC vs Minnesota United FC 2 on 2025-07-03 at 12:45AM
+2025-06-08 23:59:03,942 - INFO - Found fixture: Tacoma Defiance vs The Town FC on 2025-07-03 at 2:00AM
+2025-06-08 23:59:03,942 - INFO - Found fixture: Ventura County FC vs Vancouver Whitecaps FC 2 on 2025-07-03 at 2:00AM
+2025-06-08 23:59:03,942 - INFO - Found fixture: Carolina Core vs Inter Miami CF II on 2025-07-04 at 11:30PM
+2025-06-08 23:59:03,943 - INFO - Found fixture: Austin FC II vs Los Angeles FC 2 on 2025-07-04 at 12:30AM
+2025-06-08 23:59:03,943 - INFO - Found fixture: Sporting Kansas City II vs Portland Timbers 2 on 2025-07-05 at 5:00PM
+2025-06-08 23:59:03,944 - INFO - Found fixture: Columbus Crew 2 vs Columbus Crew 2 on 2025-07-05 at 7:00PM
+2025-06-08 23:59:03,944 - INFO - Found fixture: Chattanooga FC vs Chicago Fire FC II on 2025-07-05 at 11:00PM
+2025-06-08 23:59:03,944 - INFO - Found 8 fixtures on 2025-07-03 (and possibly surrounding dates).
+2025-06-08 23:59:03,945 - INFO - Found 3 dates with games on the current page: ['2025-07-03', '2025-07-04', '2025-07-05']
+2025-06-08 23:59:04,945 - INFO - Scraping date: 2025-07-04 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-07-04)
+2025-06-08 23:59:05,613 - INFO - Found fixture: Carolina Core vs Inter Miami CF II on 2025-07-04 at 11:30PM
+2025-06-08 23:59:05,614 - INFO - Found fixture: Austin FC II vs Los Angeles FC 2 on 2025-07-04 at 12:30AM
+2025-06-08 23:59:05,614 - INFO - Found fixture: Sporting Kansas City II vs Portland Timbers 2 on 2025-07-05 at 5:00PM
+2025-06-08 23:59:05,615 - INFO - Found fixture: Columbus Crew 2 vs Columbus Crew 2 on 2025-07-05 at 7:00PM
+2025-06-08 23:59:05,615 - INFO - Found fixture: Chattanooga FC vs Chicago Fire FC II on 2025-07-05 at 11:00PM
+2025-06-08 23:59:05,615 - INFO - Found fixture: Philadelphia Union II vs Toronto FC II on 2025-07-06 at 7:00PM
+2025-06-08 23:59:05,616 - INFO - Found fixture: FC Cincinnati 2 vs New York City FC II on 2025-07-06 at 11:00PM
+2025-06-08 23:59:05,616 - INFO - Found fixture: Crown Legacy FC vs Orlando City B on 2025-07-06 at 11:00PM
+2025-06-08 23:59:05,616 - INFO - Found fixture: New York Red Bulls II vs Huntsville City FC on 2025-07-06 at 11:00PM
+2025-06-08 23:59:05,616 - INFO - Found fixture: Colorado Rapids 2 vs Houston Dynamo FC 2 on 2025-07-06 at 12:00AM
+2025-06-08 23:59:05,617 - INFO - Found fixture: Real Monarchs vs Saint Louis City SC 2 on 2025-07-06 at 1:30AM
+2025-06-08 23:59:05,617 - INFO - Found 11 fixtures on 2025-07-04 (and possibly surrounding dates).
+2025-06-08 23:59:05,618 - INFO - Found 3 dates with games on the current page: ['2025-07-04', '2025-07-05', '2025-07-06']
+2025-06-08 23:59:06,618 - INFO - Scraping date: 2025-07-05 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-07-05)
+2025-06-08 23:59:07,499 - INFO - Found fixture: Sporting Kansas City II vs Portland Timbers 2 on 2025-07-05 at 5:00PM
+2025-06-08 23:59:07,499 - INFO - Found fixture: Columbus Crew 2 vs Columbus Crew 2 on 2025-07-05 at 7:00PM
+2025-06-08 23:59:07,500 - INFO - Found fixture: Chattanooga FC vs Chicago Fire FC II on 2025-07-05 at 11:00PM
+2025-06-08 23:59:07,500 - INFO - Found fixture: Philadelphia Union II vs Toronto FC II on 2025-07-06 at 7:00PM
+2025-06-08 23:59:07,501 - INFO - Found fixture: FC Cincinnati 2 vs New York City FC II on 2025-07-06 at 11:00PM
+2025-06-08 23:59:07,501 - INFO - Found fixture: Crown Legacy FC vs Orlando City B on 2025-07-06 at 11:00PM
+2025-06-08 23:59:07,502 - INFO - Found fixture: New York Red Bulls II vs Huntsville City FC on 2025-07-06 at 11:00PM
+2025-06-08 23:59:07,502 - INFO - Found fixture: Colorado Rapids 2 vs Houston Dynamo FC 2 on 2025-07-06 at 12:00AM
+2025-06-08 23:59:07,502 - INFO - Found fixture: Real Monarchs vs Saint Louis City SC 2 on 2025-07-06 at 1:30AM
+2025-06-08 23:59:07,503 - INFO - Found fixture: Crown Legacy FC vs Carolina Core on 2025-07-09 at 11:00PM
+2025-06-08 23:59:07,503 - INFO - Found fixture: Atlanta United 2 vs FC Cincinnati 2 on 2025-07-09 at 11:30PM
+2025-06-08 23:59:07,503 - INFO - Found 11 fixtures on 2025-07-05 (and possibly surrounding dates).
+2025-06-08 23:59:07,504 - INFO - Found 3 dates with games on the current page: ['2025-07-05', '2025-07-06', '2025-07-09']
+2025-06-08 23:59:08,505 - INFO - Scraping date: 2025-07-06 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-07-06)
+2025-06-08 23:59:09,322 - INFO - Found fixture: Philadelphia Union II vs Toronto FC II on 2025-07-06 at 7:00PM
+2025-06-08 23:59:09,322 - INFO - Found fixture: FC Cincinnati 2 vs New York City FC II on 2025-07-06 at 11:00PM
+2025-06-08 23:59:09,323 - INFO - Found fixture: Crown Legacy FC vs Orlando City B on 2025-07-06 at 11:00PM
+2025-06-08 23:59:09,323 - INFO - Found fixture: New York Red Bulls II vs Huntsville City FC on 2025-07-06 at 11:00PM
+2025-06-08 23:59:09,323 - INFO - Found fixture: Colorado Rapids 2 vs Houston Dynamo FC 2 on 2025-07-06 at 12:00AM
+2025-06-08 23:59:09,324 - INFO - Found fixture: Real Monarchs vs Saint Louis City SC 2 on 2025-07-06 at 1:30AM
+2025-06-08 23:59:09,324 - INFO - Found fixture: Crown Legacy FC vs Carolina Core on 2025-07-09 at 11:00PM
+2025-06-08 23:59:09,324 - INFO - Found fixture: Atlanta United 2 vs FC Cincinnati 2 on 2025-07-09 at 11:30PM
+2025-06-08 23:59:09,325 - INFO - Found fixture: Toronto FC II vs New York Red Bulls II on 2025-07-11 at 11:00PM
+2025-06-08 23:59:09,325 - INFO - Found fixture: Austin FC II vs Saint Louis City SC 2 on 2025-07-11 at 12:30AM
+2025-06-08 23:59:09,325 - INFO - Found 10 fixtures on 2025-07-06 (and possibly surrounding dates).
+2025-06-08 23:59:09,326 - INFO - Found 3 dates with games on the current page: ['2025-07-06', '2025-07-09', '2025-07-11']
+2025-06-08 23:59:10,326 - INFO - Scraping date: 2025-07-09 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-07-09)
+2025-06-08 23:59:11,197 - INFO - Found fixture: Crown Legacy FC vs Carolina Core on 2025-07-09 at 11:00PM
+2025-06-08 23:59:11,197 - INFO - Found fixture: Atlanta United 2 vs FC Cincinnati 2 on 2025-07-09 at 11:30PM
+2025-06-08 23:59:11,197 - INFO - Found fixture: Toronto FC II vs New York Red Bulls II on 2025-07-11 at 11:00PM
+2025-06-08 23:59:11,198 - INFO - Found fixture: Austin FC II vs Saint Louis City SC 2 on 2025-07-11 at 12:30AM
+2025-06-08 23:59:11,198 - INFO - Found fixture: Chicago Fire FC II vs New England Revolution II on 2025-07-13 at 6:00PM
+2025-06-08 23:59:11,199 - INFO - Found fixture: Philadelphia Union II vs Chattanooga FC on 2025-07-13 at 7:00PM
+2025-06-08 23:59:11,199 - INFO - Found fixture: Minnesota United FC 2 vs Real Monarchs on 2025-07-13 at 8:00PM
+2025-06-08 23:59:11,199 - INFO - Found fixture: FC Cincinnati 2 vs Huntsville City FC on 2025-07-13 at 10:00PM
+2025-06-08 23:59:11,199 - INFO - Found fixture: Inter Miami CF II vs Crown Legacy FC on 2025-07-13 at 11:00PM
+2025-06-08 23:59:11,200 - INFO - Found fixture: Orlando City B vs Carolina Core on 2025-07-13 at 11:00PM
+2025-06-08 23:59:11,200 - INFO - Found fixture: Atlanta United 2 vs Columbus Crew 2 on 2025-07-13 at 11:30PM
+2025-06-08 23:59:11,200 - INFO - Found fixture: Colorado Rapids 2 vs Vancouver Whitecaps FC 2 on 2025-07-13 at 12:00AM
+2025-06-08 23:59:11,201 - INFO - Found fixture: Houston Dynamo FC 2 vs North Texas SC on 2025-07-13 at 12:00AM
+2025-06-08 23:59:11,201 - INFO - Found fixture: The Town FC vs Sporting Kansas City II on 2025-07-13 at 12:00AM
+2025-06-08 23:59:11,201 - INFO - Found fixture: Los Angeles FC 2 vs Portland Timbers 2 on 2025-07-13 at 2:00AM
+2025-06-08 23:59:11,201 - INFO - Found 15 fixtures on 2025-07-09 (and possibly surrounding dates).
+2025-06-08 23:59:11,202 - INFO - Found 3 dates with games on the current page: ['2025-07-09', '2025-07-11', '2025-07-13']
+2025-06-08 23:59:12,203 - INFO - Scraping date: 2025-07-11 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-07-11)
+2025-06-08 23:59:12,983 - INFO - Found fixture: Toronto FC II vs New York Red Bulls II on 2025-07-11 at 11:00PM
+2025-06-08 23:59:12,983 - INFO - Found fixture: Austin FC II vs Saint Louis City SC 2 on 2025-07-11 at 12:30AM
+2025-06-08 23:59:12,984 - INFO - Found fixture: Chicago Fire FC II vs New England Revolution II on 2025-07-13 at 6:00PM
+2025-06-08 23:59:12,984 - INFO - Found fixture: Philadelphia Union II vs Chattanooga FC on 2025-07-13 at 7:00PM
+2025-06-08 23:59:12,984 - INFO - Found fixture: Minnesota United FC 2 vs Real Monarchs on 2025-07-13 at 8:00PM
+2025-06-08 23:59:12,985 - INFO - Found fixture: FC Cincinnati 2 vs Huntsville City FC on 2025-07-13 at 10:00PM
+2025-06-08 23:59:12,985 - INFO - Found fixture: Inter Miami CF II vs Crown Legacy FC on 2025-07-13 at 11:00PM
+2025-06-08 23:59:12,985 - INFO - Found fixture: Orlando City B vs Carolina Core on 2025-07-13 at 11:00PM
+2025-06-08 23:59:12,985 - INFO - Found fixture: Atlanta United 2 vs Columbus Crew 2 on 2025-07-13 at 11:30PM
+2025-06-08 23:59:12,986 - INFO - Found fixture: Colorado Rapids 2 vs Vancouver Whitecaps FC 2 on 2025-07-13 at 12:00AM
+2025-06-08 23:59:12,986 - INFO - Found fixture: Houston Dynamo FC 2 vs North Texas SC on 2025-07-13 at 12:00AM
+2025-06-08 23:59:12,986 - INFO - Found fixture: The Town FC vs Sporting Kansas City II on 2025-07-13 at 12:00AM
+2025-06-08 23:59:12,986 - INFO - Found fixture: Los Angeles FC 2 vs Portland Timbers 2 on 2025-07-13 at 2:00AM
+2025-06-08 23:59:12,987 - INFO - Found fixture: New York City FC II vs Toronto FC II on 2025-07-16 at 11:30PM
+2025-06-08 23:59:12,987 - INFO - Found fixture: Saint Louis City SC 2 vs Ventura County FC on 2025-07-16 at 12:00AM
+2025-06-08 23:59:12,987 - INFO - Found 15 fixtures on 2025-07-11 (and possibly surrounding dates).
+2025-06-08 23:59:12,988 - INFO - Found 3 dates with games on the current page: ['2025-07-11', '2025-07-13', '2025-07-16']
+2025-06-08 23:59:13,989 - INFO - Scraping date: 2025-07-13 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-07-13)
+2025-06-08 23:59:14,867 - INFO - Found fixture: Chicago Fire FC II vs New England Revolution II on 2025-07-13 at 6:00PM
+2025-06-08 23:59:14,867 - INFO - Found fixture: Philadelphia Union II vs Chattanooga FC on 2025-07-13 at 7:00PM
+2025-06-08 23:59:14,867 - INFO - Found fixture: Minnesota United FC 2 vs Real Monarchs on 2025-07-13 at 8:00PM
+2025-06-08 23:59:14,868 - INFO - Found fixture: FC Cincinnati 2 vs Huntsville City FC on 2025-07-13 at 10:00PM
+2025-06-08 23:59:14,868 - INFO - Found fixture: Inter Miami CF II vs Crown Legacy FC on 2025-07-13 at 11:00PM
+2025-06-08 23:59:14,868 - INFO - Found fixture: Orlando City B vs Carolina Core on 2025-07-13 at 11:00PM
+2025-06-08 23:59:14,868 - INFO - Found fixture: Atlanta United 2 vs Columbus Crew 2 on 2025-07-13 at 11:30PM
+2025-06-08 23:59:14,869 - INFO - Found fixture: Colorado Rapids 2 vs Vancouver Whitecaps FC 2 on 2025-07-13 at 12:00AM
+2025-06-08 23:59:14,869 - INFO - Found fixture: Houston Dynamo FC 2 vs North Texas SC on 2025-07-13 at 12:00AM
+2025-06-08 23:59:14,869 - INFO - Found fixture: The Town FC vs Sporting Kansas City II on 2025-07-13 at 12:00AM
+2025-06-08 23:59:14,870 - INFO - Found fixture: Los Angeles FC 2 vs Portland Timbers 2 on 2025-07-13 at 2:00AM
+2025-06-08 23:59:14,870 - INFO - Found fixture: New York City FC II vs Toronto FC II on 2025-07-16 at 11:30PM
+2025-06-08 23:59:14,870 - INFO - Found fixture: Saint Louis City SC 2 vs Ventura County FC on 2025-07-16 at 12:00AM
+2025-06-08 23:59:14,871 - INFO - Found fixture: Houston Dynamo FC 2 vs Vancouver Whitecaps FC 2 on 2025-07-17 at 12:00AM
+2025-06-08 23:59:14,871 - INFO - Found fixture: Tacoma Defiance vs Real Monarchs on 2025-07-17 at 2:00AM
+2025-06-08 23:59:14,871 - INFO - Found 15 fixtures on 2025-07-13 (and possibly surrounding dates).
+2025-06-08 23:59:14,872 - INFO - Found 3 dates with games on the current page: ['2025-07-13', '2025-07-16', '2025-07-17']
+2025-06-08 23:59:15,873 - INFO - Scraping date: 2025-07-16 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-07-16)
+2025-06-08 23:59:16,430 - INFO - Found fixture: New York City FC II vs Toronto FC II on 2025-07-16 at 11:30PM
+2025-06-08 23:59:16,430 - INFO - Found fixture: Saint Louis City SC 2 vs Ventura County FC on 2025-07-16 at 12:00AM
+2025-06-08 23:59:16,431 - INFO - Found fixture: Houston Dynamo FC 2 vs Vancouver Whitecaps FC 2 on 2025-07-17 at 12:00AM
+2025-06-08 23:59:16,431 - INFO - Found fixture: Tacoma Defiance vs Real Monarchs on 2025-07-17 at 2:00AM
+2025-06-08 23:59:16,431 - INFO - Found fixture: Huntsville City FC vs Columbus Crew 2 on 2025-07-18 at 12:00AM
+2025-06-08 23:59:16,432 - INFO - Found fixture: Sporting Kansas City II vs North Texas SC on 2025-07-18 at 12:30AM
+2025-06-08 23:59:16,432 - INFO - Found fixture: Portland Timbers 2 vs Minnesota United FC 2 on 2025-07-18 at 3:00AM
+2025-06-08 23:59:16,432 - INFO - Found 7 fixtures on 2025-07-16 (and possibly surrounding dates).
+2025-06-08 23:59:16,433 - INFO - Found 3 dates with games on the current page: ['2025-07-16', '2025-07-17', '2025-07-18']
+2025-06-08 23:59:17,433 - INFO - Scraping date: 2025-07-17 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-07-17)
+2025-06-08 23:59:18,202 - INFO - Found fixture: Houston Dynamo FC 2 vs Vancouver Whitecaps FC 2 on 2025-07-17 at 12:00AM
+2025-06-08 23:59:18,202 - INFO - Found fixture: Tacoma Defiance vs Real Monarchs on 2025-07-17 at 2:00AM
+2025-06-08 23:59:18,203 - INFO - Found fixture: Huntsville City FC vs Columbus Crew 2 on 2025-07-18 at 12:00AM
+2025-06-08 23:59:18,203 - INFO - Found fixture: Sporting Kansas City II vs North Texas SC on 2025-07-18 at 12:30AM
+2025-06-08 23:59:18,203 - INFO - Found fixture: Portland Timbers 2 vs Minnesota United FC 2 on 2025-07-18 at 3:00AM
+2025-06-08 23:59:18,204 - INFO - Found fixture: Chattanooga FC vs Inter Miami CF II on 2025-07-19 at 11:00PM
+2025-06-08 23:59:18,204 - INFO - Found fixture: Carolina Core vs Atlanta United 2 on 2025-07-19 at 11:30PM
+2025-06-08 23:59:18,204 - INFO - Found fixture: Crown Legacy FC vs Philadelphia Union II on 2025-07-19 at 12:00AM
+2025-06-08 23:59:18,204 - INFO - Found 8 fixtures on 2025-07-17 (and possibly surrounding dates).
+2025-06-08 23:59:18,205 - INFO - Found 3 dates with games on the current page: ['2025-07-17', '2025-07-18', '2025-07-19']
+2025-06-08 23:59:19,205 - INFO - Scraping date: 2025-07-18 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-07-18)
+2025-06-08 23:59:19,979 - INFO - Found fixture: Huntsville City FC vs Columbus Crew 2 on 2025-07-18 at 12:00AM
+2025-06-08 23:59:19,979 - INFO - Found fixture: Sporting Kansas City II vs North Texas SC on 2025-07-18 at 12:30AM
+2025-06-08 23:59:19,979 - INFO - Found fixture: Portland Timbers 2 vs Minnesota United FC 2 on 2025-07-18 at 3:00AM
+2025-06-08 23:59:19,980 - INFO - Found fixture: Chattanooga FC vs Inter Miami CF II on 2025-07-19 at 11:00PM
+2025-06-08 23:59:19,980 - INFO - Found fixture: Carolina Core vs Atlanta United 2 on 2025-07-19 at 11:30PM
+2025-06-08 23:59:19,980 - INFO - Found fixture: Crown Legacy FC vs Philadelphia Union II on 2025-07-19 at 12:00AM
+2025-06-08 23:59:19,981 - INFO - Found fixture: New England Revolution II vs Orlando City B on 2025-07-20 at 7:00PM
+2025-06-08 23:59:19,981 - INFO - Found fixture: Toronto FC II vs Chicago Fire FC II on 2025-07-20 at 7:00PM
+2025-06-08 23:59:19,982 - INFO - Found fixture: New York Red Bulls II vs New York City FC II on 2025-07-20 at 11:00PM
+2025-06-08 23:59:19,983 - INFO - Found fixture: Colorado Rapids 2 vs Tacoma Defiance on 2025-07-20 at 12:00AM
+2025-06-08 23:59:19,983 - INFO - Found fixture: Real Monarchs vs Austin FC II on 2025-07-20 at 1:30AM
+2025-06-08 23:59:19,984 - INFO - Found fixture: Ventura County FC vs Los Angeles FC 2 on 2025-07-20 at 2:00AM
+2025-06-08 23:59:19,984 - INFO - Found 12 fixtures on 2025-07-18 (and possibly surrounding dates).
+2025-06-08 23:59:19,985 - INFO - Found 3 dates with games on the current page: ['2025-07-18', '2025-07-19', '2025-07-20']
+2025-06-08 23:59:20,985 - INFO - Scraping date: 2025-07-19 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-07-19)
+2025-06-08 23:59:21,974 - INFO - Found fixture: Chattanooga FC vs Inter Miami CF II on 2025-07-19 at 11:00PM
+2025-06-08 23:59:21,974 - INFO - Found fixture: Carolina Core vs Atlanta United 2 on 2025-07-19 at 11:30PM
+2025-06-08 23:59:21,974 - INFO - Found fixture: Crown Legacy FC vs Philadelphia Union II on 2025-07-19 at 12:00AM
+2025-06-08 23:59:21,975 - INFO - Found fixture: New England Revolution II vs Orlando City B on 2025-07-20 at 7:00PM
+2025-06-08 23:59:21,975 - INFO - Found fixture: Toronto FC II vs Chicago Fire FC II on 2025-07-20 at 7:00PM
+2025-06-08 23:59:21,975 - INFO - Found fixture: New York Red Bulls II vs New York City FC II on 2025-07-20 at 11:00PM
+2025-06-08 23:59:21,976 - INFO - Found fixture: Colorado Rapids 2 vs Tacoma Defiance on 2025-07-20 at 12:00AM
+2025-06-08 23:59:21,976 - INFO - Found fixture: Real Monarchs vs Austin FC II on 2025-07-20 at 1:30AM
+2025-06-08 23:59:21,976 - INFO - Found fixture: Ventura County FC vs Los Angeles FC 2 on 2025-07-20 at 2:00AM
+2025-06-08 23:59:21,977 - INFO - Found fixture: The Town FC vs Minnesota United FC 2 on 2025-07-22 at 12:30AM
+2025-06-08 23:59:21,977 - INFO - Found 10 fixtures on 2025-07-19 (and possibly surrounding dates).
+2025-06-08 23:59:21,978 - INFO - Found 3 dates with games on the current page: ['2025-07-19', '2025-07-20', '2025-07-22']
+2025-06-08 23:59:22,979 - INFO - Scraping date: 2025-07-20 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-07-20)
+2025-06-08 23:59:23,837 - INFO - Found fixture: New England Revolution II vs Orlando City B on 2025-07-20 at 7:00PM
+2025-06-08 23:59:23,837 - INFO - Found fixture: Toronto FC II vs Chicago Fire FC II on 2025-07-20 at 7:00PM
+2025-06-08 23:59:23,838 - INFO - Found fixture: New York Red Bulls II vs New York City FC II on 2025-07-20 at 11:00PM
+2025-06-08 23:59:23,838 - INFO - Found fixture: Colorado Rapids 2 vs Tacoma Defiance on 2025-07-20 at 12:00AM
+2025-06-08 23:59:23,838 - INFO - Found fixture: Real Monarchs vs Austin FC II on 2025-07-20 at 1:30AM
+2025-06-08 23:59:23,839 - INFO - Found fixture: Ventura County FC vs Los Angeles FC 2 on 2025-07-20 at 2:00AM
+2025-06-08 23:59:23,839 - INFO - Found fixture: The Town FC vs Minnesota United FC 2 on 2025-07-22 at 12:30AM
+2025-06-08 23:59:23,839 - INFO - Found fixture: Huntsville City FC vs Orlando City B on 2025-07-25 at 12:00AM
+2025-06-08 23:59:23,840 - INFO - Found fixture: Austin FC II vs Houston Dynamo FC 2 on 2025-07-25 at 12:30AM
+2025-06-08 23:59:23,840 - INFO - Found 9 fixtures on 2025-07-20 (and possibly surrounding dates).
+2025-06-08 23:59:23,841 - INFO - Found 3 dates with games on the current page: ['2025-07-20', '2025-07-22', '2025-07-25']
+2025-06-08 23:59:24,841 - INFO - Scraping date: 2025-07-22 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-07-22)
+2025-06-08 23:59:25,601 - INFO - Found fixture: The Town FC vs Minnesota United FC 2 on 2025-07-22 at 12:30AM
+2025-06-08 23:59:25,602 - INFO - Found fixture: Huntsville City FC vs Orlando City B on 2025-07-25 at 12:00AM
+2025-06-08 23:59:25,602 - INFO - Found fixture: Austin FC II vs Houston Dynamo FC 2 on 2025-07-25 at 12:30AM
+2025-06-08 23:59:25,603 - INFO - Found fixture: New York City FC II vs Philadelphia Union II on 2025-07-26 at 8:00PM
+2025-06-08 23:59:25,603 - INFO - Found fixture: Chattanooga FC vs Crown Legacy FC on 2025-07-26 at 11:00PM
+2025-06-08 23:59:25,603 - INFO - Found fixture: Real Monarchs vs The Town FC on 2025-07-26 at 2:00AM
+2025-06-08 23:59:25,603 - INFO - Found 6 fixtures on 2025-07-22 (and possibly surrounding dates).
+2025-06-08 23:59:25,604 - INFO - Found 3 dates with games on the current page: ['2025-07-22', '2025-07-25', '2025-07-26']
+2025-06-08 23:59:26,605 - INFO - Scraping date: 2025-07-25 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-07-25)
+2025-06-08 23:59:27,371 - INFO - Found fixture: Huntsville City FC vs Orlando City B on 2025-07-25 at 12:00AM
+2025-06-08 23:59:27,371 - INFO - Found fixture: Austin FC II vs Houston Dynamo FC 2 on 2025-07-25 at 12:30AM
+2025-06-08 23:59:27,372 - INFO - Found fixture: New York City FC II vs Philadelphia Union II on 2025-07-26 at 8:00PM
+2025-06-08 23:59:27,372 - INFO - Found fixture: Chattanooga FC vs Crown Legacy FC on 2025-07-26 at 11:00PM
+2025-06-08 23:59:27,372 - INFO - Found fixture: Real Monarchs vs The Town FC on 2025-07-26 at 2:00AM
+2025-06-08 23:59:27,373 - INFO - Found fixture: Chicago Fire FC II vs New York Red Bulls II on 2025-07-27 at 6:00PM
+2025-06-08 23:59:27,373 - INFO - Found fixture: Columbus Crew 2 vs Toronto FC II on 2025-07-27 at 10:00PM
+2025-06-08 23:59:27,373 - INFO - Found fixture: Inter Miami CF II vs FC Cincinnati 2 on 2025-07-27 at 11:00PM
+2025-06-08 23:59:27,374 - INFO - Found fixture: Saint Louis City SC 2 vs Minnesota United FC 2 on 2025-07-27 at 11:00PM
+2025-06-08 23:59:27,374 - INFO - Found fixture: Los Angeles FC 2 vs Sporting Kansas City II on 2025-07-27 at 2:00AM
+2025-06-08 23:59:27,374 - INFO - Found fixture: Tacoma Defiance vs Portland Timbers 2 on 2025-07-27 at 2:00AM
+2025-06-08 23:59:27,374 - INFO - Found 11 fixtures on 2025-07-25 (and possibly surrounding dates).
+2025-06-08 23:59:27,375 - INFO - Found 3 dates with games on the current page: ['2025-07-25', '2025-07-26', '2025-07-27']
+2025-06-08 23:59:28,376 - INFO - Scraping date: 2025-07-26 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-07-26)
+2025-06-08 23:59:29,243 - INFO - Found fixture: New York City FC II vs Philadelphia Union II on 2025-07-26 at 8:00PM
+2025-06-08 23:59:29,244 - INFO - Found fixture: Chattanooga FC vs Crown Legacy FC on 2025-07-26 at 11:00PM
+2025-06-08 23:59:29,244 - INFO - Found fixture: Real Monarchs vs The Town FC on 2025-07-26 at 2:00AM
+2025-06-08 23:59:29,244 - INFO - Found fixture: Chicago Fire FC II vs New York Red Bulls II on 2025-07-27 at 6:00PM
+2025-06-08 23:59:29,245 - INFO - Found fixture: Columbus Crew 2 vs Toronto FC II on 2025-07-27 at 10:00PM
+2025-06-08 23:59:29,245 - INFO - Found fixture: Inter Miami CF II vs FC Cincinnati 2 on 2025-07-27 at 11:00PM
+2025-06-08 23:59:29,245 - INFO - Found fixture: Saint Louis City SC 2 vs Minnesota United FC 2 on 2025-07-27 at 11:00PM
+2025-06-08 23:59:29,246 - INFO - Found fixture: Los Angeles FC 2 vs Sporting Kansas City II on 2025-07-27 at 2:00AM
+2025-06-08 23:59:29,246 - INFO - Found fixture: Tacoma Defiance vs Portland Timbers 2 on 2025-07-27 at 2:00AM
+2025-06-08 23:59:29,246 - INFO - Found fixture: New England Revolution II vs Atlanta United 2 on 2025-07-30 at 3:00PM
+2025-06-08 23:59:29,247 - INFO - Found fixture: Carolina Core vs Philadelphia Union II on 2025-07-30 at 11:30PM
+2025-06-08 23:59:29,247 - INFO - Found 11 fixtures on 2025-07-26 (and possibly surrounding dates).
+2025-06-08 23:59:29,248 - INFO - Found 3 dates with games on the current page: ['2025-07-26', '2025-07-27', '2025-07-30']
+2025-06-08 23:59:30,248 - INFO - Scraping date: 2025-07-27 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-07-27)
+2025-06-08 23:59:30,911 - INFO - Found fixture: Chicago Fire FC II vs New York Red Bulls II on 2025-07-27 at 6:00PM
+2025-06-08 23:59:30,912 - INFO - Found fixture: Columbus Crew 2 vs Toronto FC II on 2025-07-27 at 10:00PM
+2025-06-08 23:59:30,912 - INFO - Found fixture: Inter Miami CF II vs FC Cincinnati 2 on 2025-07-27 at 11:00PM
+2025-06-08 23:59:30,912 - INFO - Found fixture: Saint Louis City SC 2 vs Minnesota United FC 2 on 2025-07-27 at 11:00PM
+2025-06-08 23:59:30,913 - INFO - Found fixture: Los Angeles FC 2 vs Sporting Kansas City II on 2025-07-27 at 2:00AM
+2025-06-08 23:59:30,913 - INFO - Found fixture: Tacoma Defiance vs Portland Timbers 2 on 2025-07-27 at 2:00AM
+2025-06-08 23:59:30,913 - INFO - Found fixture: New England Revolution II vs Atlanta United 2 on 2025-07-30 at 3:00PM
+2025-06-08 23:59:30,914 - INFO - Found fixture: Carolina Core vs Philadelphia Union II on 2025-07-30 at 11:30PM
+2025-06-08 23:59:30,914 - INFO - Found fixture: Columbus Crew 2 vs New York Red Bulls II on 2025-07-31 at 10:00PM
+2025-06-08 23:59:30,914 - INFO - Found fixture: Vancouver Whitecaps FC 2 vs Sporting Kansas City II on 2025-07-31 at 1:00AM
+2025-06-08 23:59:30,915 - INFO - Found 10 fixtures on 2025-07-27 (and possibly surrounding dates).
+2025-06-08 23:59:30,916 - INFO - Found 3 dates with games on the current page: ['2025-07-27', '2025-07-30', '2025-07-31']
+2025-06-08 23:59:31,916 - INFO - Scraping date: 2025-07-30 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-07-30)
+2025-06-08 23:59:32,894 - INFO - Found fixture: New England Revolution II vs Atlanta United 2 on 2025-07-30 at 3:00PM
+2025-06-08 23:59:32,895 - INFO - Found fixture: Carolina Core vs Philadelphia Union II on 2025-07-30 at 11:30PM
+2025-06-08 23:59:32,895 - INFO - Found fixture: Columbus Crew 2 vs New York Red Bulls II on 2025-07-31 at 10:00PM
+2025-06-08 23:59:32,895 - INFO - Found fixture: Vancouver Whitecaps FC 2 vs Sporting Kansas City II on 2025-07-31 at 1:00AM
+2025-06-08 23:59:32,896 - INFO - Found fixture: Tacoma Defiance vs Ventura County FC on 2025-08-01 at 2:00AM
+2025-06-08 23:59:32,896 - INFO - Found 5 fixtures on 2025-07-30 (and possibly surrounding dates).
+2025-06-08 23:59:32,897 - INFO - Found 3 dates with games on the current page: ['2025-07-30', '2025-07-31', '2025-08-01']
+2025-06-08 23:59:33,897 - INFO - Scraping date: 2025-07-31 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-07-31)
+2025-06-08 23:59:34,561 - INFO - Found fixture: Columbus Crew 2 vs New York Red Bulls II on 2025-07-31 at 10:00PM
+2025-06-08 23:59:34,562 - INFO - Found fixture: Vancouver Whitecaps FC 2 vs Sporting Kansas City II on 2025-07-31 at 1:00AM
+2025-06-08 23:59:34,562 - INFO - Found fixture: Tacoma Defiance vs Ventura County FC on 2025-08-01 at 2:00AM
+2025-06-08 23:59:34,563 - INFO - Found fixture: Crown Legacy FC vs Huntsville City FC on 2025-08-02 at 9:00PM
+2025-06-08 23:59:34,563 - INFO - Found fixture: Chattanooga FC vs Toronto FC II on 2025-08-02 at 11:00PM
+2025-06-08 23:59:34,563 - INFO - Found fixture: Carolina Core vs New England Revolution II on 2025-08-02 at 11:30PM
+2025-06-08 23:59:34,563 - INFO - Found fixture: Minnesota United FC 2 vs Houston Dynamo FC 2 on 2025-08-02 at 12:00AM
+2025-06-08 23:59:34,564 - INFO - Found fixture: North Texas SC vs Colorado Rapids 2 on 2025-08-02 at 12:45AM
+2025-06-08 23:59:34,564 - INFO - Found 8 fixtures on 2025-07-31 (and possibly surrounding dates).
+2025-06-08 23:59:34,565 - INFO - Found 3 dates with games on the current page: ['2025-07-31', '2025-08-01', '2025-08-02']
+2025-06-08 23:59:35,565 - INFO - Scraping date: 2025-08-01 (URL: https://www.foxsports.com/soccer/mls-next-pro/schedule?date=2025-08-01)

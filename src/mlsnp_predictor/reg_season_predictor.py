@@ -7,13 +7,23 @@ from datetime import datetime, timedelta
 import pickle
 from pathlib import Path
 
-# AutoML imports
+# AutoML imports - AutoGluon for Python 3.12 compatibility
 try:
-    from pycaret.regression import *
+    from autogluon.tabular import TabularPredictor
     AUTOML_AVAILABLE = True
+    AUTOML_LIBRARY = "autogluon"
 except ImportError:
-    AUTOML_AVAILABLE = False
-    logging.warning("PyCaret not installed. Install with: pip install pycaret")
+    try:
+        # Fallback to sklearn if no AutoML available
+        from sklearn.ensemble import RandomForestRegressor
+        from sklearn.preprocessing import StandardScaler
+        from sklearn.pipeline import Pipeline
+        AUTOML_AVAILABLE = True
+        AUTOML_LIBRARY = "sklearn"
+    except ImportError:
+        AUTOML_AVAILABLE = False
+        AUTOML_LIBRARY = None
+        logging.warning("No AutoML library found. Install with: pip install autogluon")
 
 logger = logging.getLogger(__name__)
 
@@ -60,14 +70,18 @@ class MLSNPRegSeasonPredictor:
         # Try to load existing model first
         if self.model_path.exists():
             try:
-                with open(self.model_path, 'rb') as f:
-                    self.ml_model = pickle.load(f)
+                if AUTOML_LIBRARY == "autogluon":
+                    self.ml_model = TabularPredictor.load(str(self.model_path))
+                else:
+                    with open(self.model_path, 'rb') as f:
+                        self.ml_model = pickle.load(f)
                 logger.info(f"Loaded existing ML model from {self.model_path}")
                 return
             except Exception as e:
                 logger.warning(f"Could not load existing model: {e}")
+        
         # Build new model if needed
-        logger.info("Building new AutoML model for xG prediction...")
+        logger.info(f"Building new AutoML model using {AUTOML_LIBRARY}...")
         training_data = self._prepare_training_data()
         
         if len(training_data) < 50:
@@ -76,38 +90,56 @@ class MLSNPRegSeasonPredictor:
             return
         
         try:
-            # Initialize PyCaret environment
-            reg_setup = setup(
-                data=training_data,
-                target='goals',  # We'll predict actual goals
-                train_size=0.8,
-                session_id=42,
-                verbose=False,
-                normalize=True,
-                transformation=True,
-                remove_multicollinearity=True,
-                feature_interaction=True,
-                polynomial_features=True,
-                ignore_low_variance=True
-            )
-            
-            # Create and train the model
-            # Using blend of best models for better performance
-            best_model = compare_models(
-                include=['lr', 'ridge', 'rf', 'gbr', 'xgboost', 'lightgbm'],
-                fold=5,
-                n_select=3
-            )
-            
-            self.ml_model = blend_models(best_model)
-            
-            # Save the model
-            self.model_path.parent.mkdir(exist_ok=True)
-            with open(self.model_path, 'wb') as f:
-                pickle.dump(self.ml_model, f)
-            
-            logger.info("AutoML model training completed successfully")
-
+            if AUTOML_LIBRARY == "autogluon":
+                # AutoGluon approach
+                self.model_path.parent.mkdir(exist_ok=True)
+                
+                self.ml_model = TabularPredictor(
+                    label='goals',
+                    path=str(self.model_path),
+                    problem_type='regression',
+                    eval_metric='root_mean_squared_error'
+                )
+                
+                # Train with AutoGluon
+                self.ml_model.fit(
+                    training_data,
+                    time_limit=300,  # 5 minutes max
+                    presets='best_quality',
+                    verbosity=0
+                )
+                
+                logger.info("AutoGluon model training completed")
+                
+            elif AUTOML_LIBRARY == "sklearn":
+                # Sklearn fallback approach
+                features = [col for col in training_data.columns if col != 'goals']
+                X = training_data[features]
+                y = training_data['goals']
+                
+                # Create a simple but effective pipeline
+                self.ml_model = Pipeline([
+                    ('scaler', StandardScaler()),
+                    ('rf', RandomForestRegressor(
+                        n_estimators=100,
+                        max_depth=10,
+                        random_state=42,
+                        n_jobs=-1
+                    ))
+                ])
+                
+                self.ml_model.fit(X, y)
+                
+                # Save the model
+                self.model_path.parent.mkdir(exist_ok=True)
+                with open(self.model_path, 'wb') as f:
+                    pickle.dump(self.ml_model, f)
+                
+                # Store feature names for prediction
+                self._feature_names = features
+                
+                logger.info("Sklearn RandomForest model training completed")
+                
         except Exception as e:
             logger.error(f"AutoML model training failed: {e}")
             self.use_automl = False
@@ -471,30 +503,23 @@ class MLSNPRegSeasonPredictor:
             away_df = pd.DataFrame([away_features])
             
             try:
-                # Get predictions (expected goals)
-                home_exp_goals = max(0.1, self.ml_model.predict(home_df)[0])
-                away_exp_goals = max(0.1, self.ml_model.predict(away_df)[0])
+                # Get predictions based on library
+                if AUTOML_LIBRARY == "autogluon":
+                    home_exp_goals = max(0.1, self.ml_model.predict(home_df).iloc[0])
+                    away_exp_goals = max(0.1, self.ml_model.predict(away_df).iloc[0])
+                elif AUTOML_LIBRARY == "sklearn":
+                    # Ensure columns match training
+                    home_df = home_df[self._feature_names]
+                    away_df = away_df[self._feature_names]
+                    home_exp_goals = max(0.1, self.ml_model.predict(home_df)[0])
+                    away_exp_goals = max(0.1, self.ml_model.predict(away_df)[0])
+                    
             except Exception as e:
                 logger.warning(f"ML prediction failed, falling back to traditional method: {e}")
                 return self._simulate_game_traditional(game)
         else:
             # Use traditional method
             return self._simulate_game_traditional(game)
-        
-        # Sample from Poisson distribution
-        home_goals = np.random.poisson(home_exp_goals)
-        away_goals = np.random.poisson(away_exp_goals)
-        
-        went_to_shootout = False
-        if home_goals == away_goals:
-            went_to_shootout = True
-            # Shootout probability could also be learned, but keeping simple for now
-            if np.random.rand() > 0.5:
-                home_goals += 1
-            else:
-                away_goals += 1
-                
-        return home_goals, away_goals, went_to_shootout
 
     def _simulate_game_traditional(self, game: Dict) -> Tuple[int, int, bool]:
         """Traditional simulation method (fallback)."""
