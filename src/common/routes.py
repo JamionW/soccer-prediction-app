@@ -455,8 +455,8 @@ async def run_conference_simulation(
     user_id: int,
     league_averages: Dict[str, float]
 ) -> Dict:
-    # Run simulation for a single conference with provided league averages.
-
+    """Run simulation for a single conference with AutoML option."""
+    
     run_id = await db_manager.store_simulation_run(
         user_id=user_id,
         conference=conference,
@@ -467,23 +467,32 @@ async def run_conference_simulation(
     # 1. FETCH: Get all data from DatabaseManager
     sim_data = await db_manager.get_data_for_simulation(conference, 2025)
     
-    # 2. COMPUTE: Run simulation with fetched data
+    # 2. Check if user wants to use AutoML (could be a parameter)
+    use_automl = True  # Could come from request or user preferences
+    
+    # 3. COMPUTE: Run simulation with fetched data
     predictor = MLSNPRegSeasonPredictor(
         conference=conference,
         conference_teams=sim_data["conference_teams"],
         games_data=sim_data["games_data"],
         team_performance=sim_data["team_performance"],
-        league_averages=league_averages
+        league_averages=league_averages,
+        use_automl=use_automl  # New parameter
     )
+    
+    # If using AutoML, log model performance
+    if predictor.use_automl and predictor.ml_model:
+        logger.info(f"Using AutoML model for {conference} conference predictions")
+        # Could add model metrics here
     
     summary_df, simulation_results, _, qualification_data = predictor.run_simulations(n_simulations)
     
-    # 3. STORE: Save results to database
+    # 4. STORE: Save results to database
     await db_manager.store_simulation_results(
         run_id, summary_df, simulation_results, qualification_data
     )
     
-    # 4. FORMAT: Prepare API response with ALL required fields
+    # 5. FORMAT: Prepare API response with ALL required fields
     team_performances = []
     top_8_teams = {}
     team_records = {}
@@ -526,13 +535,93 @@ async def run_conference_simulation(
         "league_averages_used": league_averages
     }
 
-
 def extract_regular_season_records(conference_results: Dict) -> Dict[str, Dict]:
     """
     Extract regular season records for all teams in a conference.
     Used for determining home field advantage in playoffs.
     """
     return conference_results.get("team_records", {})
+
+@router.post("/simulations/validate-model")
+async def validate_prediction_model(
+    conference: str = Body(...),
+    current_user: Dict = Depends(auth_manager.validate_token)
+):
+    """
+    Validate the prediction model by backtesting on historical data.
+    Admin only endpoint for model evaluation.
+    """
+    if not current_user.get('is_admin'):
+        raise HTTPException(status_code=403, detail="Admin access required")
+    
+    # Get historical games
+    sim_data = await db_manager.get_data_for_simulation(conference, 2025)
+    
+    # Split into train/test
+    completed_games = [g for g in sim_data["games_data"] if g.get('is_completed')]
+    split_point = int(len(completed_games) * 0.8)
+    
+    train_games = completed_games[:split_point]
+    test_games = completed_games[split_point:]
+    
+    # Train model on historical data
+    predictor = MLSNPRegSeasonPredictor(
+        conference=conference,
+        conference_teams=sim_data["conference_teams"],
+        games_data=train_games,  # Only train data
+        team_performance=sim_data["team_performance"],
+        league_averages=await calculate_league_averages(),
+        use_automl=True
+    )
+    
+    # Validate on test set
+    predictions = []
+    actuals = []
+    
+    for game in test_games:
+        # Get prediction
+        pred_home, pred_away, _ = predictor._simulate_game(game)
+        
+        # Get actual
+        actual_home = game.get('home_score', 0)
+        actual_away = game.get('away_score', 0)
+        
+        predictions.extend([pred_home, pred_away])
+        actuals.extend([actual_home, actual_away])
+    
+    # Calculate metrics
+    from sklearn.metrics import mean_absolute_error, r2_score
+    
+    mae = mean_absolute_error(actuals, predictions)
+    r2 = r2_score(actuals, predictions)
+    
+    # Compare to baseline (traditional method)
+    predictor.use_automl = False
+    baseline_predictions = []
+    
+    for game in test_games:
+        pred_home, pred_away, _ = predictor._simulate_game_traditional(game)
+        baseline_predictions.extend([pred_home, pred_away])
+    
+    baseline_mae = mean_absolute_error(actuals, baseline_predictions)
+    baseline_r2 = r2_score(actuals, baseline_predictions)
+    
+    return {
+        "conference": conference,
+        "test_games": len(test_games),
+        "automl_model": {
+            "mae": mae,
+            "r2": r2,
+            "improvement_over_baseline": {
+                "mae_reduction": baseline_mae - mae,
+                "r2_increase": r2 - baseline_r2
+            }
+        },
+        "baseline_model": {
+            "mae": baseline_mae,
+            "r2": baseline_r2
+        }
+    }
 
 async def run_playoff_simulation_with_records(
     eastern_seeds: Dict[str, int],
