@@ -10,16 +10,14 @@ logger = logging.getLogger(__name__)
 # Load environment variables from .env file (for local testing, ignored on Railway)
 load_dotenv()
 
-DATABASE_URL = os.getenv('DATABASE_URL')
+# For local development, prioritize the public URL
+# For Railway deployment, it will use the internal URL automatically
+DATABASE_URL = os.getenv('DATABASE_URL_PUBLIC') or os.getenv('DATABASE_URL')
 
 if DATABASE_URL is None:
-    raise ValueError("DATABASE_URL environment variable not set. Please configure it before running the application.")
+    raise ValueError("No database URL found. Please set DATABASE_URL_PUBLIC or DATABASE_URL environment variable.")
 
 # Log the database URL (masking password for security in production logs)
-# For debugging, you can temporarily print the full URL, but be cautious in public logs.
-# For now, let's just confirm it's being read.
-# If DATABASE_URL contains '@', split and rejoin to mask password.
-# Otherwise, just log the URL.
 if '@' in DATABASE_URL:
     parts = DATABASE_URL.split('@')
     # Assuming password is part of the first segment after '://' and before '@'

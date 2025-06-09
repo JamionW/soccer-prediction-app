@@ -37,6 +37,15 @@ class MLSNPRegSeasonPredictor:
         self.current_standings = self._calculate_current_standings()
         self.remaining_games = self._filter_remaining_games()
 
+        logger.info(f"=== GAME FILTERING DEBUG ===")
+        logger.info(f"Total games passed to predictor: {len(self.games_data)}")
+        logger.info(f"Conference teams: {len(self.conference_teams)}")
+        logger.info(f"Remaining games after filtering: {len(self.remaining_games)}")
+        
+        # Let's see what's in the first few games for good measure
+        for i, game in enumerate(self.games_data[:3]):
+            logger.info(f"Sample game {i+1}: completed={game.get('is_completed')}, home={game.get('home_team_id')}, away={game.get('away_team_id')}")
+
 
     def _calculate_current_standings(self) -> Dict[str, Dict]:
         """
@@ -103,8 +112,22 @@ class MLSNPRegSeasonPredictor:
             defend_metric = stats.get('x_goals_against', stats.get('goals_against', 0))
             games_played = stats['games_played']
             
-            attack_strength = (attack_metric / games_played) / self.league_avg_xgf
-            defend_strength = (defend_metric / games_played) / self.league_avg_xga
+            # SAFETY GUARDS: Ensure we never divide by zero
+            safe_league_avg_xgf = max(self.league_avg_xgf, 0.1)  # Minimum 0.1
+            safe_league_avg_xga = max(self.league_avg_xga, 0.1)  # Minimum 0.1
+            
+            # Calculate per-game metrics
+            attack_per_game = attack_metric / games_played if games_played > 0 else safe_league_avg_xgf
+            defend_per_game = defend_metric / games_played if games_played > 0 else safe_league_avg_xga
+            
+            # Calculate strength ratios
+            attack_strength = attack_per_game / safe_league_avg_xgf
+            defend_strength = defend_per_game / safe_league_avg_xga
+            
+            # Ensure reasonable bounds (between 0.1 and 5.0)
+            attack_strength = max(min(attack_strength, 5.0), 0.1)
+            defend_strength = max(min(defend_strength, 5.0), 0.1)
+            
             return attack_strength, defend_strength
         
         return 1.0, 1.0 # Fallback to league average strength

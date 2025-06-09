@@ -343,11 +343,11 @@ class FoxSportsMLSNextProScraper:
                                 'away_team': away_team,
                                 'away_team_id': away_id,
                                 'location': self._extract_location(row),
-                                'time': self._extract_time(row),
+                                'score_or_status': self._extract_score_or_status(row),
                                 'source': 'fox_sports'
                             }
                             fixtures.append(fixture)
-                            logger.info(f"Found fixture: {home_team} vs {away_team} on {current_date} at {fixture['time']}")
+                            logger.info(f"Found fixture: {home_team} vs {away_team} on {current_date} at {fixture['score_or_status']}")
                         else:
                             logger.warning(f"Could not match teams to ASA IDs: {home_team} vs {away_team} for date {current_date}")
         
@@ -424,7 +424,7 @@ class FoxSportsMLSNextProScraper:
                 
         return "TBD"
     
-    def _extract_time(self, row) -> str:
+    def _extract_score_or_status(self, row) -> str:
         """Extract game time from a row."""
         # Time is typically in the 4th cell (index 3), which has class 'cell-text broadcast'
         cells = row.find_all('td')

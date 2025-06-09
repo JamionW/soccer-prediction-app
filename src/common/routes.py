@@ -51,7 +51,8 @@ async def get_conference_teams(conference: str):
     if conference not in ["eastern", "western"]:
         raise HTTPException(status_code=400, detail="Conference must be 'eastern' or 'western'")
     
-    teams = await db_manager.get_conference_teams(conference, 2025)
+    conf_id = 1 if conference == "eastern" else 2
+    teams = await db_manager.get_conference_teams(conf_id, 2025)
     standings = await db_manager.calculate_and_store_standings(2025, conference)
     
     return {

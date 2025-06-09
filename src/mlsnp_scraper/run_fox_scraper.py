@@ -51,7 +51,7 @@ def main():
             
             logger.info("Sample fixtures found:")
             for fixture in fixtures[:5]:
-                logger.info(f"  {fixture['date']}: {fixture['home_team']} vs {fixture['away_team']} at {fixture['time']} ({fixture['location']})")
+                logger.info(f"  {fixture['date']}: {fixture['home_team']} vs {fixture['away_team']} at ({fixture['location']})")
             
             if len(fixtures) > 5:
                 logger.info(f"  ... and {len(fixtures) - 5} more")

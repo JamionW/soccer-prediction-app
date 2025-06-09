@@ -2,6 +2,7 @@ import asyncio
 import json
 import logging
 import sys
+import re
 from pathlib import Path
 from datetime import datetime
 from typing import List, Dict, Optional
@@ -104,64 +105,152 @@ class FixtureLoader:
             fixture: Fixture data dictionary
             fixture_num: Fixture number for logging
         """
-        # Validate required fields
-        required_fields = ['date', 'home_team_id', 'away_team_id', 'home_team', 'away_team']
-        missing_fields = [field for field in required_fields if field not in fixture]
-        
-        if missing_fields:
-            raise ValueError(f"Missing required fields: {missing_fields}")
-        
-        # Log what we're processing
-        logger.info(f"Processing fixture {fixture_num}: {fixture['home_team']} vs {fixture['away_team']} on {fixture['date']}")
-        
-        # Ensure both teams exist in the database
-        await self._ensure_team_exists(fixture['home_team_id'], fixture['home_team'])
-        await self._ensure_team_exists(fixture['away_team_id'], fixture['away_team'])
-        
-        # Parse the fixture date
         try:
-            fixture_date = datetime.strptime(fixture['date'], '%Y-%m-%d')
-        except ValueError:
-            raise ValueError(f"Invalid date format: {fixture['date']}")
+            # Validate required fields
+            required_fields = ['date', 'home_team_id', 'away_team_id', 'home_team', 'away_team']
+            missing_fields = [field for field in required_fields if field not in fixture]
+            
+            if missing_fields:
+                raise ValueError(f"Missing required fields: {missing_fields}")
+            
+            # Log what we're processing
+            logger.info(f"Processing fixture {fixture_num}: {fixture['home_team']} vs {fixture['away_team']} on {fixture['date']}")
+            
+            # DEBUG: Print the entire fixture data to see what we're working with
+            logger.debug(f"Full fixture data: {fixture}")
+            
+            # Ensure both teams exist in the database
+            await self._ensure_team_exists(fixture['home_team_id'], fixture['home_team'])
+            await self._ensure_team_exists(fixture['away_team_id'], fixture['away_team'])
+            
+            # Parse the fixture date
+            try:
+                fixture_date = datetime.strptime(fixture['date'], '%Y-%m-%d')
+                logger.debug(f"Parsed date: {fixture_date}, type: {type(fixture_date)}")
+            except ValueError:
+                raise ValueError(f"Invalid date format: {fixture['date']}")
+            
+            # Generate a unique game_id
+            game_id = f"{fixture['home_team_id']}_{fixture['away_team_id']}_{fixture['date']}"
+            logger.debug(f"Generated game_id: {game_id}")
+            
+            # Check if this game already exists
+            existing_game = await self.db_manager.db.fetch_one(
+                "SELECT game_id FROM games WHERE game_id = :game_id",
+                values={"game_id": game_id}
+            )
+            
+            if existing_game:
+                logger.info(f"  → Game already exists in database, skipping")
+                self.stats['fixtures_skipped'] += 1
+                return
+            
+            # Parse scores from the "time" field (which actually contains scores)
+            home_score, away_score, home_penalties, away_penalties = self._parse_score_data(fixture.get('score_or_status', ''))
+            
+            # Determine if game is completed and status
+            status, is_completed = self._determine_game_status(fixture.get('score_or_status', ''))
+            
+            # Determine if it went to shootout
+            went_to_shootout = (is_completed and home_score is not None and away_score is not None and 
+                            home_score == away_score and (home_penalties is not None or away_penalties is not None))
+            
+            # Prepare game data for insertion - ensuring all types are correct
+            game_data = {
+                "game_id": game_id,
+                "date": fixture_date,
+                "status": status,
+                "home_team_id": fixture['home_team_id'],
+                "away_team_id": fixture['away_team_id'],
+                "matchday": int(0),  # Explicitly convert to int
+                "attendance": int(0),  # Explicitly convert to int
+                "is_completed": is_completed,
+                "went_to_shootout": went_to_shootout,
+                "season_year": int(fixture_date.year),  # Explicitly convert to int
+                "expanded_minutes": int(90),  # Explicitly convert to int
+                "home_score": home_score,  # Can be None or int
+                "away_score": away_score,  # Can be None or int
+                "home_penalties": home_penalties,  # Can be None or int
+                "away_penalties": away_penalties  # Can be None or int
+            }
+            
+            # DEBUG: Print game_data with types to identify any remaining issues
+            logger.debug("Game data with types:")
+            for key, value in game_data.items():
+                logger.debug(f"  {key}: {value} (type: {type(value)})")
+            
+            # Insert the game using the existing store_game method
+            logger.debug("About to call store_game...")
+            await self.db_manager.store_game(game_data)
+            
+            logger.info(f"  → Successfully loaded fixture into database")
+            self.stats['fixtures_loaded'] += 1
+            
+        except Exception as e:
+            logger.error(f"Error in _process_fixture: {e}", exc_info=True)
+            self.stats['errors'].append(f"Fixture {fixture_num}: {str(e)}")
+            # Don't re-raise to continue processing other fixtures
+
+    def _parse_score_data(self, time_field: str) -> tuple:
+        """
+        Parse the "time" field which actually contains score data.
         
-        # Generate a unique game_id using the same pattern as DatabaseManager
-        game_id = f"{fixture['home_team_id']}_{fixture['away_team_id']}_{fixture['date']}"
+        Args:
+            time_field: The time field from scraped data (e.g., "4-2", "POSTPONED-", "TBD")
+            
+        Returns:
+            Tuple of (home_score, away_score, home_penalties, away_penalties)
+            All values are either int or None
+        """
+        if not time_field or time_field in ['TBD', 'POSTPONED-', '']:
+            return None, None, None, None
         
-        # Check if this game already exists
-        existing_game = await self.db_manager.db.fetch_one(
-            "SELECT game_id FROM games WHERE game_id = :game_id",
-            values={"game_id": game_id}
-        )
+        # Check for score pattern like "4-2", "0-1", etc.
+        score_pattern = r'^(\d+)-(\d+)$'
+        match = re.match(score_pattern, time_field.strip())
         
-        if existing_game:
-            logger.info(f"  → Game already exists in database, skipping")
-            self.stats['fixtures_skipped'] += 1
-            return
+        if match:
+            try:
+                home_score = int(match.group(1))
+                away_score = int(match.group(2))
+                logger.debug(f"Parsed scores: {home_score}-{away_score}")
+                return home_score, away_score, None, None
+            except ValueError:
+                logger.warning(f"Could not convert scores to integers: {time_field}")
+                return None, None, None, None
         
-        # Prepare game data for insertion
-        game_data = {
-            "game_id": game_id,
-            "date": fixture_date,
-            "status": "scheduled",
-            "home_team_id": fixture['home_team_id'],
-            "away_team_id": fixture['away_team_id'],
-            "matchday": 0,  # Will be updated when ASA data becomes available
-            "attendance": 0,
-            "is_completed": False,
-            "went_to_shootout": False,
-            "season_year": fixture_date.year,
-            "expanded_minutes": 90,
-            "home_score": None,
-            "away_score": None,
-            "home_penalties": None,
-            "away_penalties": None
-        }
+        # If no score pattern matches, treat as future/incomplete game
+        logger.debug(f"No score pattern found in: {time_field}")
+        return None, None, None, None
+
+    def _determine_game_status(self, time_field: str) -> tuple:
+        """
+        Determine game status and completion based on the time field.
         
-        # Insert the game using the existing store_game method
-        await self.db_manager.store_game(game_data)
+        Args:
+            time_field: The time field from scraped data
+            
+        Returns:
+            Tuple of (status, is_completed)
+        """
+        if not time_field:
+            return "scheduled", False
         
-        logger.info(f"  → Successfully loaded fixture into database")
-        self.stats['fixtures_loaded'] += 1
+        time_field = time_field.strip().upper()
+        
+        if 'POSTPONED' in time_field:
+            return "postponed", False
+        elif time_field in ['TBD', '']:
+            return "scheduled", False
+        elif re.match(r'^\d+-\d+$', time_field):
+            # Has a score, so it's completed
+            return "final", True
+        elif ':' in time_field and ('PM' in time_field or 'AM' in time_field):
+            # Looks like a future game time
+            return "scheduled", False
+        else:
+            # Default case - might be a future game with unusual time format
+            return "scheduled", False
     
     async def _ensure_team_exists(self, team_id: str, team_name: str):
         """
