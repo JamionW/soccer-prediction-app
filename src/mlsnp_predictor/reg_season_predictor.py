@@ -477,49 +477,57 @@ class MLSNPRegSeasonPredictor:
         return 7.0  # Default
 
     def _simulate_game(self, game: Dict) -> Tuple[int, int, bool]:
-        """Simulates a single game using either ML model or traditional method."""
-        home_id, away_id = game["home_team_id"], game["away_team_id"]
-        
-        if self.use_automl and self.ml_model:
-            # Use ML model for prediction
-            home_features = self._extract_features(
-                team_id=home_id,
-                opponent_id=away_id,
-                is_home=True,
-                game_date=game.get('date'),
-                games_before=self.games_data
-            )
+        """Simulates a single game and returns score and shootout status."""
+        try:
+            home_id = game.get("home_team_id")
+            away_id = game.get("away_team_id")
             
-            away_features = self._extract_features(
-                team_id=away_id,
-                opponent_id=home_id,
-                is_home=False,
-                game_date=game.get('date'),
-                games_before=self.games_data
-            )
+            # Add validation to prevent None values
+            if not home_id or not away_id:
+                logger.warning(f"Invalid team IDs in game: home={home_id}, away={away_id}")
+                return (1, 1, False)  # Default to 1-1 draw
             
-            # Convert to DataFrame for prediction
-            home_df = pd.DataFrame([home_features])
-            away_df = pd.DataFrame([away_features])
-            
+            # Get team strengths with proper error handling
             try:
-                # Get predictions based on library
-                if AUTOML_LIBRARY == "autogluon":
-                    home_exp_goals = max(0.1, self.ml_model.predict(home_df).iloc[0])
-                    away_exp_goals = max(0.1, self.ml_model.predict(away_df).iloc[0])
-                elif AUTOML_LIBRARY == "sklearn":
-                    # Ensure columns match training
-                    home_df = home_df[self._feature_names]
-                    away_df = away_df[self._feature_names]
-                    home_exp_goals = max(0.1, self.ml_model.predict(home_df)[0])
-                    away_exp_goals = max(0.1, self.ml_model.predict(away_df)[0])
-                    
+                home_attack, home_defense = self._get_team_strength(home_id)
+                away_attack, away_defense = self._get_team_strength(away_id)
             except Exception as e:
-                logger.warning(f"ML prediction failed, falling back to traditional method: {e}")
-                return self._simulate_game_traditional(game)
-        else:
-            # Use traditional method
-            return self._simulate_game_traditional(game)
+                logger.warning(f"Error getting team strength for {home_id} vs {away_id}: {e}")
+                # Use default values
+                home_attack = home_defense = away_attack = away_defense = 1.0
+            
+            # Calculate expected goals for this matchup with safety checks
+            try:
+                home_exp_goals = max(0.1, home_attack * away_defense * self.league_avg_xgf)
+                away_exp_goals = max(0.1, away_attack * home_defense * self.league_avg_xga)
+            except (TypeError, ValueError) as e:
+                logger.warning(f"Error calculating expected goals: {e}")
+                home_exp_goals = away_exp_goals = 1.0
+            
+            # Get result from Poisson distribution with error handling
+            try:
+                home_goals = np.random.poisson(home_exp_goals)
+                away_goals = np.random.poisson(away_exp_goals)
+            except (ValueError, TypeError) as e:
+                logger.warning(f"Error in Poisson generation: {e}")
+                home_goals = away_goals = 1
+            
+            # Handle shootouts
+            went_to_shootout = False
+            if home_goals == away_goals:
+                went_to_shootout = True
+                # Simple coin flip for shootout winner
+                if np.random.rand() > 0.5:
+                    home_goals += 1  # Representing a shootout win
+                else:
+                    away_goals += 1
+            
+            return home_goals, away_goals, went_to_shootout
+            
+        except Exception as e:
+            logger.error(f"Critical error in _simulate_game: {e}")
+            # Return safe default values instead of None
+            return (1, 1, False)
 
     def _simulate_game_traditional(self, game: Dict) -> Tuple[int, int, bool]:
         """Traditional simulation method (fallback)."""
@@ -547,19 +555,34 @@ class MLSNPRegSeasonPredictor:
         return home_goals, away_goals, went_to_shootout
 
     def _get_team_strength(self, team_id: str) -> Tuple[float, float]:
-        """Gets a team's offensive and defensive strength, falling back to league average."""
-        stats = self.team_performance.get(team_id)
-        if stats and stats.get('games_played', 0) > 0:
-            # Use xG if available, otherwise fall back to goals
-            attack_metric = stats.get('x_goals_for', stats.get('goals_for', 0))
-            defend_metric = stats.get('x_goals_against', stats.get('goals_against', 0))
-            games_played = stats['games_played']
+        """Gets a team's offensive and defensive strength, with improved error handling."""
+        try:
+            stats = self.team_performance.get(team_id)
+            if stats and stats.get('games_played', 0) > 0:
+                # Use xG if available, otherwise fall back to goals
+                attack_metric = stats.get('x_goals_for', stats.get('goals_for', 0))
+                defend_metric = stats.get('x_goals_against', stats.get('goals_against', 0))
+                games_played = stats['games_played']
+                
+                # Safety checks for division by zero
+                if games_played == 0:
+                    return 1.0, 1.0
+                    
+                # Safety checks for league averages
+                safe_league_avg_xgf = max(0.1, self.league_avg_xgf) if self.league_avg_xgf else 1.2
+                safe_league_avg_xga = max(0.1, self.league_avg_xga) if self.league_avg_xga else 1.2
+                
+                attack_strength = max(0.1, (attack_metric / games_played) / safe_league_avg_xgf)
+                defend_strength = max(0.1, (defend_metric / games_played) / safe_league_avg_xga)
+                
+                return attack_strength, defend_strength
             
-            attack_strength = (attack_metric / games_played) / self.league_avg_xgf
-            defend_strength = (defend_metric / games_played) / self.league_avg_xga
-            return attack_strength, defend_strength
+            return 1.0, 1.0  # Fallback to league average strength
         
-        return 1.0, 1.0 # Fallback to league average strength
+        except Exception as e:
+            logger.warning(f"Error calculating team strength for {team_id}: {e}")
+
+        return 1.0, 1.0  # Safe fallback
 
     def run_simulations(self, n_simulations: int) -> Tuple[pd.DataFrame, Dict, pd.DataFrame, Dict]:
         """

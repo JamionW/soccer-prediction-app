@@ -13,6 +13,7 @@ import numpy as np
 from collections import defaultdict
 import json
 from src.mlsnp_predictor.constants import EASTERN_CONFERENCE_TEAMS, WESTERN_CONFERENCE_TEAMS
+from datetime import datetime, timedelta, timezone
 
 logger = logging.getLogger(__name__)
 
@@ -374,7 +375,7 @@ class DatabaseManager:
         
         # Check if data is fresh (less than 1 day old)
         if xg_data:
-            data_age = datetime.now() - xg_data['date_captured']
+            data_age = datetime.now(timezone.utc) - xg_data['date_captured']
             if data_age < timedelta(days=1):
                 return dict(xg_data)
         
