@@ -1,0 +1,5 @@
+AutoGluon Model Detailed Report
+======================================================================
+Model path: models/xg_predictor_eastern_202506.pkl
+
+Model Information:

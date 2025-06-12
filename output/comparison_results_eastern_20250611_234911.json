@@ -1,0 +1,397 @@
+{
+  "run_info": {
+    "conference": "eastern",
+    "n_simulations": 1000,
+    "run_date": "2025-06-11T23:49:11.921205",
+    "completed_games": 164,
+    "league_averages": {
+      "league_avg_xgf": 1.2,
+      "league_avg_xga": 1.2
+    }
+  },
+  "comparison": [
+    {
+      "team": "Philadelphia Union II",
+      "current_points": 12,
+      "trad_playoff": 100.0,
+      "ml_playoff": 100.0,
+      "difference": 0.0
+    },
+    {
+      "team": "Chattanooga FC",
+      "current_points": 24,
+      "trad_playoff": 99.9,
+      "ml_playoff": 100.0,
+      "difference": 0.09999999999999432
+    },
+    {
+      "team": "New York Red Bulls II",
+      "current_points": 24,
+      "trad_playoff": 99.9,
+      "ml_playoff": 100.0,
+      "difference": 0.09999999999999432
+    },
+    {
+      "team": "Huntsville City FC",
+      "current_points": 12,
+      "trad_playoff": 99.8,
+      "ml_playoff": 99.7,
+      "difference": -0.09999999999999432
+    },
+    {
+      "team": "Chicago Fire FC II",
+      "current_points": 15,
+      "trad_playoff": 94.0,
+      "ml_playoff": 94.5,
+      "difference": 0.5
+    },
+    {
+      "team": "Orlando City B",
+      "current_points": 18,
+      "trad_playoff": 72.1,
+      "ml_playoff": 70.3,
+      "difference": -1.7999999999999972
+    },
+    {
+      "team": "New York City FC II",
+      "current_points": 18,
+      "trad_playoff": 71.8,
+      "ml_playoff": 68.30000000000001,
+      "difference": -3.499999999999986
+    },
+    {
+      "team": "New England Revolution II",
+      "current_points": 9,
+      "trad_playoff": 60.3,
+      "ml_playoff": 60.5,
+      "difference": 0.20000000000000284
+    },
+    {
+      "team": "Carolina Core",
+      "current_points": 6,
+      "trad_playoff": 41.699999999999996,
+      "ml_playoff": 40.5,
+      "difference": -1.1999999999999957
+    },
+    {
+      "team": "Crown Legacy FC",
+      "current_points": 9,
+      "trad_playoff": 21.6,
+      "ml_playoff": 27.400000000000002,
+      "difference": 5.800000000000001
+    },
+    {
+      "team": "Inter Miami CF II",
+      "current_points": 12,
+      "trad_playoff": 15.6,
+      "ml_playoff": 14.299999999999999,
+      "difference": -1.3000000000000007
+    },
+    {
+      "team": "Toronto FC II",
+      "current_points": 12,
+      "trad_playoff": 13.100000000000001,
+      "ml_playoff": 14.2,
+      "difference": 1.0999999999999979
+    },
+    {
+      "team": "Atlanta United 2",
+      "current_points": 6,
+      "trad_playoff": 9.1,
+      "ml_playoff": 8.7,
+      "difference": -0.40000000000000036
+    },
+    {
+      "team": "Columbus Crew 2",
+      "current_points": 6,
+      "trad_playoff": 1.0999999999999999,
+      "ml_playoff": 1.5,
+      "difference": 0.40000000000000013
+    },
+    {
+      "team": "FC Cincinnati 2",
+      "current_points": 3,
+      "trad_playoff": 0.0,
+      "ml_playoff": 0.1,
+      "difference": 0.1
+    }
+  ],
+  "traditional_results": [
+    {
+      "Team": "Philadelphia Union II",
+      "_team_id": "KPqjwN4Q6v",
+      "Current Points": 12,
+      "Games Played": 5,
+      "Playoff Qualification %": 100.0,
+      "Average Final Rank": 1.125,
+      "Average Points": 65.245
+    },
+    {
+      "Team": "Chattanooga FC",
+      "_team_id": "raMyeZAMd2",
+      "Current Points": 24,
+      "Games Played": 10,
+      "Playoff Qualification %": 99.9,
+      "Average Final Rank": 3.169,
+      "Average Points": 52.607
+    },
+    {
+      "Team": "New York Red Bulls II",
+      "_team_id": "9Yqdwg85vJ",
+      "Current Points": 24,
+      "Games Played": 10,
+      "Playoff Qualification %": 99.9,
+      "Average Final Rank": 2.616,
+      "Average Points": 55.227
+    },
+    {
+      "Team": "Huntsville City FC",
+      "_team_id": "OlMlKDEQLz",
+      "Current Points": 12,
+      "Games Played": 7,
+      "Playoff Qualification %": 99.8,
+      "Average Final Rank": 3.763,
+      "Average Points": 49.639
+    },
+    {
+      "Team": "Chicago Fire FC II",
+      "_team_id": "0x5gb3bM7O",
+      "Current Points": 15,
+      "Games Played": 9,
+      "Playoff Qualification %": 94.0,
+      "Average Final Rank": 5.362,
+      "Average Points": 44.245
+    },
+    {
+      "Team": "Orlando City B",
+      "_team_id": "kRQaW3L5KZ",
+      "Current Points": 18,
+      "Games Played": 11,
+      "Playoff Qualification %": 72.1,
+      "Average Final Rank": 7.464,
+      "Average Points": 38.088
+    },
+    {
+      "Team": "New York City FC II",
+      "_team_id": "jYQJXkP5GR",
+      "Current Points": 18,
+      "Games Played": 12,
+      "Playoff Qualification %": 71.8,
+      "Average Final Rank": 7.609,
+      "Average Points": 37.282
+    },
+    {
+      "Team": "New England Revolution II",
+      "_team_id": "gpMO1Pyqzy",
+      "Current Points": 9,
+      "Games Played": 7,
+      "Playoff Qualification %": 60.3,
+      "Average Final Rank": 8.047,
+      "Average Points": 36.369
+    },
+    {
+      "Team": "Carolina Core",
+      "_team_id": "NWMWJezQlz",
+      "Current Points": 6,
+      "Games Played": 5,
+      "Playoff Qualification %": 41.699999999999996,
+      "Average Final Rank": 9.189,
+      "Average Points": 33.678
+    },
+    {
+      "Team": "Crown Legacy FC",
+      "_team_id": "a35reDLML6",
+      "Current Points": 9,
+      "Games Played": 7,
+      "Playoff Qualification %": 21.6,
+      "Average Final Rank": 10.295,
+      "Average Points": 31.214
+    },
+    {
+      "Team": "Inter Miami CF II",
+      "_team_id": "vzqowoZqap",
+      "Current Points": 12,
+      "Games Played": 11,
+      "Playoff Qualification %": 15.6,
+      "Average Final Rank": 10.825,
+      "Average Points": 30.16
+    },
+    {
+      "Team": "Toronto FC II",
+      "_team_id": "4JMAkpDqKg",
+      "Current Points": 12,
+      "Games Played": 9,
+      "Playoff Qualification %": 13.100000000000001,
+      "Average Final Rank": 11.127,
+      "Average Points": 29.457
+    },
+    {
+      "Team": "Atlanta United 2",
+      "_team_id": "wvq9jx1QWn",
+      "Current Points": 6,
+      "Games Played": 6,
+      "Playoff Qualification %": 9.1,
+      "Average Final Rank": 11.63,
+      "Average Points": 27.869
+    },
+    {
+      "Team": "Columbus Crew 2",
+      "_team_id": "0Oq6Yad56D",
+      "Current Points": 6,
+      "Games Played": 7,
+      "Playoff Qualification %": 1.0999999999999999,
+      "Average Final Rank": 13.204,
+      "Average Points": 24.092
+    },
+    {
+      "Team": "FC Cincinnati 2",
+      "_team_id": "gpMOXy25zy",
+      "Current Points": 3,
+      "Games Played": 8,
+      "Playoff Qualification %": 0.0,
+      "Average Final Rank": 14.575,
+      "Average Points": 17.828
+    }
+  ],
+  "ml_results": [
+    {
+      "Team": "Philadelphia Union II",
+      "_team_id": "KPqjwN4Q6v",
+      "Current Points": 12,
+      "Games Played": 5,
+      "Playoff Qualification %": 100.0,
+      "Average Final Rank": 1.111,
+      "Average Points": 65.099
+    },
+    {
+      "Team": "New York Red Bulls II",
+      "_team_id": "9Yqdwg85vJ",
+      "Current Points": 24,
+      "Games Played": 10,
+      "Playoff Qualification %": 100.0,
+      "Average Final Rank": 2.596,
+      "Average Points": 55.338
+    },
+    {
+      "Team": "Chattanooga FC",
+      "_team_id": "raMyeZAMd2",
+      "Current Points": 24,
+      "Games Played": 10,
+      "Playoff Qualification %": 100.0,
+      "Average Final Rank": 3.186,
+      "Average Points": 52.654
+    },
+    {
+      "Team": "Huntsville City FC",
+      "_team_id": "OlMlKDEQLz",
+      "Current Points": 12,
+      "Games Played": 7,
+      "Playoff Qualification %": 99.7,
+      "Average Final Rank": 3.809,
+      "Average Points": 49.734
+    },
+    {
+      "Team": "Chicago Fire FC II",
+      "_team_id": "0x5gb3bM7O",
+      "Current Points": 15,
+      "Games Played": 9,
+      "Playoff Qualification %": 94.5,
+      "Average Final Rank": 5.303,
+      "Average Points": 44.582
+    },
+    {
+      "Team": "Orlando City B",
+      "_team_id": "kRQaW3L5KZ",
+      "Current Points": 18,
+      "Games Played": 11,
+      "Playoff Qualification %": 70.3,
+      "Average Final Rank": 7.507,
+      "Average Points": 37.977
+    },
+    {
+      "Team": "New York City FC II",
+      "_team_id": "jYQJXkP5GR",
+      "Current Points": 18,
+      "Games Played": 12,
+      "Playoff Qualification %": 68.30000000000001,
+      "Average Final Rank": 7.709,
+      "Average Points": 36.975
+    },
+    {
+      "Team": "New England Revolution II",
+      "_team_id": "gpMO1Pyqzy",
+      "Current Points": 9,
+      "Games Played": 7,
+      "Playoff Qualification %": 60.5,
+      "Average Final Rank": 8.038,
+      "Average Points": 36.406
+    },
+    {
+      "Team": "Carolina Core",
+      "_team_id": "NWMWJezQlz",
+      "Current Points": 6,
+      "Games Played": 5,
+      "Playoff Qualification %": 40.5,
+      "Average Final Rank": 9.23,
+      "Average Points": 33.577
+    },
+    {
+      "Team": "Crown Legacy FC",
+      "_team_id": "a35reDLML6",
+      "Current Points": 9,
+      "Games Played": 7,
+      "Playoff Qualification %": 27.400000000000002,
+      "Average Final Rank": 10.172,
+      "Average Points": 31.499
+    },
+    {
+      "Team": "Inter Miami CF II",
+      "_team_id": "vzqowoZqap",
+      "Current Points": 12,
+      "Games Played": 11,
+      "Playoff Qualification %": 14.299999999999999,
+      "Average Final Rank": 10.909,
+      "Average Points": 29.968
+    },
+    {
+      "Team": "Toronto FC II",
+      "_team_id": "4JMAkpDqKg",
+      "Current Points": 12,
+      "Games Played": 9,
+      "Playoff Qualification %": 14.2,
+      "Average Final Rank": 10.927,
+      "Average Points": 29.918
+    },
+    {
+      "Team": "Atlanta United 2",
+      "_team_id": "wvq9jx1QWn",
+      "Current Points": 6,
+      "Games Played": 6,
+      "Playoff Qualification %": 8.7,
+      "Average Final Rank": 11.69,
+      "Average Points": 27.769
+    },
+    {
+      "Team": "Columbus Crew 2",
+      "_team_id": "0Oq6Yad56D",
+      "Current Points": 6,
+      "Games Played": 7,
+      "Playoff Qualification %": 1.5,
+      "Average Final Rank": 13.225,
+      "Average Points": 23.888
+    },
+    {
+      "Team": "FC Cincinnati 2",
+      "_team_id": "gpMOXy25zy",
+      "Current Points": 3,
+      "Games Played": 8,
+      "Playoff Qualification %": 0.1,
+      "Average Final Rank": 14.588,
+      "Average Points": 17.616
+    }
+  ],
+  "model_info": {
+    "ml_available": true,
+    "ml_model_path": "models/xg_predictor_eastern_202506.pkl"
+  }
+}

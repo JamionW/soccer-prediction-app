@@ -327,17 +327,39 @@ class MLSNPRegSeasonPredictor:
         return 1.0, 1.0 # Fallback to league average strength
 
     def _calculate_form(self, team_id: str, before_date: str, games: List[Dict], 
-                       n_games: int = 5) -> Dict[str, float]:
+                   n_games: int = 5) -> Dict[str, float]:
         """Calculate recent form statistics for a team."""
         recent_games = []
+        
+        # Convert before_date to datetime if it's a string
+        if isinstance(before_date, str):
+            try:
+                before_date_dt = pd.to_datetime(before_date)
+            except:
+                before_date_dt = before_date
+        else:
+            before_date_dt = before_date
         
         for game in reversed(games):  # Most recent first
             if not game.get('is_completed'):
                 continue
                 
             game_date = game.get('date')
-            if game_date and before_date and game_date >= before_date:
-                continue
+            
+            # Ensure game_date is comparable
+            if game_date and before_date_dt:
+                # Convert game_date to datetime if needed
+                if isinstance(game_date, str):
+                    try:
+                        game_date_dt = pd.to_datetime(game_date)
+                    except:
+                        continue
+                else:
+                    game_date_dt = game_date
+                
+                # Skip games on or after the before_date
+                if game_date_dt >= before_date_dt:
+                    continue
                 
             if game['home_team_id'] == team_id or game['away_team_id'] == team_id:
                 recent_games.append(game)
