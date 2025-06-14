@@ -1,4 +1,4 @@
-# Soccer Table and Playoff Predictor API (Updated: 2025-06-06)
+# Soccer Table and Playoff Predictor API (Updated: 2024-06-13)
 
 This API provides a method for simulating soccer league seasons (specifically only MLS Next Pro at the moment), predicting standings, and running playoff simulations.
 
@@ -69,7 +69,9 @@ This allows users to predict regular season outcomes and playoff brackets.
 
 4.  **Regular Season Simulation (`MLSNPRegSeasonPredictor`)**:
     *   Users can choose to run a single conference or both.
+    *   Performs data quality checks on input game data to identify potential inconsistencies.
     *   Takes conference details, team data, game schedules, and league averages as input.
+    *   Key simulation parameters, such as home-field advantage in shootouts (e.g., `HOME_SHOOTOUT_WIN_PROB`), are defined as configurable constants within the predictor.
     *   Runs Monte Carlo simulations for the remainder of the season.
     *   Outputs predicted standings, playoff qualification odds, and other metrics.
     *   Results are stored in the database.
@@ -77,6 +79,9 @@ This allows users to predict regular season outcomes and playoff brackets.
 5.  **Playoff Simulation (`MLSNPPlayoffPredictor`)**:
     *   Can be run with seeding derived from a regular season simulation or with manually provided seeds.
     *   Uses team performance metrics (like xG) and regular season records (for home-field advantage) to simulate playoff rounds.
+    *   Home-field advantage is applied through mechanisms such as an xG boost for the home team (e.g., `HOME_ADVANTAGE_XG_MULTIPLIER`) and an increased probability of winning shootouts (`HOME_TEAM_SHOOTOUT_WIN_PROB`).
+    *   Opponent selection in applicable rounds is determined by a weighted system considering head-to-head records, recent team form, and seeding.
+    *   These simulation parameters and weights are defined as configurable constants.
     *   Outputs probabilities for teams advancing through each round and winning the championship.
     *   Results are stored in the database.
 
@@ -133,8 +138,8 @@ All endpoints are relative to the base URL of the API.
 ### Simulation Result Routes
 
 *   **`GET /simulations/{simulation_id}`**
-    *   **Purpose**: Retrieves the status and results of a specific simulation.
-    *   **Authentication**: Public (assumed, for accessing results via a known ID).
+    *   **Purpose**: Retrieves the status and results of a specific simulation from the in-memory cache. This endpoint is public if the simulation ID is known.
+    *   **Authentication**: None (public if ID is known).
 
 ### Data Management Routes
 

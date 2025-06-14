@@ -47,7 +47,7 @@ class TestCommonUtils(unittest.TestCase):
         # An empty dict {} is True in boolean context, so it should be wrapped in a list.
         mock_api_func = MagicMock(return_value={})
         result = safe_api_call(mock_api_func)
-        self.assertEqual(result, []) # Changed from [{}] to [] to match actual behavior
+        self.assertEqual(result, [{}]) # Corrected: An empty dict is truthy and should be wrapped.
         mock_api_func.assert_called_once_with()
 
     @patch('src.common.utils.logger.error') # Patching the logger in the utils module
@@ -87,3 +87,4 @@ class TestCommonUtils(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+```

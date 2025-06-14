@@ -22,11 +22,14 @@ class MLSNPPlayoffPredictor:
             league_avg_xga: League average expected goals against.
             regular_season_records: Regular season records for determining home field advantage
         """
+        logger.info("Initializing MLSNPPlayoffPredictor.")
         self.games_data = games_data
         self.team_performance = team_performance
         self.league_avg_xgf = league_avg_xgf if league_avg_xgf > 0.05 else 1.2
         self.league_avg_xga = league_avg_xga if league_avg_xga > 0.05 else 1.2
         self.regular_season_records = regular_season_records or {}
+        logger.info(f"Playoff Predictor initialized with {len(games_data)} games, {len(team_performance)} teams' performance data.")
+        logger.info(f"League averages for Playoff predictor: xGF={self.league_avg_xgf:.2f}, xGA={self.league_avg_xga:.2f}")
         
         # Cache for head-to-head records
         self.h2h_cache = {}
@@ -40,6 +43,11 @@ class MLSNPPlayoffPredictor:
             'worst_form': 0.3,   # 30% - Pick opponent in worst form
             'lowest_seed': 0.2   # 20% - Pick lowest seed
         }
+        # Simulation constants
+        self.HOME_ADVANTAGE_XG_MULTIPLIER = 1.10  # Home team gets a 10% xG boost
+        self.HOME_TEAM_SHOOTOUT_WIN_PROB = 0.55 # Home team has 55% chance of winning shootout
+        self.NEUTRAL_SITE_SHOOTOUT_WIN_PROB = 0.50 # Neutral site shootout is 50/50
+        logger.info(f"Playoff sim constants: Home Adv xG Mult={self.HOME_ADVANTAGE_XG_MULTIPLIER}, Home SO Prob={self.HOME_TEAM_SHOOTOUT_WIN_PROB}, Neutral SO Prob={self.NEUTRAL_SITE_SHOOTOUT_WIN_PROB}")
     
     def determine_championship_home_team(self, east_champ_id: str, west_champ_id: str) -> Tuple[str, str]:
         """
@@ -61,54 +69,50 @@ class MLSNPPlayoffPredictor:
         
         # If we don't have records, fall back to coin flip
         if not east_record or not west_record:
-            logger.warning(f"Missing regular season records for championship. Using coin flip.")
-            if np.random.random() < 0.5:
-                return east_champ_id, west_champ_id
-            else:
-                return west_champ_id, east_champ_id
+            logger.warning(f"Missing regular season records for championship between {east_champ_id} and {west_champ_id}. Using coin flip.")
+            home_team, away_team = (east_champ_id, west_champ_id) if np.random.random() < 0.5 else (west_champ_id, east_champ_id)
+            logger.info(f"Championship home team determined by coin flip: {home_team} (home) vs {away_team} (away)")
+            return home_team, away_team
+
+        reason = "N/A"
+        home_team, away_team = east_champ_id, west_champ_id # Default assignment if all tiebreakers pass (should be rare)
         
         # Compare records using tiebreakers
         # 1. Total points (use average final points for better accuracy)
         east_points = east_record.get('average_final_points', east_record.get('points', 0))
         west_points = west_record.get('average_final_points', west_record.get('points', 0))
-        
-        if east_points > west_points:
-            return east_champ_id, west_champ_id
-        elif west_points > east_points:
-            return west_champ_id, east_champ_id
-        
-        # 2. Total wins
-        east_wins = east_record.get('wins', 0)
-        west_wins = west_record.get('wins', 0)
-        
-        if east_wins > west_wins:
-            return east_champ_id, west_champ_id
-        elif west_wins > east_wins:
-            return west_champ_id, east_champ_id
-        
-        # 3. Goal difference
-        east_gd = east_record.get('goal_difference', 0)
-        west_gd = west_record.get('goal_difference', 0)
-        
-        if east_gd > west_gd:
-            return east_champ_id, west_champ_id
-        elif west_gd > east_gd:
-            return west_champ_id, east_champ_id
-        
-        # 4. Goals for
-        east_gf = east_record.get('goals_for', 0)
-        west_gf = west_record.get('goals_for', 0)
-        
-        if east_gf > west_gf:
-            return east_champ_id, west_champ_id
-        elif west_gf > east_gf:
-            return west_champ_id, east_champ_id
-        
-        # 5. Coin flip
-        if np.random.random() < 0.5:
-            return east_champ_id, west_champ_id
+        logger.debug(f"Championship HFA check: {east_champ_id} pts={east_points} vs {west_champ_id} pts={west_points}")
+        if east_points > west_points: reason = "points"; home_team, away_team = east_champ_id, west_champ_id
+        elif west_points > east_points: reason = "points"; home_team, away_team = west_champ_id, east_champ_id
         else:
-            return west_champ_id, east_champ_id
+            # 2. Total wins
+            east_wins = east_record.get('wins', 0)
+            west_wins = west_record.get('wins', 0)
+            logger.debug(f"Championship HFA check (tie on pts): {east_champ_id} wins={east_wins} vs {west_champ_id} wins={west_wins}")
+            if east_wins > west_wins: reason = "wins"; home_team, away_team = east_champ_id, west_champ_id
+            elif west_wins > east_wins: reason = "wins"; home_team, away_team = west_champ_id, east_champ_id
+            else:
+                # 3. Goal difference
+                east_gd = east_record.get('goal_difference', 0)
+                west_gd = west_record.get('goal_difference', 0)
+                logger.debug(f"Championship HFA check (tie on wins): {east_champ_id} GD={east_gd} vs {west_champ_id} GD={west_gd}")
+                if east_gd > west_gd: reason = "GD"; home_team, away_team = east_champ_id, west_champ_id
+                elif west_gd > east_gd: reason = "GD"; home_team, away_team = west_champ_id, east_champ_id
+                else:
+                    # 4. Goals for
+                    east_gf = east_record.get('goals_for', 0)
+                    west_gf = west_record.get('goals_for', 0)
+                    logger.debug(f"Championship HFA check (tie on GD): {east_champ_id} GF={east_gf} vs {west_champ_id} GF={west_gf}")
+                    if east_gf > west_gf: reason = "GF"; home_team, away_team = east_champ_id, west_champ_id
+                    elif west_gf > east_gf: reason = "GF"; home_team, away_team = west_champ_id, east_champ_id
+                    else:
+                        # 5. Coin flip
+                        reason = "coin_flip"
+                        home_team, away_team = (east_champ_id, west_champ_id) if np.random.random() < 0.5 else (west_champ_id, east_champ_id)
+                        logger.debug(f"Championship HFA check (tie on GF): Using coin flip.")
+
+        logger.info(f"Championship home team determined: {home_team} (home) vs {away_team} (away) based on {reason}")
+        return home_team, away_team
     
     def calculate_head_to_head_rating(self, team_id: str, opponent_id: str) -> float:
         """
@@ -169,7 +173,6 @@ class MLSNPPlayoffPredictor:
             h2h_goal_differential = (team_xgf - team_xga) - (opp_xgf - opp_xga)
             logger.debug(f"No H2H games for {team_id} vs {opponent_id}. Using season xG diff: {h2h_goal_differential:.2f}")
 
-        self.h2h_cache[cache_key] = h2h_goal_differential
         self.h2h_cache[cache_key] = h2h_goal_differential
         return h2h_goal_differential
     
@@ -311,57 +314,59 @@ class MLSNPPlayoffPredictor:
         logger.debug(f"{selecting_team} selected {selected} using {selection_method} method")
         return selected, selection_method
     
-    def simulate_match(self, team1_id: str, team2_id: str, 
-                      is_neutral_site: bool = True) -> Tuple[str, int, int]:
+    def simulate_match(self, home_team_id: str, away_team_id: str,
+                      is_neutral_site: bool = False) -> Tuple[str, int, int]:
         """
         Simulate a playoff match between two teams.
         
         Args:
-            team1_id: First team ID
-            team2_id: Second team ID
-            is_neutral_site: Whether match is at neutral site (no home advantage)
+            home_team_id: ID of the designated home team.
+            away_team_id: ID of the designated away team.
+            is_neutral_site: Whether match is at neutral site (no home advantage effects).
             
         Returns:
-            Tuple of (winner_id, team1_score, team2_score)
+            Tuple of (winner_id, home_score, away_score)
         """
-        # Get team performance metrics
-        team1_perf = self.team_performance.get(team1_id, {})
-        team2_perf = self.team_performance.get(team2_id, {})
-        
-        # Calculate expected goals
-        team1_xg = team1_perf.get('xgf_per_game', self.league_avg_xgf)
-        team2_xg = team2_perf.get('xgf_per_game', self.league_avg_xgf)
-        
-        # Adjust for defensive strength using league averages passed in __init__
-        # Defensive ratio: opponent_xga / league_avg_xga. If ratio < 1, opponent is good defensively.
-        team1_def_ratio_adj = team2_perf.get('xga_per_game', self.league_avg_xga) / self.league_avg_xga
-        team2_def_ratio_adj = team1_perf.get('xga_per_game', self.league_avg_xga) / self.league_avg_xga
+        logger.debug(f"Simulating match: Home={home_team_id}, Away={away_team_id}, Neutral={is_neutral_site}")
+        home_perf = self.team_performance.get(home_team_id, {})
+        away_perf = self.team_performance.get(away_team_id, {})
 
-        team1_xg_adjusted = team1_xg * team1_def_ratio_adj
-        team2_xg_adjusted = team2_xg * team2_def_ratio_adj
+        home_attack_strength = home_perf.get('xgf_per_game', self.league_avg_xgf)
+        away_attack_strength = away_perf.get('xgf_per_game', self.league_avg_xgf)
+
+        home_exp_goals_adj_vs_away_def = away_perf.get('xga_per_game', self.league_avg_xga) / self.league_avg_xga
+        away_exp_goals_adj_vs_home_def = home_perf.get('xga_per_game', self.league_avg_xga) / self.league_avg_xga
+
+        home_exp_goals = home_attack_strength * home_exp_goals_adj_vs_away_def
+        away_exp_goals = away_attack_strength * away_exp_goals_adj_vs_home_def
         
-        # Apply home advantage if not a neutral site
-        # This assumes team1_id is the designated home team if not neutral
         if not is_neutral_site:
-            # Using a multiplier here for simplicity, can be tuned.
-            team1_xg_adjusted *= 1.1  # Chose a 10% boost for home team's xG
+            home_exp_goals *= self.HOME_ADVANTAGE_XG_MULTIPLIER
 
-        # Ensure xG is not negative and has a minimum floor
-        team1_xg_adjusted = max(0.05, team1_xg_adjusted)
-        team2_xg_adjusted = max(0.05, team2_xg_adjusted)
+        logger.debug(f"Match xG before floor: HomeID={home_team_id}, HomeExp={home_exp_goals:.2f}, AwayID={away_team_id}, AwayExp={away_exp_goals:.2f}")
+        home_exp_goals = max(0.05, home_exp_goals)
+        away_exp_goals = max(0.05, away_exp_goals)
+        logger.debug(f"Match xG after floor: HomeID={home_team_id}, HomeExp={home_exp_goals:.2f}, AwayID={away_team_id}, AwayExp={away_exp_goals:.2f}")
 
-        # Simulate goals
-        team1_goals = np.random.poisson(team1_xg_adjusted)
-        team2_goals = np.random.poisson(team2_xg_adjusted)
-        
-        # Handle draws with penalty shootout
-        if team1_goals == team2_goals:
-            # 55-45 chance in penalties for home to win
-            winner = team1_id if np.random.random() > 0.45 else team2_id
+        home_goals = np.random.poisson(home_exp_goals)
+        away_goals = np.random.poisson(away_exp_goals)
+
+        shootout_occurred = False
+        if home_goals == away_goals:
+            shootout_occurred = True
+            if is_neutral_site:
+                shootout_home_win_prob = self.NEUTRAL_SITE_SHOOTOUT_WIN_PROB
+                logger.debug(f"Shootout on neutral site. Home ({home_team_id}) win prob: {shootout_home_win_prob:.2f}")
+            else:
+                shootout_home_win_prob = self.HOME_TEAM_SHOOTOUT_WIN_PROB
+                logger.debug(f"Shootout at home team's ({home_team_id}) venue. Win prob: {shootout_home_win_prob:.2f}")
+
+            winner = home_team_id if np.random.random() < shootout_home_win_prob else away_team_id
         else:
-            winner = team1_id if team1_goals > team2_goals else team2_id
+            winner = home_team_id if home_goals > away_goals else away_team_id
         
-        return winner, team1_goals, team2_goals
+        logger.debug(f"Match result: {home_team_id} {home_goals} - {away_goals} {away_team_id}. Winner: {winner}. Shootout: {shootout_occurred}")
+        return winner, home_goals, away_goals
     
     def simulate_single_playoff(self, eastern_seeds: Dict[str, int], 
                                western_seeds: Dict[str, int]) -> Dict:
@@ -376,10 +381,12 @@ class MLSNPPlayoffPredictor:
         
         # Simulate each conference
         for conf, seeds in [('eastern', eastern_seeds), ('western', western_seeds)]:
+            logger.info(f"Simulating {conf} conference playoffs...")
             # Create reverse mapping (seed -> team_id)
             seed_to_team = {v: k for k, v in seeds.items()}
             
             results[conf]['round1_selection_details'] = []
+            logger.debug(f"{conf} Round 1 opponent selection starting.")
             # Round 1: Seeds 1-3 choose opponents
             available_opponents = [seed_to_team[i] for i in range(5, 9)] # Seeds 5,6,7,8
             round1_matchups = []
@@ -399,13 +406,13 @@ class MLSNPPlayoffPredictor:
             
             # Seed 4 gets remaining opponent
             round1_matchups.append((seed_to_team[4], available_opponents[0]))
+            logger.debug(f"{conf} Round 1 matchups: {round1_matchups}")
             
             # Simulate Round 1
+            logger.info(f"Simulating {conf} Round 1 matches...")
             round1_winners = []
-            # results[conf]['round1_selections'] = [] # For storing selection choices later
-            for selected_matchup_team1, selected_matchup_team2 in round1_matchups:
-                # Determine actual home team by seed for this matchup explicitly
-                # seeds dict: team_id -> seed_number (lower is better, e.g. 1 is higher than 5)
+            for i, (selected_matchup_team1, selected_matchup_team2) in enumerate(round1_matchups):
+                logger.debug(f"R1 Match {i+1} ({conf}): {selected_matchup_team1} vs {selected_matchup_team2}")
                 if seeds[selected_matchup_team1] > seeds[selected_matchup_team2]:
                     # Team2 is higher seed, so they are home.
                     actual_home, actual_away = selected_matchup_team2, selected_matchup_team1
@@ -413,13 +420,11 @@ class MLSNPPlayoffPredictor:
                     # Team1 is higher seed (or equal, default to team1 as home - selection order implies this)
                     actual_home, actual_away = selected_matchup_team1, selected_matchup_team2
 
-                winner, sim_home_score, sim_away_score = self.simulate_match(actual_home, actual_away, is_neutral_site=False)
+                winner, home_score, away_score = self.simulate_match(actual_home, actual_away, is_neutral_site=False)
 
-                # Store scores based on the actual home/away for clarity if needed elsewhere
-                # For the 'matchup' tuple, it's just for reference of who played whom.
                 results[conf]['round1'].append({
-                    'matchup': tuple(sorted((selected_matchup_team1, selected_matchup_team2))), # Store sorted for consistency
-                    'sim_details': {'home': actual_home, 'away': actual_away, 'home_score': sim_home_score, 'away_score': sim_away_score},
+                    'matchup': tuple(sorted((selected_matchup_team1, selected_matchup_team2))),
+                    'sim_details': {'home': actual_home, 'away': actual_away, 'home_score': home_score, 'away_score': away_score},
                     'winner': winner,
                 })
                 round1_winners.append(winner)
@@ -427,14 +432,18 @@ class MLSNPPlayoffPredictor:
             # Round 2: Highest seed chooses opponent
             # Note: highest seed means lowest seed number
             round1_winner_seeds = sorted([(seeds[w], w) for w in round1_winners]) # List of (seed_num, team_id)
+            logger.debug(f"{conf} Round 1 Winners (seed, team_id): {round1_winner_seeds}")
             
             highest_seed_selector_id = round1_winner_seeds[0][1] # Team ID of the highest seed
             highest_seed_selector_seed_num = round1_winner_seeds[0][0]
+            logger.debug(f"{conf} Round 2 highest seed selector: {highest_seed_selector_id} (Seed {highest_seed_selector_seed_num})")
 
             opponents_for_round2_choice = [details[1] for details in round1_winner_seeds[1:]] # List of team_ids
+            logger.debug(f"{conf} Round 2 available opponents for selection: {opponents_for_round2_choice}")
             
             results[conf]['round2_selection_details'] = []
-            if len(opponents_for_round2_choice) > 0 : # Should always be 3 opponents for 4 winners
+            if len(round1_winners) == 4 and len(opponents_for_round2_choice) == 3 : # Standard scenario: 4 winners, 3 choices for top seed
+                logger.debug(f"{conf} Round 2 opponent selection starting for {highest_seed_selector_id}.")
                 chosen_opponent_r2_id, selection_method_r2 = self.select_opponent(
                     highest_seed_selector_id, opponents_for_round2_choice, seeds
                 )
@@ -450,71 +459,96 @@ class MLSNPPlayoffPredictor:
                     (highest_seed_selector_id, chosen_opponent_r2_id),
                     (opponents_for_round2_choice[0], opponents_for_round2_choice[1]) # The remaining two play each other
                 ]
-            else: # Should not happen with 4 winners
-                round2_matchups = [] # Or handle error
+            elif len(round1_winners) < 4 and len(round1_winners) >=2 : # Handle scenarios with fewer than 4 winners if possible (e.g. straight to final)
+                 logger.warning(f"Fewer than 4 winners in {conf} Round 1 ({len(round1_winners)}), proceeding with available teams for Round 2 if possible.")
+                 if len(round1_winners) >= 2: # Need at least two for a match
+                    round2_matchups = [(round1_winner_seeds[0][1], round1_winner_seeds[1][1])] # Highest two play
+                 else: # Not enough for even one match
+                    round2_matchups = []
+            else:
+                logger.error(f"Unexpected number of R1 winners ({len(round1_winners)}) or available opponents ({len(opponents_for_round2_choice)}) for {conf} Round 2. Cannot form matchups.")
+                round2_matchups = []
+            logger.debug(f"{conf} Round 2 matchups: {round2_matchups}")
 
             # Simulate Round 2
+            logger.info(f"Simulating {conf} Round 2 matches...")
             round2_winners = []
-            for selected_matchup_team1, selected_matchup_team2 in round2_matchups:
-                # Determine actual home team by seed
+            for i, (selected_matchup_team1, selected_matchup_team2) in enumerate(round2_matchups):
+                logger.debug(f"R2 Match {i+1} ({conf}): {selected_matchup_team1} vs {selected_matchup_team2}")
                 if seeds[selected_matchup_team1] > seeds[selected_matchup_team2]:
                     actual_home, actual_away = selected_matchup_team2, selected_matchup_team1
                 else:
                     actual_home, actual_away = selected_matchup_team1, selected_matchup_team2
-
-                winner, sim_home_score, sim_away_score = self.simulate_match(actual_home, actual_away, is_neutral_site=False)
-
+                logger.debug(f"R2 Match {i+1} ({conf}) Home: {actual_home}, Away: {actual_away}")
+                winner, home_score, away_score = self.simulate_match(actual_home, actual_away, is_neutral_site=False)
                 results[conf]['round2'].append({
                     'matchup': tuple(sorted((selected_matchup_team1, selected_matchup_team2))),
-                    'sim_details': {'home': actual_home, 'away': actual_away, 'home_score': sim_home_score, 'away_score': sim_away_score},
+                    'sim_details': {'home': actual_home, 'away': actual_away, 'home_score': home_score, 'away_score': away_score},
                     'winner': winner,
                 })
                 round2_winners.append(winner)
+            logger.debug(f"{conf} Round 2 Winners: {round2_winners}")
             
             # Conference Final
-            team_a_cf, team_b_cf = round2_winners[0], round2_winners[1]
-            if seeds[team_a_cf] > seeds[team_b_cf]: # team_b_cf is higher seed
-                actual_home_cf, actual_away_cf = team_b_cf, team_a_cf
-            else: # team_a_cf is higher seed or equal
-                actual_home_cf, actual_away_cf = team_a_cf, team_b_cf
+            logger.info(f"Simulating {conf} Conference Final...")
+            if len(round2_winners) < 2:
+                logger.error(f"Not enough winners for {conf} Conference Final. Winners: {round2_winners}")
+                results[conf]['final'] = {'winner': None, 'matchup': (None,None), 'sim_details': None}
+            else:
+                team_a_cf, team_b_cf = round2_winners[0], round2_winners[1] # Should be the only two if logic is correct
+                logger.debug(f"{conf} Conf Final: {team_a_cf} vs {team_b_cf}")
+                if seeds[team_a_cf] > seeds[team_b_cf]:
+                    actual_home_cf, actual_away_cf = team_b_cf, team_a_cf
+                else:
+                    actual_home_cf, actual_away_cf = team_a_cf, team_b_cf
+                logger.debug(f"{conf} Conf Final Home: {actual_home_cf}, Away: {actual_away_cf}")
+                winner_cf, home_score_cf, away_score_cf = self.simulate_match(actual_home_cf, actual_away_cf, is_neutral_site=False)
+                results[conf]['final'] = {
+                    'matchup': tuple(sorted((team_a_cf, team_b_cf))),
+                    'sim_details': {'home': actual_home_cf, 'away': actual_away_cf, 'home_score': home_score_cf, 'away_score': away_score_cf},
+                    'winner': winner_cf,
+                }
+            if results[conf]['final'] and results[conf]['final']['winner']:
+                 logger.info(f"{conf} Conference Champion: {results[conf]['final']['winner']}")
+            else:
+                 logger.warning(f"{conf} Conference Final could not be determined due to insufficient winners.")
 
-            winner_cf, sim_home_score_cf, sim_away_score_cf = self.simulate_match(actual_home_cf, actual_away_cf, is_neutral_site=False)
-            results[conf]['final'] = {
-                'matchup': tuple(sorted((team_a_cf, team_b_cf))),
-                'sim_details': {'home': actual_home_cf, 'away': actual_away_cf, 'home_score': sim_home_score_cf, 'away_score': sim_away_score_cf},
-                'winner': winner_cf,
+        # Championship
+        logger.info("Simulating MLSNP Championship game...")
+        east_champ_id = results.get('eastern', {}).get('final', {}).get('winner')
+        west_champ_id = results.get('western', {}).get('final', {}).get('winner')
+
+        if not east_champ_id or not west_champ_id:
+            logger.error(f"Cannot simulate championship. Eastern Champ: {east_champ_id}, Western Champ: {west_champ_id}")
+            results['championship'] = {'winner': None, 'matchup': (None,None), 'sim_details': None}
+        else:
+            logger.debug(f"Championship Game: {east_champ_id} (East) vs {west_champ_id} (West)")
+            actual_home_cup, actual_away_cup = self.determine_championship_home_team(
+                east_champ_id,
+                west_champ_id
+            )
+            # determine_championship_home_team already logs the outcome and reason
+
+            winner_cup, home_score_cup, away_score_cup = self.simulate_match(
+                actual_home_cup,
+                actual_away_cup,
+                is_neutral_site=False
+            )
+            results['championship'] = {
+                'matchup': tuple(sorted((east_champ_id, west_champ_id))),
+                'sim_details': {
+                    'home': actual_home_cup,
+                    'away': actual_away_cup,
+                    'home_score': home_score_cup,
+                    'away_score': away_score_cup,
+                    'home_field_reason': 'regular_season_record'
+                },
+                'winner': winner_cup,
             }
-        
-        # Championship - Hosted by higher seed from original regular season seeding
-        east_champ_id = results['eastern']['final']['winner']
-        west_champ_id = results['western']['final']['winner']
-
-        # Determine home team based on regular season performance
-        actual_home_cup, actual_away_cup = self.determine_championship_home_team(
-            east_champ_id, 
-            west_champ_id
-        )
-        
-        # Log the decision for debugging
-        logger.debug(f"Championship home field: {actual_home_cup} (home) vs {actual_away_cup} (away)")
-        
-        winner_cup, sim_home_score_cup, sim_away_score_cup = self.simulate_match(
-            actual_home_cup, 
-            actual_away_cup, 
-            is_neutral_site=False  # Not neutral - home team has advantage
-        )
-        
-        results['championship'] = {
-            'matchup': tuple(sorted((east_champ_id, west_champ_id))),
-            'sim_details': {
-                'home': actual_home_cup, 
-                'away': actual_away_cup, 
-                'home_score': sim_home_score_cup, 
-                'away_score': sim_away_score_cup,
-                'home_field_reason': 'regular_season_record'
-            },
-            'winner': winner_cup,
-        }
+            if winner_cup:
+                logger.info(f"MLSNP Champion: {winner_cup}")
+            else:
+                logger.error("MLSNP Championship could not be determined.")
         
         return results
     
@@ -549,9 +583,16 @@ class MLSNPPlayoffPredictor:
         }
         
         # Run simulations
-        logger.info(f"Running {n_simulations} playoff simulations...")
-        
-        for _ in tqdm(range(n_simulations), desc="Simulating playoffs"):
+        logger.info(f"Starting {n_simulations} full playoff bracket simulations...")
+
+        for i in tqdm(range(n_simulations), desc="Simulating playoffs", disable=None):
+            # Log progress sparsely for very large N to avoid flooding logs
+            log_interval = n_simulations // 10 if n_simulations >= 1000 else (n_simulations // 5 if n_simulations >=100 else 1)
+            if log_interval > 0 and (i + 1) % log_interval == 0:
+                 logger.debug(f"Running playoff simulation {i + 1}/{n_simulations}...")
+            elif n_simulations < 20 and (i+1) % 1 == 0: # Log every sim if very few
+                 logger.debug(f"Running playoff simulation {i + 1}/{n_simulations}...")
+
             sim_result = self.simulate_single_playoff(eastern_seeds, western_seeds)
             
             # Track results for each conference
@@ -575,12 +616,14 @@ class MLSNPPlayoffPredictor:
                 results['team_probabilities'][conf_winner]['conf_final_win'] += 1
             
             # Championship
-            champion = sim_result['championship']['winner']
-            results['team_probabilities'][champion]['championship_win'] += 1
+            champion = sim_result.get('championship', {}).get('winner')
+            if champion:
+                results['team_probabilities'][champion]['championship_win'] += 1
 
             # Aggregate opponent selection frequency
-            for conf in ['eastern', 'western']:
-                if 'round1_selection_details' in sim_result[conf]:
+            for conf_name_iter in ['eastern', 'western']:
+                current_conf_results = sim_result.get(conf_name_iter, {})
+                if current_conf_results and 'round1_selection_details' in current_conf_results:
                     for selection_detail in sim_result[conf]['round1_selection_details']:
                         selector = selection_detail['selector_id']
                         selected = selection_detail['selected_opponent_id']
@@ -588,8 +631,8 @@ class MLSNPPlayoffPredictor:
                         results['opponent_selection_frequency'][selector][selected][method] = \
                             results['opponent_selection_frequency'][selector][selected].get(method, 0) + 1
 
-                if 'round2_selection_details' in sim_result[conf]:
-                    for selection_detail in sim_result[conf]['round2_selection_details']:
+                if current_conf_results and 'round2_selection_details' in current_conf_results:
+                    for selection_detail in current_conf_results['round2_selection_details']:
                         selector = selection_detail['selector_id']
                         selected = selection_detail['selected_opponent_id']
                         method = selection_detail['method']
@@ -597,10 +640,15 @@ class MLSNPPlayoffPredictor:
                             results['opponent_selection_frequency'][selector][selected].get(method, 0) + 1
         
         # Convert counts to probabilities
-        for team in all_teams:
-            for stage in results['team_probabilities'][team]:
-                results['team_probabilities'][team][stage] /= n_simulations
-                results['team_probabilities'][team][stage] *= 100  # Convert to percentage
+        if n_simulations > 0:
+            for team in all_teams:
+                for stage in results['team_probabilities'][team]:
+                    results['team_probabilities'][team][stage] /= n_simulations
+                    results['team_probabilities'][team][stage] *= 100  # Convert to percentage
+        else:
+            logger.warning("n_simulations was 0 for run_playoff_simulations, probabilities will be zero.")
+
+        logger.info(f"Finished all {n_simulations} playoff simulations.")
         
         # Add summary statistics
         results['summary'] = {
