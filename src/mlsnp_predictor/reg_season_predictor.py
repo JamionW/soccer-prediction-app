@@ -1,3 +1,4 @@
+from xml.etree.ElementTree import QName
 import numpy as np
 import pandas as pd
 import logging
@@ -46,7 +47,38 @@ class MLSNPRegSeasonPredictor:
         for i, game in enumerate(self.games_data[:3]):
             logger.info(f"Sample game {i+1}: completed={game.get('is_completed')}, home={game.get('home_team_id')}, away={game.get('away_team_id')}")
 
-
+    def _check_data_quality(self) -> List[str]:
+        """
+        Check for suspicious data patterns that might indicate incorrect game data.
+        Returns list of warning messages.
+        """
+        warnings = []
+        
+        # Check for teams with unusual win/loss patterns
+        for team_id, stats in self.current_standings.items():
+            team_name = self.team_names.get(team_id, team_id)
+            
+            # Check for impossible records (more wins than games played, etc.)
+            total_results = stats.get('wins', 0) + stats.get('losses', 0) + stats.get('draws', 0) + stats.get('shootout_wins', 0)
+            games_played = stats.get('games_played', 0)
+            
+            if total_results != games_played and games_played > 0:
+                warnings.append(f"⚠️  {team_name}: Win/loss/draw counts don't add up to games played ({total_results} vs {games_played})")
+            
+            # Check for unusual points calculations
+            expected_points = (stats.get('wins', 0) * 3) + (stats.get('shootout_wins', 0) * 2) + (stats.get('draws', 0) - stats.get('shootout_wins', 0))
+            actual_points = stats.get('points', 0)
+            
+            if expected_points != actual_points:
+                warnings.append(f"⚠️  {team_name}: Points calculation seems off (expected {expected_points}, got {actual_points})")
+        
+        # Check for corrected games
+        corrected_games = [g for g in self.games_data if g.get('data_corrected', False)]
+        if corrected_games:
+            warnings.append(f"ℹ️  {len(corrected_games)} games were auto-corrected during import (check correction_notes)")
+        
+        return warnings    
+    
     def _calculate_current_standings(self) -> Dict[str, Dict]:
         """
         Calculates current standings based on completed games from the provided data.
@@ -58,40 +90,96 @@ class MLSNPRegSeasonPredictor:
             "goals_for": 0, "goals_against": 0, "shootout_wins": 0
         })
 
+        completed_games_count = 0
+        shootout_games_count = 0
+        skipped_games_count = 0
+
+        for team_id in self.conference_teams:
+            standings[team_id]["team_id"] = team_id
+            standings[team_id]["name"] = self.team_names.get(team_id, f"Team {team_id}")
+
         for game in self.games_data:
-            if not game.get("is_completed"):
+            is_completed = game.get("is_completed", False)
+
+            # Additional check: if we have scores, it should be completed
+            has_scores = (game.get("home_score") is not None and game.get("away_score") is not None)
+            if has_scores and not is_completed:
+                logger.warning(f"Game {game.get('game_id', 'unknown')} has scores but not marked complete")
+                is_completed = True
+
+            if not is_completed:
+                skipped_games_count += 1
                 continue
 
             home_id, away_id = game["home_team_id"], game["away_team_id"]
+            
+            # Ensure both teams are in our conference
             if home_id not in self.conference_teams or away_id not in self.conference_teams:
                 continue
 
+            # Score handling with validation
+            try:
+                home_score = int(game.get("home_score", 0))
+                away_score = int(game.get("away_score", 0))
+            except (ValueError, TypeError):
+                logger.warning(f"Invalid scores for game {game.get('game_id', 'unknown')}: {game.get('home_score')} - {game.get('away_score')}")
+                continue
+
+            completed_games_count += 1
+
+            # Initialize team data if needed
             for team_id in [home_id, away_id]:
                 if standings[team_id]["team_id"] is None:
                     standings[team_id]["team_id"] = team_id
                     standings[team_id]["name"] = self.team_names.get(team_id, f"Team {team_id}")
 
-            home_score, away_score = game.get("home_score", 0), game.get("away_score", 0)
-
-            if game.get("went_to_shootout"):
-                home_pens, away_pens = game.get("home_penalties", 0), game.get("away_penalties", 0)
-                if home_pens > away_pens:
-                    self._update_shootout_winner(standings[home_id], home_score, away_score)
-                    self._update_shootout_loser(standings[away_id], away_score, home_score)
-                else:
-                    self._update_shootout_winner(standings[away_id], away_score, home_score)
-                    self._update_shootout_loser(standings[home_id], home_score, away_score)
+            # Shootout handling
+            went_to_shootout = game.get("went_to_shootout", False)
+            
+            if went_to_shootout:
+                shootout_games_count += 1
+                home_pens = game.get("home_penalties", 0) or 0
+                away_pens = game.get("away_penalties", 0) or 0
+                
+                # STEP 1: Both teams get regulation draw stats
+                # (games_played, goals_for/against, draws)
+                self._update_regulation_draw(standings[home_id], home_score, away_score)
+                self._update_regulation_draw(standings[away_id], away_score, home_score)
+                
+                # STEP 2: Award shootout result
+                if home_pens > away_pens:  # Home wins shootout
+                    standings[home_id]["shootout_wins"] += 1
+                    standings[home_id]["points"] += 2  # 2 total points for SO win
+                    standings[away_id]["points"] += 1   # 1 point for SO loss
+                    logger.debug(f"Shootout: {home_id} beats {away_id} {home_pens}-{away_pens}")
+                else:  # Away wins shootout
+                    standings[away_id]["shootout_wins"] += 1
+                    standings[away_id]["points"] += 2  # 2 total points for SO win
+                    standings[home_id]["points"] += 1   # 1 point for SO loss
+                    logger.debug(f"Shootout: {away_id} beats {home_id} {away_pens}-{home_pens}")
+                    
             else:
+                # Regular time result (no shootout)
                 if home_score > away_score:
                     self._update_team_standings(standings[home_id], home_score, away_score, "win")
                     self._update_team_standings(standings[away_id], away_score, home_score, "loss")
                 elif away_score > home_score:
                     self._update_team_standings(standings[away_id], away_score, home_score, "win")
                     self._update_team_standings(standings[home_id], home_score, away_score, "loss")
+                else:
+                    # This shouldn't happen in MLS Next Pro (all draws go to shootout)
+                    logger.warning(f"Regulation draw without shootout in game {game.get('game_id', 'unknown')}")
+                    self._update_regulation_draw(standings[home_id], home_score, away_score)
+                    self._update_regulation_draw(standings[away_id], away_score, home_score)
+                    standings[home_id]["points"] += 1
+                    standings[away_id]["points"] += 1
 
+        # Calculate final goal differences
         for team_id, stats in standings.items():
             stats["goal_difference"] = stats["goals_for"] - stats["goals_against"]
 
+        logger.info(f"Processed {completed_games_count} completed games ({shootout_games_count} went to shootout)")
+        
         return {team_id: dict(stats) for team_id, stats in standings.items()}
 
     def _filter_remaining_games(self) -> List[Dict]:
@@ -151,7 +239,7 @@ class MLSNPRegSeasonPredictor:
         if home_goals == away_goals:
             went_to_shootout = True
             # Simple coin flip for shootout winner
-            if np.random.rand() > 0.5:
+            if np.random.rand() > 0.45:  # 55% chance home wins shootout
                 home_goals += 1 # Representing a shootout win
             else:
                 away_goals += 1
@@ -162,6 +250,14 @@ class MLSNPRegSeasonPredictor:
         """
         Runs the Monte Carlo simulation for n_simulations.
         """
+
+        # Check data quality before running simulations
+        warnings = self._check_data_quality()
+        if warnings:
+            logger.warning("Data quality warnings detected:")
+            for warning in warnings:
+                logger.warning(f"  {warning}")
+
         final_ranks = defaultdict(list)
         final_points = defaultdict(list)
 
@@ -173,13 +269,20 @@ class MLSNPRegSeasonPredictor:
                 h_goals, a_goals, shootout = self._simulate_game(game)
 
                 if shootout:
-                    if h_goals > a_goals: # Home won shootout
-                        self._update_shootout_winner(sim_standings[home_id], h_goals - 1, a_goals)
-                        self._update_shootout_loser(sim_standings[away_id], a_goals, h_goals - 1)
-                    else: # Away won shootout
-                        self._update_shootout_winner(sim_standings[away_id], a_goals - 1, h_goals)
-                        self._update_shootout_loser(sim_standings[home_id], h_goals, a_goals - 1)
-                else: # Regulation result
+                    self._update_regulation_draw(sim_standings[home_id], h_goals - 1, a_goals)
+                    self._update_regulation_draw(sim_standings[away_id], a_goals, h_goals - 1)
+                    
+                    # Award shootout points
+                    if h_goals > a_goals:  # Home won shootout (h_goals was incremented)
+                        sim_standings[home_id]["shootout_wins"] += 1
+                        sim_standings[home_id]["points"] += 2
+                        sim_standings[away_id]["points"] += 1
+                    else:  # Away won shootout
+                        sim_standings[away_id]["shootout_wins"] += 1
+                        sim_standings[away_id]["points"] += 2
+                        sim_standings[home_id]["points"] += 1
+                else:
+                    # Regular result
                     if h_goals > a_goals:
                         self._update_team_standings(sim_standings[home_id], h_goals, a_goals, "win")
                         self._update_team_standings(sim_standings[away_id], a_goals, h_goals, "loss")
@@ -189,6 +292,7 @@ class MLSNPRegSeasonPredictor:
 
             # Sort standings and record ranks
             sorted_teams = sorted(sim_standings.values(), key=lambda x: (-x['points'], -x['wins'], -x['goal_difference'], -x['goals_for'], -x['shootout_wins']))
+            
             for rank, stats in enumerate(sorted_teams, 1):
                 team_id = stats['team_id']
                 final_ranks[team_id].append(rank)
@@ -234,19 +338,19 @@ class MLSNPRegSeasonPredictor:
         team_stats["goals_for"] += goals_for
         team_stats["goals_against"] += goals_against
         team_stats["goal_difference"] += (goals_for - goals_against)
+
         if result == "win":
             team_stats["wins"] += 1
             team_stats["points"] += 3
         elif result == "loss":
             team_stats["losses"] += 1
 
-    def _update_shootout_winner(self, team_stats: Dict, goals_for: int, goals_against: int):
-        self._update_team_standings(team_stats, goals_for, goals_against, "loss") # No points for loss part
-        team_stats["draws"] += 1
-        team_stats["shootout_wins"] += 1
-        team_stats["points"] += 2 # 2 points for SO win
-
-    def _update_shootout_loser(self, team_stats: Dict, goals_for: int, goals_against: int):
-        self._update_team_standings(team_stats, goals_for, goals_against, "loss") # No points for loss part
-        team_stats["draws"] += 1
-        team_stats["points"] += 1 # 1 point for SO loss
+    def _update_regulation_draw(self, team_stats: Dict, goals_for: int, goals_against: int):
+        """
+        Handle regulation draw (used for shootout games)
+        Updates games_played, goals, and draws count
+        """
+        team_stats["games_played"] += 1
+        team_stats["goals_for"] += goals_for
+        team_stats["goals_against"] += goals_against
+        team_stats["draws"] += 1  # This was a regulation draw

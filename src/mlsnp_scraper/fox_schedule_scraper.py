@@ -109,7 +109,10 @@ class FoxSportsMLSNextProScraper:
             'dates_scraped': 0,
             'fixtures_found': 0,
             'teams_not_matched': set(),
-            'dates_with_games': []
+            'dates_with_games': [],
+            'ambiguous_resolutions': [],
+            'resolution_failures': [],
+            'same_team_errors': []
         }
         
         logger.info(f"Initialized Fox Sports scraper with {len(self.asa_teams)} ASA teams")
@@ -157,20 +160,54 @@ class FoxSportsMLSNextProScraper:
             base_name = re.sub(r'\s+(2|II|B)$', '', team_name, flags=re.I)
             lookup[base_name.lower()] = team_id
             
-            # Add city name only
-            city_parts = team_name.split()
-            if city_parts:
-                city = city_parts[0]
-                if city.lower() not in lookup:  # Avoid conflicts
-                    lookup[city.lower()] = team_id
+            # Add specific patterns for disambiguation - AVOID CONFLICTS
+            if 'New York City' in team_name:
+                lookup['new york city fc ii'] = team_id
+                lookup['nyc fc ii'] = team_id
+                lookup['nycfc ii'] = team_id
+                # Don't use generic 'new york' to avoid conflicts
+            elif 'New England' in team_name:
+                lookup['new england revolution ii'] = team_id
+                lookup['new england'] = team_id
+                lookup['revolution ii'] = team_id
+            elif 'Red Bulls' in team_name:
+                lookup['new york red bulls ii'] = team_id
+                lookup['red bulls ii'] = team_id
+                lookup['nyrb ii'] = team_id
+            elif 'Columbus' in team_name:
+                lookup['columbus crew 2'] = team_id
+                lookup['columbus'] = team_id
+                lookup['crew 2'] = team_id
+            elif 'Colorado' in team_name:
+                lookup['colorado rapids 2'] = team_id
+                lookup['colorado'] = team_id
+                lookup['rapids 2'] = team_id
             
-            # Add special handling for teams with "FC" in the name
-            if 'FC' in team_name:
-                without_fc = team_name.replace(' FC', '').replace('FC ', '')
-                lookup[without_fc.lower()] = team_id
+            # Add city name only for non-conflicting cases
+            city_parts = team_name.split()
+            if city_parts and city_parts[0].lower() not in ['new']:  # Avoid 'New' conflicts
+                city = city_parts[0]
+                city_key = city.lower()
+                if city_key not in lookup:
+                    lookup[city_key] = team_id
         
-        logger.info(f"Created {len(lookup)} team name patterns for ASA matching")
+        logging.info(f"Created {len(lookup)} team name patterns for ASA matching")
+        
+        # Log key lookups for debugging
+        debug_keys = ['new york city fc ii', 'columbus crew 2', 'columbus', 'colorado rapids 2', 'colorado']
+        for key in debug_keys:
+            if key in lookup:
+                team_name = self._get_team_name_by_id(lookup[key])
+                logging.info(f"Lookup '{key}' → {team_name} ({lookup[key]})")
+        
         return lookup
+    
+    def _get_team_name_by_id(self, team_id: str) -> str:
+        """Helper to get team name by ID."""
+        for team in self.asa_teams:
+            if team['team_id'] == team_id:
+                return team['team_name']
+        return f"Unknown team (ID: {team_id})"
     
     def _extract_available_dates(self, soup: BeautifulSoup) -> List[str]:
         """
@@ -233,7 +270,7 @@ class FoxSportsMLSNextProScraper:
         
         return dates
     
-    def _resolve_team_from_abbreviation(self, abbrev: str, row_element) -> Optional[str]:
+    def _resolve_team_from_abbreviation(self, abbrev: str, row_element, cell_index: int = None) -> Optional[str]:
         """
         Resolve a Fox Sports abbreviation to a team name.        
         For the ambiguous "NEW" abbreviation, this checks the team logo
@@ -244,30 +281,148 @@ class FoxSportsMLSNextProScraper:
         Returns:
             The full team name, or None if not found
         """
-        # First check if it's a known abbreviation
+        logging.info(f"🔍 Resolving abbreviation: '{abbrev}' (cell {cell_index})")
+
+        # First check if it's a known non-ambiguous abbreviation
         if abbrev in self.FOX_ABBREVIATIONS and self.FOX_ABBREVIATIONS[abbrev] != 'AMBIGUOUS':
-            return self.FOX_ABBREVIATIONS[abbrev]
+            team_name = self.FOX_ABBREVIATIONS[abbrev]
+            logging.info(f"✅ Resolved '{abbrev}' to '{team_name}' via direct mapping")
+            return team_name
         
-        # Handle the ambiguous "NEW" case by checking logos
-        if abbrev == 'NEW' or abbrev == 'COL':
-            # Look for team logo images in the row
-            logos = row_element.find_all('img', src=re.compile(r'team-logos'))
+        # Handle ambiguous cases (NEW, COL)
+        if abbrev in ['NEW', 'COL'] or self.FOX_ABBREVIATIONS.get(abbrev) == 'AMBIGUOUS':
+            logging.info(f"🚨 Attempting to resolve ambiguous abbreviation: '{abbrev}'")
             
-            for logo in logos:
-                logo_src = logo.get('src', '')
-                
-                # Check against our logo patterns
-                for pattern, team_name in self.LOGO_PATTERNS.items():
-                    if pattern in logo_src:
-                        logger.debug(f"Resolved {abbrev} to {team_name} based on logo: {logo_src}")
-                        return team_name
+            # Strategy 1: Enhanced logo detection
+            resolved_team = self._resolve_by_enhanced_logo(abbrev, row_element, cell_index)
+            if resolved_team:
+                logging.info(f"✅ Resolved '{abbrev}' to '{resolved_team}' via logo")
+                self.stats['ambiguous_resolutions'].append({
+                    'abbrev': abbrev,
+                    'resolved_to': resolved_team,
+                    'method': 'logo',
+                    'cell_index': cell_index
+                })
+                return resolved_team
             
-            # If we can't determine from logo, log it
-            logger.warning(f"Could not resolve ambiguous 'NEW' abbreviation - no matching logo found")
+            # Strategy 2: Alt text analysis
+            resolved_team = self._resolve_by_alt_text(abbrev, row_element)
+            if resolved_team:
+                logging.info(f"✅ Resolved '{abbrev}' to '{resolved_team}' via alt text")
+                self.stats['ambiguous_resolutions'].append({
+                    'abbrev': abbrev,
+                    'resolved_to': resolved_team,
+                    'method': 'alt_text',
+                    'cell_index': cell_index
+                })
+                return resolved_team
+            
+            # If we get here, resolution failed
+            logging.error(f"❌ Could not resolve ambiguous abbreviation '{abbrev}'")
+            logging.error(f"Row HTML snippet: {str(row_element)[:500]}")
+            
+            # Emergency fallback - extract all images for debugging
+            images = row_element.find_all('img')
+            for i, img in enumerate(images):
+                logging.error(f"Image {i}: src='{img.get('src', '')}', alt='{img.get('alt', '')}'")
+            
+            self.stats['resolution_failures'].append({
+                'abbrev': abbrev,
+                'html_snippet': str(row_element)[:500],
+                'cell_index': cell_index
+            })
+            return None
         
-        # If we get here, we couldn't resolve the abbreviation
-        logger.warning(f"Unknown Fox Sports abbreviation: '{abbrev}'")
+        # Unknown abbreviation
+        logging.warning(f"❓ Unknown Fox Sports abbreviation: '{abbrev}'")
         self.stats['teams_not_matched'].add(abbrev)
+        return None
+    
+    def _resolve_by_enhanced_logo(self, abbrev: str, row_element, cell_index: int = None) -> Optional[str]:
+        """Enhanced logo resolution with specific patterns for NEW/COL."""
+        # Use cell-specific searching if index provided
+        if cell_index is not None:
+            cells = row_element.find_all('td', class_='cell-entity')
+            if cell_index < len(cells):
+                current_cell = cells[cell_index]
+            else:
+                logging.warning(f"Cell index {cell_index} not found for '{abbrev}'")
+                current_cell = row_element.find('td', class_='cell-entity')
+        else:
+            current_cell = row_element.find('td', class_='cell-entity')
+        
+        if not current_cell:
+            logging.debug("No cell-entity found in row element")
+            return None
+        
+        images = current_cell.find_all('img')
+        logging.info(f"Found {len(images)} images in current cell for '{abbrev}'")
+        
+        for img in images:
+            src = img.get('src', '')
+            alt = img.get('alt', '')
+            
+            logging.info(f"Checking image: src='{src}', alt='{alt}'")
+            
+            # Enhanced logo patterns based on actual Fox Sports URLs
+            logo_patterns = {
+                # New York teams
+                'new-york-city-fc-2': 'New York City FC II',
+                'new-england-revolution-2': 'New England Revolution II', 
+                'new-york-red-bulls-2': 'New York Red Bulls II',
+                # Columbus vs Colorado
+                'columbus-crew-2': 'Columbus Crew 2',
+                'colorado-rapids-2': 'Colorado Rapids 2',
+            }
+            
+            # Check patterns against src
+            for pattern, team_name in logo_patterns.items():
+                if pattern in src.lower():
+                    logging.info(f"🎯 Logo match: '{pattern}' in '{src}' → '{team_name}'")
+                    return team_name
+            
+            # Also check alt text for team names
+            alt_lower = alt.lower()
+            if 'new york city' in alt_lower:
+                logging.info(f"🎯 Alt text match: 'new york city' in '{alt}' → 'New York City FC II'")
+                return 'New York City FC II'
+            elif 'columbus' in alt_lower:
+                logging.info(f"🎯 Alt text match: 'columbus' in '{alt}' → 'Columbus Crew 2'")
+                return 'Columbus Crew 2'
+            elif 'colorado' in alt_lower:
+                logging.info(f"🎯 Alt text match: 'colorado' in '{alt}' → 'Colorado Rapids 2'")
+                return 'Colorado Rapids 2'
+            elif 'new england' in alt_lower:
+                logging.info(f"🎯 Alt text match: 'new england' in '{alt}' → 'New England Revolution II'")
+                return 'New England Revolution II'
+        
+        logging.warning(f"No logo patterns matched for '{abbrev}'")
+        return None
+
+    def _resolve_by_alt_text(self, abbrev: str, row_element) -> Optional[str]:
+        """Fallback resolution using alt text and location data."""
+        # Get the current cell for this abbreviation
+        current_cell = row_element.find('td', class_='cell-entity')
+        if not current_cell:
+            return None
+        
+        # Look for any text that might help identify the team
+        cell_text = current_cell.get_text().lower()
+        
+        # Check if we can find city/location clues
+        if abbrev == 'NEW':
+            if 'new york city' in cell_text or 'nyc' in cell_text:
+                return 'New York City FC II'
+            elif 'new england' in cell_text or 'foxborough' in cell_text:
+                return 'New England Revolution II'
+            elif 'red bulls' in cell_text:
+                return 'New York Red Bulls II'
+        elif abbrev == 'COL':
+            if 'columbus' in cell_text or 'crew' in cell_text:
+                return 'Columbus Crew 2'
+            elif 'colorado' in cell_text or 'rapids' in cell_text:
+                return 'Colorado Rapids 2'
+        
         return None
     
     def _extract_fixtures_from_page(self, soup: BeautifulSoup) -> List[Dict]:
@@ -327,10 +482,48 @@ class FoxSportsMLSNextProScraper:
                 away_abbrev = away_abbrev_elem.get_text(strip=True) if away_abbrev_elem else None
                 
                 if home_abbrev and away_abbrev:
-                    home_team = self._resolve_team_from_abbreviation(home_abbrev, row)
-                    away_team = self._resolve_team_from_abbreviation(away_abbrev, row)
+                    home_team = self._resolve_team_from_abbreviation(home_abbrev, row, cell_index=0)
+                    away_team = self._resolve_team_from_abbreviation(away_abbrev, row, cell_index=1)
                     
                     if home_team and away_team:
+                        if home_team == away_team:
+                            print(f"\n🚨 SAME TEAM ERROR DETECTED:")
+                            print(f"Date: {current_date}")
+                            print(f"Abbreviations: {home_abbrev} vs {away_abbrev}")
+                            print(f"Both resolved to: {home_team}")
+                            print(f"Row HTML snippet:")
+                            print(str(row)[:500] + "...")
+                            
+                            # Get the specific cells for analysis
+                            cells = row.find_all('td', class_='cell-entity')
+                            if len(cells) >= 2:
+                                # Analyze home cell (index 0)
+                                home_images = cells[0].find_all('img')
+                                print(f"\nHome cell images ({len(home_images)}):")
+                                for i, img in enumerate(home_images):
+                                    print(f"  {i}: src='{img.get('src', '')}', alt='{img.get('alt', '')}'")
+                                
+                                # Analyze away cell (index 1)  
+                                away_images = cells[1].find_all('img')
+                                print(f"\nAway cell images ({len(away_images)}):")
+                                for i, img in enumerate(away_images):
+                                    print(f"  {i}: src='{img.get('src', '')}', alt='{img.get('alt', '')}'")
+                            
+                            # Add to your stats tracking
+                            if not hasattr(self.stats, 'same_team_errors'):
+                                self.stats['same_team_errors'] = []
+                            
+                            self.stats['same_team_errors'].append({
+                                'date': current_date,
+                                'home_abbrev': home_abbrev,
+                                'away_abbrev': away_abbrev,
+                                'resolved_name': home_team,
+                                'row_snippet': str(row)[:200]
+                            })
+                            
+                            print("=" * 50)
+                            continue  # Skip this fixture
+
                         # Match to ASA IDs
                         home_id = self._match_to_asa_id(home_team)
                         away_id = self._match_to_asa_id(away_team)

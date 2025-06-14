@@ -314,7 +314,7 @@ async def run_simulation_task(
         await ensure_historical_data_loaded()
         
         # Update any incomplete games that should be complete by now
-        await db_manager.update_incomplete_games(2025)
+        await db_manager.update_games_with_asa(2025, conference)
         
         if conference == "both":
             # Calculate league-wide averages ONCE for both conferences to share

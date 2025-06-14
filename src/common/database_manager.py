@@ -11,6 +11,8 @@ from datetime import datetime, timedelta, timezone
 from databases import Database
 import asyncio
 from collections import defaultdict
+import pandas as pd
+import numpy as np
 
 logger = logging.getLogger(__name__)
 
@@ -243,93 +245,197 @@ class DatabaseManager:
         query = "SELECT * FROM games WHERE game_id = :game_id"
         game = await self.db.fetch_one(query, values={"game_id": game_id})
         
-        if game:
+        if not game:
+            logger.warning(f"Game {game_id} not found in database")
+            return None
+            
+        if game['asa_loaded']:
             return dict(game)
         
-        logger.info(f"Game {game_id} not in database, fetching from ASA API...")
+        # Extract team IDs and date from the existing game record
+        home_team_id = game['home_team_id']
+        away_team_id = game['away_team_id']
+        game_date = game['date']
+        season_year = game['season_year']
+        
+        logger.info(f"Game {game_id} needs ASA data, fetching by teams and date...")
         try:
-            games_data = self.asa_client.get_games(game_id=[game_id])
-            if not games_data:
-                logger.warning(f"Game {game_id} not found in ASA API.")
-                return None
+            # Fetch games for both teams for the season
+            games_data = self.asa_client.get_games(
+                leagues=['mlsnp'],
+                team_ids=[home_team_id, away_team_id],
+                seasons=[str(season_year)]  # Changed from season_name
+            )
             
-            # Store and return the new game data
-            await self.store_game(games_data[0])
-            return await self.db.fetch_one(query, values={"game_id": game_id})
+            if games_data.empty:
+                logger.warning(f"No ASA games found for teams {home_team_id} vs {away_team_id} in {season_year}")
+                return dict(game)
+            
+            # Convert game_date to date object for comparison
+            target_date = game_date.date() if hasattr(game_date, 'date') else game_date
+            
+            # Find the matching game by home/away teams and date
+            for idx, asa_game in games_data.iterrows():
+                # Parse ASA date
+                asa_date_str = asa_game.get('date_time_utc', asa_game.get('date'))
+                if asa_date_str:
+                    try:
+                        # Use pandas to parse and convert to timezone-naive
+                        asa_datetime = pd.to_datetime(asa_date_str)
+                        asa_date = asa_datetime.tz_localize(None).date() if asa_datetime.tzinfo else asa_datetime.date()
+                    except Exception as e:
+                        logger.warning(f"Could not parse ASA date: {asa_date_str}, error: {e}")
+                        continue
+                    
+                    # Check if this is our game (same teams and within 1 day)
+                    date_diff = abs((asa_date - target_date).days)
+                    if (asa_game['home_team_id'] == home_team_id and 
+                        asa_game['away_team_id'] == away_team_id and
+                        date_diff <= 1):  # Allow 1 day difference for timezone issues
+                        
+                        # Found the matching game!
+                        game_data = asa_game.to_dict()
+                        
+                        # IMPORTANT: Preserve our original game_id
+                        game_data['game_id'] = game_id
+                        
+                        # Store with ASA data
+                        await self.store_game(game_data, from_asa=True)
+                        
+                        # Return the updated record
+                        updated_game = await self.db.fetch_one(query, values={"game_id": game_id})
+                        return dict(updated_game) if updated_game else None
+            
+            logger.warning(f"Could not find exact match in ASA data for {home_team_id} vs {away_team_id} on {target_date}")
+            return dict(game)
+            
         except Exception as e:
-            logger.error(f"Error fetching game {game_id} from ASA: {e}")
-            return None
+            logger.error(f"Error fetching game {game_id} from ASA: {e}", exc_info=True)
+            return dict(game) if game else None
 
-    async def store_game(self, game_data: Dict) -> Dict:
+    async def store_game(self, game_data: Dict, from_asa: bool = False) -> Dict:
         """
         Store a game in the database, handling data transformation and updates.
         Uses ON CONFLICT to efficiently update existing game records.
         Now also updates matchdays for existing games when ASA data is provided.
         """
         try:
-            # First, try to update matchday for any existing games (if this is ASA data)
-            if game_data.get('matchday') is not None:
-                await self.update_matchday_from_asa_data(game_data)
-
-            game_id = game_data.get('game_id')
-            if not game_id:
-                raise ValueError("game_id is required")
-            
-            # Handle date parsing more robustly
-            date_str = game_data.get('date_time_utc', game_data.get('date'))
-            game_date = None
-            
-            if date_str:
-                if isinstance(date_str, datetime):
-                    game_date = date_str
-                elif isinstance(date_str, str):
-                    # Robust date parsing - handle ASA's UTC format
-                    date_str_clean = date_str.replace(' UTC', '+00:00').replace('Z', '+00:00')
-                    for fmt in ('%Y-%m-%d %H:%M:%S%z', '%Y-%m-%dT%H:%M:%S%z', '%Y-%m-%d %H:%M:%S', '%Y-%m-%d'):
-                        try:
-                            game_date = datetime.strptime(date_str_clean, fmt)
-                            break
-                        except ValueError:
-                            continue
-                            
-            if not game_date:
-                raise ValueError(f"Could not parse date: {date_str}")
-            
-            # Handle status and completion
-            status = game_data.get('status', 'scheduled').lower()
-            is_completed = game_data.get('is_completed', False)
-            if isinstance(is_completed, str):
-                is_completed = is_completed.lower() in ['true', '1', 'yes']
+            # Helper function to convert pandas/numpy values to Python bool
+            def to_bool(value):
+                """Convert various representations to boolean."""
+                if value is None or (isinstance(value, float) and pd.isna(value)):
+                    return False
+                if isinstance(value, (bool, np.bool_)):
+                    return bool(value)
+                if isinstance(value, (int, float)):
+                    return bool(value) and value != 0
+                if isinstance(value, str):
+                    return value.lower() in ['true', '1', 'yes', 't', 'y']
+                return False
             
             # Handle scores - ensure they're integers or None
             def safe_int(value):
-                if value is None or value == '':
+                if value is None or value == '' or (isinstance(value, float) and pd.isna(value)):
                     return None
                 try:
                     return int(value)
                 except (ValueError, TypeError):
                     return None
+
+            game_id = game_data.get('game_id')
+            if not game_id:
+                raise ValueError("game_id is required")
             
+            # Handle date parsing
+            date_str = game_data.get('date_time_utc', game_data.get('date'))
+            game_date = None
+            
+            if date_str:
+                if isinstance(date_str, datetime):
+                    game_date = date_str.replace(tzinfo=None) if date_str.tzinfo else date_str
+                elif isinstance(date_str, pd.Timestamp):
+                    game_date = date_str.to_pydatetime().replace(tzinfo=None)
+                elif isinstance(date_str, str):
+                    # Clean the string and parse
+                    date_str_clean = date_str.replace(' UTC', '').replace('Z', '')
+                    try:
+                        parsed_date = pd.to_datetime(date_str_clean, utc=True)
+                        game_date = parsed_date.tz_localize(None)
+                    except:
+                        # Fallback parsing
+                        for fmt in ('%Y-%m-%d %H:%M:%S', '%Y-%m-%dT%H:%M:%S', '%Y-%m-%d'):
+                            try:
+                                game_date = datetime.strptime(date_str_clean, fmt)
+                                break
+                            except ValueError:
+                                continue
+
+            if not game_date:
+                raise ValueError(f"Could not parse date: {date_str}")
+                
             home_score = safe_int(game_data.get('home_score'))
             away_score = safe_int(game_data.get('away_score'))
             home_penalties = safe_int(game_data.get('home_penalties', 0))
             away_penalties = safe_int(game_data.get('away_penalties', 0))
+            original_asa_data = None
+            correction_notes = None
+            data_corrected = False
             
-            # Handle shootout logic
-            went_to_shootout = game_data.get('went_to_shootout', False)
-            if isinstance(went_to_shootout, str):
-                went_to_shootout = went_to_shootout.lower() in ['true', '1', 'yes']
+            # Handle shootout logic - use to_bool
+            went_to_shootout = to_bool(game_data.get('penalties', game_data.get('went_to_shootout', False)))
+            
+            # Handle status and completion - use to_bool for boolean fields
+            status = game_data.get('status', 'scheduled').lower()
+            
+            if from_asa:
+                # Store original ASA data before any corrections
+                original_asa_data = json.dumps({
+                'home_score': game_data.get('home_score'),
+                'away_score': game_data.get('away_score'),
+                'penalties': game_data.get('penalties'),
+                'home_penalties': game_data.get('home_penalties'),
+                'away_penalties': game_data.get('away_penalties'),
+                'went_to_shootout_original': went_to_shootout
+                })
+
+                # For ASA data: determine completion based on actual score data
+                # ASA should only return games that have been played
+                has_scores = (home_score is not None and away_score is not None)
+                is_completed = has_scores
+                
+                # Fix invalid shootouts
+                if went_to_shootout and home_score is not None and away_score is not None:
+                    if home_score != away_score:
+                        logger.warning(f"Game {game_id}: ASA marked as shootout but score is {home_score}-{away_score}. Auto-correcting.")
+                        went_to_shootout = False
+                        home_penalties = None
+                        away_penalties = None
+                        data_corrected = True
+                        correction_notes = f"Auto-corrected: Game marked as shootout but regulation score was {home_score}-{away_score}"
+
+                # ADDITIONAL: Handle missing penalty data for shootouts
+                if went_to_shootout and (home_penalties is None or away_penalties is None):
+                    if not data_corrected:  # Don't overwrite previous correction
+                        data_corrected = True
+                        correction_notes = f"Auto-corrected: Shootout game missing penalty data"
+                    else:
+                        correction_notes += "; Also fixed missing penalty data"
+                    logger.warning(f"Game {game_id}: Shootout game missing penalty data, setting to 0-0")
+                    home_penalties = 0
+                    away_penalties = 0
+            else:
+                is_completed = to_bool(game_data.get('is_completed', False))
+            
+
+            # Log a warning for data quality issues
+            if is_completed and (home_score is None or away_score is None) and not went_to_shootout:
+                logger.warning(f"Game {game_id} is completed but has no final score.")
             
             # Handle integer fields safely
             matchday = safe_int(game_data.get('matchday', 0)) or 0
             attendance = safe_int(game_data.get('attendance', 0)) or 0
             expanded_minutes = safe_int(game_data.get('expanded_minutes', 90)) or 90
-            
-            # Handle season year
-            season_year = game_data.get('season_year')
-            if season_year is None:
-                season_year = game_date.year
-            season_year = safe_int(season_year) or game_date.year
+            season_year = safe_int(game_data.get('season_year', game_date.year)) or game_date.year
             
             values = {
                 "game_id": game_id,
@@ -346,68 +452,211 @@ class DatabaseManager:
                 "home_score": home_score if is_completed else None,
                 "away_score": away_score if is_completed else None,
                 "home_penalties": home_penalties if went_to_shootout else None,
-                "away_penalties": away_penalties if went_to_shootout else None
+                "away_penalties": away_penalties if went_to_shootout else None,
+                "asa_loaded": bool(from_asa),
+                "data_corrected": data_corrected,
+                "correction_notes": correction_notes,
+                "original_asa_data": original_asa_data
             }
             
             # Debug logging
-            logger.debug(f"Storing game with values: {values}")
+            if from_asa and is_completed:
+                logger.info(f"Storing completed ASA game {game_id}: {values['home_team_id']} {home_score}-{away_score} {values['away_team_id']}")
             
             query = """
                 INSERT INTO games (
                     game_id, date, status, home_team_id, away_team_id, matchday,
                     attendance, is_completed, went_to_shootout, season_year, 
                     expanded_minutes, home_score, away_score, home_penalties, 
-                    away_penalties, created_at, updated_at)
+                    away_penalties, asa_loaded, data_corrected, correction_notes, 
+                    original_asa_data, created_at, updated_at)
                 VALUES (
                     :game_id, :date, :status, :home_team_id, :away_team_id, :matchday,
                     :attendance, :is_completed, :went_to_shootout, :season_year,
                     :expanded_minutes, :home_score, :away_score, :home_penalties,
-                    :away_penalties, NOW(), NOW())
+                    :away_penalties, :asa_loaded, :data_corrected, :correction_notes,
+                    :original_asa_data, NOW(), NOW())
                 ON CONFLICT (game_id) DO UPDATE SET
                     status = EXCLUDED.status,
                     is_completed = EXCLUDED.is_completed,
                     went_to_shootout = EXCLUDED.went_to_shootout,
-                    matchday = EXCLUDED.matchday,
+                    matchday = CASE WHEN EXCLUDED.matchday > 0 THEN EXCLUDED.matchday ELSE games.matchday END,
                     home_score = EXCLUDED.home_score,
                     away_score = EXCLUDED.away_score,
                     home_penalties = EXCLUDED.home_penalties,
                     away_penalties = EXCLUDED.away_penalties,
                     attendance = EXCLUDED.attendance,
                     expanded_minutes = EXCLUDED.expanded_minutes,
+                    asa_loaded = games.asa_loaded OR EXCLUDED.asa_loaded,
+                    data_corrected = games.data_corrected OR EXCLUDED.data_corrected,
+                    correction_notes = COALESCE(EXCLUDED.correction_notes, games.correction_notes),
+                    original_asa_data = COALESCE(EXCLUDED.original_asa_data, games.original_asa_data),
                     updated_at = NOW()
                 RETURNING *
             """
             
             result = await self.db.fetch_one(query, values=values)
-            logger.debug(f"Successfully stored game: {game_id}")
             return dict(result)
         
         except Exception as e:
             logger.error(f"Error in store_game for game_id {game_data.get('game_id', 'unknown')}: {e}", exc_info=True)
             raise
 
-    async def update_incomplete_games(self, season_year: int):
+    async def update_games_with_asa(self, season_year: int, conference: str = None):
         """
-        Finds and updates all games that should have been played but are still
-        marked as incomplete in the database.
+        Finds and updates all games that have been played, but ASA data is missing, or
+        should have been played but are still marked as incomplete in the database and
+        also need ASA data.
         """
         # Create timezone-naive datetime to match database storage
-        cutoff_date = datetime.now()
+        cutoff_date = datetime.now(timezone.utc).replace(tzinfo=None) - timedelta(hours=2)  # 2 hour buffer
+
+        if conference:
+            conf_id = 1 if conference.lower() == 'eastern' else 2
+            query = """
+                SELECT g.game_id, g.home_team_id, g.away_team_id, g.date, g.is_completed
+                FROM games g
+                JOIN team_affiliations hta ON g.home_team_id = hta.team_id AND hta.is_current = true
+                JOIN team_affiliations ata ON g.away_team_id = ata.team_id AND ata.is_current = true
+                WHERE g.season_year = :season_year 
+                AND (g.asa_loaded = false OR (g.is_completed = false AND g.date < :cutoff_date))
+                AND (hta.conference_id = :conf_id OR ata.conference_id = :conf_id)
+                ORDER BY g.date
+            """
+            values = {
+                "season_year": season_year, 
+                "cutoff_date": cutoff_date,
+                "conf_id": conf_id
+            }
+        else:
+            query = """
+                SELECT game_id, home_team_id, away_team_id, date, is_completed 
+                FROM games 
+                WHERE season_year = :season_year 
+                AND (asa_loaded = false OR (is_completed = false AND date < :cutoff_date))
+                ORDER BY date
+            """
+            values = {
+                "season_year": season_year, 
+                "cutoff_date": cutoff_date
+            }
         
-        query = """
-            SELECT game_id FROM games 
-            WHERE season_year = :season_year AND is_completed = false AND date < :cutoff_date
-        """
-        incomplete_games = await self.db.fetch_all(query, values={"season_year": season_year, "cutoff_date": cutoff_date})
+        games_to_update = await self.db.fetch_all(query, values=values)
         
-        if not incomplete_games:
-            logger.info(f"No incomplete games found to update for {season_year}.")
+        if not games_to_update:
+            logger.info(f"All games for {season_year} are up to date with ASA data.")
             return
 
-        logger.info(f"Found {len(incomplete_games)} incomplete games to update for {season_year}.")
-        for game in incomplete_games:
-            await self.get_or_fetch_game(game['game_id'])
-            await asyncio.sleep(0.1)  # Be nice to the API
+        logger.info(f"Found {len(games_to_update)} games to update with ASA data for {season_year}.")
+        
+        # Get unique team IDs to limit ASA fetch
+        team_ids = set()
+        for game in games_to_update:
+            team_ids.add(game['home_team_id'])
+            team_ids.add(game['away_team_id'])
+
+        # Fetch all ASA games for the season once
+        try:
+            logger.info(f"Fetching ASA games for {len(team_ids)} teams...")
+            # Fetch only games involving these specific teams
+            all_asa_games = self.asa_client.get_games(
+                leagues=['mlsnp'],
+                team_ids=list(team_ids),  # Limit to only relevant teams
+                seasons=[str(season_year)]
+            )
+            
+            if all_asa_games.empty:
+                logger.warning(f"No games found in ASA for the specified teams in {season_year}")
+                return
+                
+            logger.info(f"Found {len(all_asa_games)} games in ASA for {season_year}")
+            
+            # Create a lookup dictionary for ASA games
+            asa_lookup = {}
+            for idx, asa_game in all_asa_games.iterrows():
+                # Parse ASA date with better error handling
+                asa_date_str = asa_game.get('date_time_utc', asa_game.get('date'))
+                if asa_date_str:
+                    try:
+                        # Handle different date formats from ASA
+                        if isinstance(asa_date_str, str):
+                            # Remove timezone info for consistent parsing
+                            clean_date_str = asa_date_str.replace(' UTC', '').replace('Z', '')
+                            asa_datetime = pd.to_datetime(clean_date_str, utc=True)
+                        else:
+                            asa_datetime = pd.to_datetime(asa_date_str, utc=True)
+                        
+                        # Convert to date for matching (removes time component)
+                        asa_date = asa_datetime.date()
+                        
+                        # Create lookup key
+                        key = (asa_game['home_team_id'], asa_game['away_team_id'], asa_date)
+                        asa_lookup[key] = asa_game.to_dict()
+                        
+                        # ADDED: Also create keys for adjacent dates to handle timezone issues
+                        for day_offset in [-1, 1]:
+                            alt_date = asa_date + timedelta(days=day_offset)
+                            alt_key = (asa_game['home_team_id'], asa_game['away_team_id'], alt_date)
+                            if alt_key not in asa_lookup:  # Don't overwrite exact matches
+                                asa_lookup[alt_key] = asa_game.to_dict()
+                                
+                    except Exception as e:
+                        logger.warning(f"Could not parse ASA date: {asa_date_str}, error: {e}")
+                        continue
+            
+            logger.info(f"Created lookup with {len(asa_lookup)} date/team combinations")
+            
+            # Now update each game that needs ASA data
+            updated_count = 0
+            no_match_count = 0
+            
+            for game_record in games_to_update:
+                game_id = game_record['game_id']
+
+                game_date = game_record['date'].date() if hasattr(game_record['date'], 'date') else game_record['date']
+                lookup_key = (game_record['home_team_id'], game_record['away_team_id'], game_date)
+                
+                if lookup_key in asa_lookup:
+                    asa_data = asa_lookup[lookup_key]
+                    # CRITICAL: Preserve our game_id
+                    asa_data['game_id'] = game_id
+                    
+                    await self.store_game(asa_data, from_asa=True)
+                    updated_count += 1
+                    
+                    if updated_count % 5 == 0:
+                        logger.info(f"Updated {updated_count} games with ASA data...")
+                else:
+                    no_match_count += 1
+                    logger.debug(f"No ASA match found for game {game_id}: {lookup_key}")
+            
+            logger.info(f"Successfully updated {updated_count} games with ASA data. {no_match_count} games had no match.")
+            
+        except Exception as e:
+            logger.error(f"Error in bulk ASA update: {e}", exc_info=True)
+            raise
+
+    async def get_corrected_games_summary(self, season_year: int = 2025) -> Dict:
+        """Get summary of all data corrections made."""
+        query = """
+            SELECT 
+                COUNT(*) as total_corrected,
+                correction_notes,
+                COUNT(*) as count_by_type
+            FROM games 
+            WHERE data_corrected = true 
+            AND season_year = :season_year
+            GROUP BY correction_notes
+            ORDER BY count_by_type DESC
+        """
+        
+        corrections = await self.db.fetch_all(query, values={"season_year": season_year})
+        
+        return {
+            "total_corrections": sum(c['count_by_type'] for c in corrections),
+            "correction_types": [dict(c) for c in corrections]
+        }
+
 
     # ==================== Team Statistics Management ====================
     
@@ -716,7 +965,7 @@ class DatabaseManager:
         conference_teams = await self.get_conference_teams(conf_id, season_year)
         team_ids = list(conference_teams.keys())
         
-        await self.update_incomplete_games(season_year)
+        await self.update_games_with_asa(season_year)
         
         all_games = await self.get_games_for_season(season_year, conference, include_incomplete=True)
         
@@ -746,7 +995,7 @@ class DatabaseManager:
             logger.info(f"Found {len(games)} games for {season_year} season.")
             
             for game in games:
-                await self.store_game(game)
+                await self.store_game(game, from_asa=True)
                 if len(games) > 100:
                     await asyncio.sleep(0.01)
 

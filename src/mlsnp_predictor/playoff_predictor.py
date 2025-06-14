@@ -357,7 +357,7 @@ class MLSNPPlayoffPredictor:
         # Handle draws with penalty shootout
         if team1_goals == team2_goals:
             # 55-45 chance in penalties for home to win
-            winner = team1_id if np.random.random() < 0.55 else team2_id
+            winner = team1_id if np.random.random() > 0.45 else team2_id
         else:
             winner = team1_id if team1_goals > team2_goals else team2_id
         
