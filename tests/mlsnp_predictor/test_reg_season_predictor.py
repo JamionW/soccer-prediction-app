@@ -100,7 +100,8 @@ class TestMLSNPRegSeasonPredictor:
             assert standings[team_id]["games_played"] == 0
             assert standings[team_id]["name"] == basic_conference_teams[team_id]
 
-    def test_calculate_current_standings_completed_games(self, basic_conference_teams, sample_team_performance_data, sample_league_averages):
+    def test_calculate_current_standings_completed_games(self, basic_conference_teams, sample_team_performance_data, sample_league_averages, caplog):
+        caplog.set_level(logging.INFO, logger='src.mlsnp_predictor.reg_season_predictor')
         games_data = [
             {"game_id": "g1", "home_team_id": "T1", "away_team_id": "T2", "home_score": 2, "away_score": 1, "is_completed": True, "went_to_shootout": False},
             {"game_id": "g2", "home_team_id": "T3", "away_team_id": "T4", "home_score": 1, "away_score": 1, "is_completed": True, "went_to_shootout": True, "home_penalties": 3, "away_penalties": 2}, # T3 wins SO

@@ -19,8 +19,9 @@ python-multipart>=0.0.5
 psycopg2-binary>=2.9.0
 sqlalchemy>=1.4.0
 alembic>=1.7.0
-databases>=0.6.0  # ← ADD THIS
-asyncpg>=0.25.0   # ← ADD THIS
+databases>=0.6.0
+asyncpg>=0.25.0
+aiosqlite>=0.17.0 # For SQLite async support
 
 # Authentication & HTTP
 bcrypt>=3.2.0     # ← ADD THIS  

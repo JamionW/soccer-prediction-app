@@ -28,8 +28,10 @@ def safe_api_call(func: callable, *args: Any, **kwargs: Any) -> List[Dict[str, A
         if isinstance(result, list):
             return result
             
-        # If it's a single item, wrap in list
-        return [result] if result else []
+        # If it's a single item (and not None, which is handled above), wrap in list.
+        # This ensures that an empty dict {} or empty list [] (if it somehow bypasses earlier checks)
+        # gets wrapped, e.g. {} -> [{}]
+        return [result]
         
     except Exception as e:
         logger.error(f"API call failed: {e}")

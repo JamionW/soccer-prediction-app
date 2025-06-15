@@ -109,11 +109,11 @@ class MLSNPRegSeasonPredictor:
 
             # Additional check: if we have scores, it should be completed
             has_scores = (game.get("home_score") is not None and game.get("away_score") is not None)
-            if has_scores and not is_completed:
-                logger.warning(f"Game {game.get('game_id', 'unknown')} has scores but not marked complete")
-                is_completed = True
+            if has_scores and not is_completed: # Check original 'is_completed' from data
+                logger.warning(f"Game {game.get('game_id', 'unknown')} has scores but source data indicates 'is_completed: False'. Trusting source 'is_completed' flag for standings calculation.")
+                # Do not override 'is_completed' to True here. Let the original flag decide.
 
-            if not is_completed:
+            if not is_completed: # This will now correctly use the original 'is_completed' flag from game data
                 skipped_games_count += 1
                 continue
 

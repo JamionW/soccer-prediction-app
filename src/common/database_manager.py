@@ -1035,12 +1035,13 @@ class DatabaseManager:
         """
         logger.info(f"Loading historical data for {season_year} season...")
         try:
-            games = self.asa_client.get_games(leagues=['mlsnp'], season_name=[str(season_year)])
-            logger.info(f"Found {len(games)} games for {season_year} season.")
+            games_df = self.asa_client.get_games(leagues=['mlsnp'], season_name=[str(season_year)])
+            logger.info(f"Found {len(games_df)} games for {season_year} season.")
             
-            for game in games:
-                await self.store_game(game, from_asa=True)
-                if len(games) > 100:
+            # Corrected iteration over DataFrame rows
+            for _, game_row in games_df.iterrows():
+                await self.store_game(game_row.to_dict(), from_asa=True)
+                if len(games_df) > 100: # Still use original length for sleep logic
                     await asyncio.sleep(0.01)
 
             team_ids = await self.db.fetch_all("SELECT DISTINCT team_id FROM team")
@@ -1263,14 +1264,14 @@ class DatabaseManager:
             summary_insert_query = """
                 INSERT INTO prediction_summary (
                 run_id, team_id, games_remaining, current_points, current_rank,
-                avg_final_rank, median_final_rank, best_rank, worst_rank,
-                rank_25, rank_75, playoff_prob_pct, clinched, eliminated,
-                created_at
+                avg_points, avg_final_rank, median_final_rank, best_rank, worst_rank,
+                rank_25, rank_75, playoff_prob_pct, clinched, eliminated, rank_dist_json,
+                status_final, created_at
                 ) VALUES (
                     :run_id, :team_id, :games_remaining, :current_points, :current_rank,
-                    :avg_final_rank, :median_final_rank, :best_rank, :worst_rank,
-                    :rank_25, :rank_75, :playoff_prob_pct, :clinched, :eliminated,
-                    NOW()
+                    :avg_points, :avg_final_rank, :median_final_rank, :best_rank, :worst_rank,
+                    :rank_25, :rank_75, :playoff_prob_pct, :clinched, :eliminated, :rank_dist_json,
+                    :status_final, NOW()
                 )
             """
             
@@ -1302,6 +1303,7 @@ class DatabaseManager:
                     "games_remaining": qual_info.get('games_remaining', 0),
                     "current_points": row['Current Points'],
                     "current_rank": row['Current Rank'],
+                    "avg_points": row['Average Points'],
                     "avg_final_rank": row['Average Final Rank'],
                     "median_final_rank": float(median_rank),
                     "best_rank": int(best_rank),
@@ -1310,7 +1312,9 @@ class DatabaseManager:
                     "rank_75": int(rank_75),
                     "playoff_prob_pct": playoff_prob,
                     "clinched": clinched,
-                    "eliminated": eliminated
+                    "eliminated": eliminated,
+                    "rank_dist_json": json.dumps(rank_dist),
+                    "status_final": qual_info.get('status') # Added this line
                 }
                 
                 await self.db.execute(summary_insert_query, values=summary_values)
