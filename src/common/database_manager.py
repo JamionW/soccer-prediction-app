@@ -277,77 +277,85 @@ class DatabaseManager:
         """
         Get a single game from the database or fetch it from the API if missing.
         """
+        game: Optional[Dict] = None  # Initialize game
         try:
             query = "SELECT * FROM games WHERE game_id = :game_id"
             game = await self.db.fetch_one(query, values={"game_id": game_id})
 
             if not game:
                 logger.warning(f"Game {game_id} not found in database")
-            return None
-            
-        if game['asa_loaded']:
-            return dict(game)
-        
-        # Extract team IDs and date from the existing game record
-        home_team_id = game['home_team_id']
-        away_team_id = game['away_team_id']
-        game_date = game['date']
-        season_year = game['season_year']
-        
-        logger.info(f"Game {game_id} needs ASA data, fetching by teams and date...")
-        try:
-            # Fetch games for both teams for the season
-            games_data = self.asa_client.get_games(
-                leagues=['mlsnp'],
-                team_ids=[home_team_id, away_team_id],
-                seasons=[str(season_year)]  # Changed from season_name
-            )
-            
-            if games_data.empty:
-                logger.warning(f"No ASA games found for teams {home_team_id} vs {away_team_id} in {season_year}")
+                return None
+
+            # Proceed only if game was found    
+            if game['asa_loaded']:
                 return dict(game)
+        
+            # Extract team IDs and date from the existing game record
+            home_team_id = game['home_team_id']
+            away_team_id = game['away_team_id']
+            game_date = game['date']
+            season_year = game['season_year']
             
-            # Convert game_date to date object for comparison
-            target_date = game_date.date() if hasattr(game_date, 'date') else game_date
-            
-            # Find the matching game by home/away teams and date
-            for idx, asa_game in games_data.iterrows():
-                # Parse ASA date
-                asa_date_str = asa_game.get('date_time_utc', asa_game.get('date'))
-                if asa_date_str:
-                    try:
-                        # Use pandas to parse and convert to timezone-naive
-                        asa_datetime = pd.to_datetime(asa_date_str)
-                        asa_date = asa_datetime.tz_localize(None).date() if asa_datetime.tzinfo else asa_datetime.date()
-                    except Exception as e:
-                        logger.warning(f"Could not parse ASA date: {asa_date_str}, error: {e}")
-                        continue
-                    
-                    # Check if this is our game (same teams and within 1 day)
-                    date_diff = abs((asa_date - target_date).days)
-                    if (asa_game['home_team_id'] == home_team_id and 
-                        asa_game['away_team_id'] == away_team_id and
-                        date_diff <= 1):  # Allow 1 day difference for timezone issues
+            logger.info(f"Game {game_id} needs ASA data, fetching by teams and date...")
+            try:
+                # Fetch games for both teams for the season
+                games_data = self.asa_client.get_games(
+                    leagues=['mlsnp'],
+                    team_ids=[home_team_id, away_team_id],
+                    seasons=[str(season_year)]  # Changed from season_name
+                )
+                
+                if games_data.empty:
+                    logger.warning(f"No ASA games found for teams {home_team_id} vs {away_team_id} in {season_year}")
+                    return dict(game)
+                
+                # Convert game_date to date object for comparison
+                target_date = game_date.date() if hasattr(game_date, 'date') else game_date
+                
+                # Find the matching game by home/away teams and date
+                for idx, asa_game in games_data.iterrows():
+                    # Parse ASA date
+                    asa_date_str = asa_game.get('date_time_utc', asa_game.get('date'))
+                    if asa_date_str:
+                        try:
+                            # Use pandas to parse and convert to timezone-naive
+                            asa_datetime = pd.to_datetime(asa_date_str)
+                            asa_date = asa_datetime.tz_localize(None).date() if asa_datetime.tzinfo else asa_datetime.date()
+                        except Exception as e:
+                            logger.warning(f"Could not parse ASA date: {asa_date_str}, error: {e}")
+                            continue
                         
-                        # Found the matching game!
-                        game_data = asa_game.to_dict()
-                        
-                        # IMPORTANT: Preserve our original game_id
-                        game_data['game_id'] = game_id
-                        
-                        # Store with ASA data
-                        await self.store_game(game_data, from_asa=True)
-                        
-                        # Return the updated record
-                        updated_game = await self.db.fetch_one(query, values={"game_id": game_id})
-                        return dict(updated_game) if updated_game else None
-            
-            logger.warning(f"Could not find exact match in ASA data for {home_team_id} vs {away_team_id} on {target_date}")
-            return dict(game)
-            
-        except Exception as e:
-            logger.error(f"Error fetching game {game_id} from ASA: {e}", exc_info=True)
-            return dict(game) if game else None
+                        # Check if this is our game (same teams and within 1 day)
+                        date_diff = abs((asa_date - target_date).days)
+                        if (asa_game['home_team_id'] == home_team_id and 
+                            asa_game['away_team_id'] == away_team_id and
+                            date_diff <= 1):  # Allow 1 day difference for timezone issues
+                            
+                            # Found the matching game!
+                            game_data = asa_game.to_dict()
+                            
+                            # IMPORTANT: Preserve our original game_id
+                            game_data['game_id'] = game_id
+                            
+                            # Store with ASA data
+                            await self.store_game(game_data, from_asa=True)
+                            
+                            # Return the updated record
+                            updated_game = await self.db.fetch_one(query, values={"game_id": game_id})
+                            return dict(updated_game) if updated_game else None
+                
+                logger.warning(f"Could not find exact match in ASA data for {home_team_id} vs {away_team_id} on {target_date}")
+                return dict(game)
+                
+            except Exception as e:
+                logger.error(f"Error fetching game {game_id} from ASA: {e}", exc_info=True)
+                # If game was fetched from DB but ASA fetch failed, return the DB game.
+                # If game is None (e.g. initial DB fetch failed and was caught by outer except), this will be None.
+                return dict(game) if game else None
+        except Exception as e: # This is the missing outer except block
+            logger.error(f"Error in get_or_fetch_game for game {game_id}: {e}", exc_info=True)
+            return None # Return None if any error occurs in the outer try block
+        
 
     async def store_game(self, game_data: Dict, from_asa: bool = False) -> Dict:
         """
@@ -1184,134 +1192,177 @@ class DatabaseManager:
 
     # ==================== Simulation Result Storage ====================
 
-    async def store_simulation_run(self, conference: str, n_simulations: int, season_year: int) -> int:
+    async def store_simulation_run(self, user_id: int, conference: str, n_simulations: int, season_year: int) -> int:
         """
         Stores a new simulation run record and returns the run ID.
         """
         logger.info(f"Storing simulation run: UserID {user_id}, Conf: {conference}, N_sim: {n_simulations}, Year: {season_year}") # Added user_id to log
         try:
-            query = """
-                INSERT INTO prediction_runs (user_id, conference_id, n_simulations, season_year, run_date, is_stored, matchday)
-                VALUES (:user_id, :conference_id, :n_simulations, :season_year, NOW(), TRUE, :matchday)
-                RETURNING run_id
-            """
-            # Determine conference_id and matchday (assuming matchday might be passed or calculated)
-            conf_map = {"eastern": 1, "western": 2, "both": None} # 'both' might mean no specific conf_id or a special one
-            conference_id_val = conf_map.get(conference.lower())
-
-            # This is a placeholder for matchday logic, might need to be passed in
-            # or calculated based on current date / latest game.
-            # For now, let's assume it's passed or can be defaulted.
-            # This was missing from the original call signature in routes.py too.
-            # Adding a default for now.
-            # TODO: Resolve how matchday is determined and passed to this function.
-            matchday_val = 0 # Placeholder, should be dynamic
-
-            values = {
-                "user_id": user_id, # Added user_id
-                "conference_id": conference_id_val,
-                "n_simulations": n_simulations,
-                "season_year": season_year,
-                "matchday": matchday_val # Added matchday
-            }
-            run_id = await self.db.fetch_val(query, values=values)
-            logger.info(f"Stored new prediction run with ID: {run_id} for user {user_id}")
-            return run_id
+            # Start a transaction since we need to insert into two tables
+            async with self.db.transaction():
+                # First, insert into prediction_runs
+                run_query = """
+                    INSERT INTO prediction_runs (
+                        conference_id, n_simulations, season_year, run_date, 
+                        is_stored, matchday, league_id
+                    ) VALUES (
+                        :conference_id, :n_simulations, :season_year, NOW(), 
+                        TRUE, :matchday, :league_id
+                    )
+                    RETURNING run_id
+                """
+                
+                # Map conference name to ID
+                conf_map = {"eastern": 1, "western": 2}
+                conference_id = conf_map.get(conference.lower())
+                
+                if conference_id is None:
+                    # Handle "both" - might need to run two separate simulations
+                    raise ValueError(f"Invalid conference: {conference}. Use 'eastern' or 'western'")
+                
+                # Get current matchday (you might want to calculate this dynamically)
+                # For now, using a placeholder
+                current_matchday = await self.get_current_matchday(season_year)
+                
+                run_values = {
+                    "conference_id": conference_id,
+                    "n_simulations": n_simulations,
+                    "season_year": season_year,
+                    "matchday": current_matchday or 0,
+                    "league_id": 1  # MLS Next Pro
+                }
+                
+                run_result = await self.db.fetch_one(run_query, values=run_values)
+                run_id = run_result['run_id']
+                
+                # Second, link this run to the user
+                user_sim_query = """
+                    INSERT INTO user_simulations (user_id, run_id, created_at)
+                    VALUES (:user_id, :run_id, NOW())
+                """
+                
+                await self.db.execute(user_sim_query, values={
+                    "user_id": user_id,
+                    "run_id": run_id
+                })
+                
+                logger.info(f"Stored new prediction run with ID: {run_id} for user {user_id}")
+                return run_id
+                
         except Exception as e:
             logger.error(f"Database error in store_simulation_run: {e}", exc_info=True)
             raise
 
-    async def store_simulation_results(self, run_id: int, summary_df: pd.DataFrame, final_rank_dist: Dict, qualification_data: Dict): # Added qualification_data
+    async def store_simulation_results(self, run_id: int, summary_df: pd.DataFrame, simulation_results: Dict, qualification_data: Dict):
         """
         Stores detailed simulation results, including team summaries and rank distributions.
         """
         logger.info(f"Storing simulation results for run_id: {run_id}")
+
         try:
-            # Using prediction_summary and projected_field tables as per routes.py
-            # This replaces the old simulation_results table logic.
-            
-            # Store in prediction_summary
             summary_insert_query = """
                 INSERT INTO prediction_summary (
-                    run_id, team_id, avg_points, avg_rank, playoff_prob_pct,
-                    rank_dist_json, games_rem, status_final, created_at
+                run_id, team_id, games_remaining, current_points, current_rank,
+                avg_final_rank, median_final_rank, best_rank, worst_rank,
+                rank_25, rank_75, playoff_prob_pct, clinched, eliminated,
+                created_at
                 ) VALUES (
-                    :run_id, :team_id, :avg_points, :avg_rank, :playoff_prob_pct,
-                    :rank_dist_json, :games_rem, :status_final, NOW()
+                    :run_id, :team_id, :games_remaining, :current_points, :current_rank,
+                    :avg_final_rank, :median_final_rank, :best_rank, :worst_rank,
+                    :rank_25, :rank_75, :playoff_prob_pct, :clinched, :eliminated,
+                    NOW()
                 )
             """
+            
             for _, row in summary_df.iterrows():
                 team_id = row['_team_id']
-                rank_dist = final_rank_dist.get(team_id, [])
+                rank_dist = simulation_results.get(team_id, [])
                 qual_info = qualification_data.get(team_id, {})
-
+                
+                # Calculate rank statistics from distribution
+                if rank_dist:
+                    rank_array = np.array(rank_dist)
+                    median_rank = np.median(rank_array)
+                    best_rank = np.min(rank_array)
+                    worst_rank = np.max(rank_array)
+                    rank_25 = np.percentile(rank_array, 25)
+                    rank_75 = np.percentile(rank_array, 75)
+                else:
+                    median_rank = row['Average Final Rank']
+                    best_rank = worst_rank = rank_25 = rank_75 = row['Average Final Rank']
+                
+                # Determine if clinched/eliminated based on playoff probability
+                playoff_prob = row['Playoff Qualification %']
+                clinched = playoff_prob >= 99.9
+                eliminated = playoff_prob <= 0.1
+                
                 summary_values = {
                     "run_id": run_id,
                     "team_id": team_id,
-                    "avg_points": row['Average Points'],
-                    "avg_rank": row['Average Final Rank'],
-                    "playoff_prob_pct": row['Playoff Qualification %'],
-                    "rank_dist_json": json.dumps(rank_dist),
-                    "games_rem": qual_info.get('games_remaining', 0),
-                    "status_final": qual_info.get('status', '')
-                    # shootout_win_impact is not directly stored here but could be if needed
+                    "games_remaining": qual_info.get('games_remaining', 0),
+                    "current_points": row['Current Points'],
+                    "current_rank": row['Current Rank'],
+                    "avg_final_rank": row['Average Final Rank'],
+                    "median_final_rank": float(median_rank),
+                    "best_rank": int(best_rank),
+                    "worst_rank": int(worst_rank),
+                    "rank_25": int(rank_25),
+                    "rank_75": int(rank_75),
+                    "playoff_prob_pct": playoff_prob,
+                    "clinched": clinched,
+                    "eliminated": eliminated
                 }
+                
                 await self.db.execute(summary_insert_query, values=summary_values)
-
-            # Store in projected_field (top 8 teams for playoffs)
-            # This part might need adjustment based on how top_8_teams is structured in `routes.py`
-            # Assuming summary_df is sorted by rank and we can take top N.
-            # Or, if `predictor.current_standings` is used, that needs to be passed.
-            # For now, let's assume summary_df contains all teams and we filter here.
-
-            # This part needs to be aligned with how `routes.py` expects `projected_field`
-            # For now, commenting out as the schema in routes for `projected_field` is different
-            # than what `summary_df` provides directly.
-            # Example from routes: projected_field (proj_id, team_id, team_name, seed, avg_final_rank, playoff_prob_pct, reg_season_points)
-            # This table seems more related to playoff projections.
-
+            
             logger.info(f"Stored {len(summary_df)} team prediction summaries for run_id: {run_id}")
-
+            
         except Exception as e:
             logger.error(f"Database error in store_simulation_results for run_id {run_id}: {e}", exc_info=True)
             raise
 
 
-    async def get_latest_simulation_run(self, conference: str, season_year: int) -> Optional[Dict]:
+    async def get_latest_simulation_run(self, user_id: int, conference: str, season_year: int) -> Optional[Dict]:
         """
         Retrieves the latest simulation run details for a given conference and season.
         """
-        # Adjusted to use prediction_runs table and conference_id
-        logger.debug(f"Fetching latest prediction run for conference: {conference}, season: {season_year}")
+        logger.debug(f"Fetching latest prediction run for user: {user_id}, conference: {conference}, season: {season_year}")
+    
         try:
-            conf_map = {"eastern": 1, "western": 2, "both": None}
-            conference_id_val = conf_map.get(conference.lower())
-
+            conf_map = {"eastern": 1, "western": 2}
+            conference_id = conf_map.get(conference.lower())
+            
+            if conference_id is None:
+                logger.warning(f"Invalid conference: {conference}")
+                return None
+            
             query = """
-                SELECT * FROM prediction_runs
-                WHERE conference_id = :conference_id AND season_year = :season_year
-                ORDER BY run_date DESC LIMIT 1
-            """ # run_timestamp changed to run_date
-
-            values = {"conference_id": conference_id_val, "season_year": season_year}
-            if conference_id_val is None and conference.lower() == "both": # Special handling for "both" if it means no specific conf
-                 query = """
-                    SELECT * FROM prediction_runs
-                    WHERE conference_id IS NULL AND season_year = :season_year
-                    ORDER BY run_date DESC LIMIT 1
-                """
-                 values = {"season_year": season_year}
-
-
+                SELECT pr.*, us.user_id 
+                FROM prediction_runs pr
+                JOIN user_simulations us ON pr.run_id = us.run_id
+                WHERE us.user_id = :user_id 
+                AND pr.conference_id = :conference_id 
+                AND pr.season_year = :season_year
+                ORDER BY pr.run_date DESC 
+                LIMIT 1
+            """
+            
+            values = {
+                "user_id": user_id,
+                "conference_id": conference_id, 
+                "season_year": season_year
+            }
+            
             run = await self.db.fetch_one(query, values=values)
             if run:
-                logger.info(f"Found latest prediction run: ID {run['run_id']} for conference: {conference}, season: {season_year}")
+                logger.info(f"Found latest prediction run: ID {run['run_id']} for user: {user_id}")
                 return dict(run)
             else:
-                logger.info(f"No prediction run found for conference: {conference}, season: {season_year}")
+                logger.info(f"No prediction run found for user: {user_id}, conference: {conference}")
                 return None
+                
         except Exception as e:
-            logger.error(f"Database error in get_latest_simulation_run for conf {conference}, year {season_year}: {e}", exc_info=True)
+            logger.error(f"Database error in get_latest_simulation_run: {e}", exc_info=True)
             raise
 
 
@@ -1319,33 +1370,45 @@ class DatabaseManager:
         """
         Retrieves all stored simulation results for a given run ID.
         """
-        # Adjusted to use prediction_summary table
         logger.debug(f"Fetching simulation results for run_id: {run_id}")
+    
         try:
             query = """
                 SELECT ps.*, t.team_name
                 FROM prediction_summary ps
                 JOIN team t ON ps.team_id = t.team_id
                 WHERE ps.run_id = :run_id
-                ORDER BY ps.avg_rank ASC
+                ORDER BY ps.avg_final_rank ASC
             """
+            
             results = await self.db.fetch_all(query, values={"run_id": run_id})
-
+            
             parsed_results = []
-            for r_row in results: # Changed variable name to avoid conflict
-                res_dict = dict(r_row)
-                if res_dict.get('rank_dist_json'):
-                    try:
-                        res_dict['final_rank_distribution'] = json.loads(res_dict['rank_dist_json'])
-                    except json.JSONDecodeError:
-                        logger.warning(f"Could not parse rank_dist_json for team {res_dict['team_id']} in run {run_id}")
-                        res_dict['final_rank_distribution'] = [] # Default to empty list
-                else:
-                    res_dict['final_rank_distribution'] = []
+            for row in results:
+                res_dict = dict(row)
+                # The schema doesn't show a rank_dist_json column
+                # The distribution data might need to be stored elsewhere
+                # or reconstructed from the percentile data
                 parsed_results.append(res_dict)
-
+            
             logger.info(f"Found {len(parsed_results)} results for run_id: {run_id}")
             return parsed_results
+            
         except Exception as e:
-            logger.error(f"Database error in get_simulation_results_for_run for run_id {run_id}: {e}", exc_info=True)
+            logger.error(f"Database error in get_simulation_results_for_run: {e}", exc_info=True)
             raise
+
+    async def get_current_matchday(self, season_year: int) -> Optional[int]:
+        """
+        Calculate the current matchday based on completed games.
+        """
+        query = """
+            SELECT MAX(matchday) as current_matchday
+            FROM games
+            WHERE season_year = :season_year
+            AND is_completed = true
+            AND matchday > 0
+        """
+        
+        result = await self.db.fetch_one(query, values={"season_year": season_year})
+        return result['current_matchday'] if result and result['current_matchday'] else 0

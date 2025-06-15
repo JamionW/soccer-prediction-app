@@ -70,46 +70,69 @@ class MLSNPPlayoffPredictor:
         # If we don't have records, fall back to coin flip
         if not east_record or not west_record:
             logger.warning(f"Missing regular season records for championship between {east_champ_id} and {west_champ_id}. Using coin flip.")
+            reason_for_missing = "missing records (coin flip)"
             home_team, away_team = (east_champ_id, west_champ_id) if np.random.random() < 0.5 else (west_champ_id, east_champ_id)
-            logger.info(f"Championship home team determined by coin flip: {home_team} (home) vs {away_team} (away)")
+            logger.info(f"Championship home team determined by {reason_for_missing}: {home_team} (home) vs {away_team} (away)")
             return home_team, away_team
 
-        reason = "N/A"
-        home_team, away_team = east_champ_id, west_champ_id # Default assignment if all tiebreakers pass (should be rare)
+        reason = "N/A" # Will be updated by the tiebreakers
+        # Default to East champ as home; will be overridden if West wins tiebreakers or by coin flip
+        home_team, away_team = east_champ_id, west_champ_id 
         
         # Compare records using tiebreakers
         # 1. Total points (use average final points for better accuracy)
         east_points = east_record.get('average_final_points', east_record.get('points', 0))
         west_points = west_record.get('average_final_points', west_record.get('points', 0))
         logger.debug(f"Championship HFA check: {east_champ_id} pts={east_points} vs {west_champ_id} pts={west_points}")
-        if east_points > west_points: reason = "points"; home_team, away_team = east_champ_id, west_champ_id
-        elif west_points > east_points: reason = "points"; home_team, away_team = west_champ_id, east_champ_id
+
+        if east_points > west_points:
+            reason = "points"
+            # home_team, away_team already set to east_champ_id, west_champ_id
+        elif west_points > east_points:
+            reason = "points"
+            home_team, away_team = west_champ_id, east_champ_id
         else:
             # 2. Total wins
             east_wins = east_record.get('wins', 0)
             west_wins = west_record.get('wins', 0)
             logger.debug(f"Championship HFA check (tie on pts): {east_champ_id} wins={east_wins} vs {west_champ_id} wins={west_wins}")
-            if east_wins > west_wins: reason = "wins"; home_team, away_team = east_champ_id, west_champ_id
-            elif west_wins > east_wins: reason = "wins"; home_team, away_team = west_champ_id, east_champ_id
+            if east_wins > west_wins:
+                reason = "wins"
+                # home_team, away_team are correct as points were tied (still default East home)
+            elif west_wins > east_wins:
+                reason = "wins"
+                home_team, away_team = west_champ_id, east_champ_id
             else:
                 # 3. Goal difference
                 east_gd = east_record.get('goal_difference', 0)
                 west_gd = west_record.get('goal_difference', 0)
                 logger.debug(f"Championship HFA check (tie on wins): {east_champ_id} GD={east_gd} vs {west_champ_id} GD={west_gd}")
-                if east_gd > west_gd: reason = "GD"; home_team, away_team = east_champ_id, west_champ_id
-                elif west_gd > east_gd: reason = "GD"; home_team, away_team = west_champ_id, east_champ_id
+                if east_gd > west_gd:
+                    reason = "goal difference"
+                    # home_team, away_team are correct
+                elif west_gd > east_gd:
+                    reason = "goal difference"
+                    home_team, away_team = west_champ_id, east_champ_id
                 else:
                     # 4. Goals for
                     east_gf = east_record.get('goals_for', 0)
                     west_gf = west_record.get('goals_for', 0)
                     logger.debug(f"Championship HFA check (tie on GD): {east_champ_id} GF={east_gf} vs {west_champ_id} GF={west_gf}")
-                    if east_gf > west_gf: reason = "GF"; home_team, away_team = east_champ_id, west_champ_id
-                    elif west_gf > east_gf: reason = "GF"; home_team, away_team = west_champ_id, east_champ_id
+                    if east_gf > west_gf:
+                        reason = "goals for"
+                        # home_team, away_team are correct
+                    elif west_gf > east_gf:
+                        reason = "goals for"
+                        home_team, away_team = west_champ_id, east_champ_id
                     else:
                         # 5. Coin flip
-                        reason = "coin_flip"
-                        home_team, away_team = (east_champ_id, west_champ_id) if np.random.random() < 0.5 else (west_champ_id, east_champ_id)
                         logger.debug(f"Championship HFA check (tie on GF): Using coin flip.")
+                        reason = "coin flip"
+                        if np.random.random() < 0.5:
+                            # home_team, away_team are already east_champ_id, west_champ_id (East wins flip)
+                            pass
+                        else:
+                            home_team, away_team = west_champ_id, east_champ_id # West wins flip
 
         logger.info(f"Championship home team determined: {home_team} (home) vs {away_team} (away) based on {reason}")
         return home_team, away_team
@@ -327,30 +350,40 @@ class MLSNPPlayoffPredictor:
         Returns:
             Tuple of (winner_id, home_score, away_score)
         """
+
+        # Get team performance metrics
         logger.debug(f"Simulating match: Home={home_team_id}, Away={away_team_id}, Neutral={is_neutral_site}")
         home_perf = self.team_performance.get(home_team_id, {})
         away_perf = self.team_performance.get(away_team_id, {})
 
+        # Calculate expected goals
         home_attack_strength = home_perf.get('xgf_per_game', self.league_avg_xgf)
         away_attack_strength = away_perf.get('xgf_per_game', self.league_avg_xgf)
 
+        # Adjust for defensive strength using league averages passed in __init__
+        # Defensive ratio: opponent_xga / league_avg_xga. If ratio < 1, opponent is good defensively.
         home_exp_goals_adj_vs_away_def = away_perf.get('xga_per_game', self.league_avg_xga) / self.league_avg_xga
         away_exp_goals_adj_vs_home_def = home_perf.get('xga_per_game', self.league_avg_xga) / self.league_avg_xga
 
         home_exp_goals = home_attack_strength * home_exp_goals_adj_vs_away_def
         away_exp_goals = away_attack_strength * away_exp_goals_adj_vs_home_def
         
+        # Apply home advantage if not a neutral site
         if not is_neutral_site:
+            # Using a multiplier for simplicity right now.
             home_exp_goals *= self.HOME_ADVANTAGE_XG_MULTIPLIER
 
+        # Ensure xG is not negative and has a minimum floor
         logger.debug(f"Match xG before floor: HomeID={home_team_id}, HomeExp={home_exp_goals:.2f}, AwayID={away_team_id}, AwayExp={away_exp_goals:.2f}")
         home_exp_goals = max(0.05, home_exp_goals)
         away_exp_goals = max(0.05, away_exp_goals)
         logger.debug(f"Match xG after floor: HomeID={home_team_id}, HomeExp={home_exp_goals:.2f}, AwayID={away_team_id}, AwayExp={away_exp_goals:.2f}")
 
+        # Simulate goals
         home_goals = np.random.poisson(home_exp_goals)
         away_goals = np.random.poisson(away_exp_goals)
 
+        # Handle draws with penalty shootout
         shootout_occurred = False
         if home_goals == away_goals:
             shootout_occurred = True
@@ -358,6 +391,7 @@ class MLSNPPlayoffPredictor:
                 shootout_home_win_prob = self.NEUTRAL_SITE_SHOOTOUT_WIN_PROB
                 logger.debug(f"Shootout on neutral site. Home ({home_team_id}) win prob: {shootout_home_win_prob:.2f}")
             else:
+                # Give home team a slight advantage in shootout
                 shootout_home_win_prob = self.HOME_TEAM_SHOOTOUT_WIN_PROB
                 logger.debug(f"Shootout at home team's ({home_team_id}) venue. Win prob: {shootout_home_win_prob:.2f}")
 
@@ -422,6 +456,8 @@ class MLSNPPlayoffPredictor:
 
                 winner, home_score, away_score = self.simulate_match(actual_home, actual_away, is_neutral_site=False)
 
+                # Store scores based on the actual home/away for clarity if needed elsewhere
+                # For the 'matchup' tuple, it's just for reference of who played whom.
                 results[conf]['round1'].append({
                     'matchup': tuple(sorted((selected_matchup_team1, selected_matchup_team2))),
                     'sim_details': {'home': actual_home, 'away': actual_away, 'home_score': home_score, 'away_score': away_score},
@@ -474,6 +510,7 @@ class MLSNPPlayoffPredictor:
             logger.info(f"Simulating {conf} Round 2 matches...")
             round2_winners = []
             for i, (selected_matchup_team1, selected_matchup_team2) in enumerate(round2_matchups):
+                # Determine actual home team by seed
                 logger.debug(f"R2 Match {i+1} ({conf}): {selected_matchup_team1} vs {selected_matchup_team2}")
                 if seeds[selected_matchup_team1] > seeds[selected_matchup_team2]:
                     actual_home, actual_away = selected_matchup_team2, selected_matchup_team1
@@ -513,7 +550,7 @@ class MLSNPPlayoffPredictor:
             else:
                  logger.warning(f"{conf} Conference Final could not be determined due to insufficient winners.")
 
-        # Championship
+        # Championship - Hosted by higher seed from original regular season seeding
         logger.info("Simulating MLSNP Championship game...")
         east_champ_id = results.get('eastern', {}).get('final', {}).get('winner')
         west_champ_id = results.get('western', {}).get('final', {}).get('winner')
@@ -522,12 +559,12 @@ class MLSNPPlayoffPredictor:
             logger.error(f"Cannot simulate championship. Eastern Champ: {east_champ_id}, Western Champ: {west_champ_id}")
             results['championship'] = {'winner': None, 'matchup': (None,None), 'sim_details': None}
         else:
+            # Determine home team based on regular season performance
             logger.debug(f"Championship Game: {east_champ_id} (East) vs {west_champ_id} (West)")
             actual_home_cup, actual_away_cup = self.determine_championship_home_team(
                 east_champ_id,
                 west_champ_id
             )
-            # determine_championship_home_team already logs the outcome and reason
 
             winner_cup, home_score_cup, away_score_cup = self.simulate_match(
                 actual_home_cup,

@@ -240,12 +240,15 @@ class MLSNPRegSeasonPredictor:
         """
         home_id, away_id = game["home_team_id"], game["away_team_id"]
         
+        # Calculate relative team strengths
         home_attack, home_defense = self._get_team_strength(home_id)
         away_attack, away_defense = self._get_team_strength(away_id)
         
+        # Calculate expected goals for this matchup
         home_exp_goals = home_attack * away_defense * self.league_avg_xgf
         away_exp_goals = away_attack * home_defense * self.league_avg_xga
         
+        # Get result from Poisson distribution
         home_goals_reg = np.random.poisson(home_exp_goals)
         away_goals_reg = np.random.poisson(away_exp_goals)
         
@@ -344,6 +347,24 @@ class MLSNPRegSeasonPredictor:
         """Creates the final summary DataFrame and qualification data dictionary."""
         summary_data = []
         qualification_data = {}
+
+        # Calculate current ranks based on current standings
+        current_teams_sorted = sorted(
+            self.current_standings.items(), 
+            key=lambda x: (
+                -x[1]['points'],  # Points (descending)
+                -x[1]['wins'],    # Wins (descending)
+                -x[1]['goal_difference'],  # Goal difference (descending)
+                -x[1]['goals_for'],  # Goals for (descending)
+                -x[1].get('shootout_wins', 0)  # Shootout wins (descending)
+            )
+        )
+    
+        # Create current rank mapping
+        current_rank_map = {
+            team_id: rank 
+            for rank, (team_id, _) in enumerate(current_teams_sorted, 1)
+    }
         
         for team_id, ranks in final_ranks.items():
             current_stats = self.current_standings.get(team_id, {})
@@ -353,6 +374,7 @@ class MLSNPRegSeasonPredictor:
                 'Team': self.team_names.get(team_id, team_id),
                 '_team_id': team_id,
                 'Current Points': current_stats.get('points', 0),
+                'Current Rank': current_rank_map.get(team_id, 999),
                 'Games Played': current_stats.get('games_played', 0),
                 'Playoff Qualification %': playoff_prob,
                 'Average Final Rank': np.mean(ranks),

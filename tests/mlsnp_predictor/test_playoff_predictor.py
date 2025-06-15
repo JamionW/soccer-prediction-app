@@ -224,4 +224,3 @@ def test_run_playoff_simulations_structure(playoff_predictor_instance, sample_te
         assert team_id in results['team_probabilities']
         for stage_prob in results['team_probabilities'][team_id].values():
             assert 0 <= stage_prob <= 100
-```

@@ -244,5 +244,3 @@ class TestMLSNPRegSeasonPredictor:
         # Check current points and GP are 0 as no initial games were completed
         assert (summary_df['Current Points'] == 0).all()
         assert (summary_df['Games Played'] == 0).all()
-
-```

@@ -139,7 +139,7 @@ All endpoints are relative to the base URL of the API.
 
 *   **`GET /simulations/{simulation_id}`**
     *   **Purpose**: Retrieves the status and results of a specific simulation from the in-memory cache. This endpoint is public if the simulation ID is known.
-    *   **Authentication**: None (public if ID is known).
+    *   **Authentication**: Public (if simulation ID is known).
 
 ### Data Management Routes
 

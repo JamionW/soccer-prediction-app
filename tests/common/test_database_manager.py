@@ -233,5 +233,3 @@ async def test_load_historical_season_basic(db_manager, mock_db):
         mock_get_xg.assert_any_call("T2", season_year)
         mock_get_xg.assert_any_call("T3", season_year)
         mock_get_xg.assert_any_call("T4", season_year)
-
-```

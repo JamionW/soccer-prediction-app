@@ -150,22 +150,23 @@ async def get_user_simulations(
         query = """
             SELECT
                 pr.run_id,
-            pr.run_date,
-            pr.season_year,
-            pr.n_simulations,
-            pr.matchday,
-            c.conf_name as conference,
-            COUNT(ps.team_id) as teams_simulated,
-            pr.is_stored
-        FROM prediction_runs pr
-        LEFT JOIN conference c ON pr.conference_id = c.conf_id
-        LEFT JOIN prediction_summary ps ON pr.run_id = ps.run_id
-        WHERE pr.user_id = :user_id
-        GROUP BY pr.run_id, pr.run_date, pr.season_year, pr.n_simulations, 
-                 pr.matchday, c.conf_name, pr.is_stored
-        ORDER BY pr.run_date DESC
-        LIMIT :limit OFFSET :skip
-    """
+                pr.run_date,
+                pr.season_year,
+                pr.n_simulations,
+                pr.matchday,
+                c.conf_name as conference,
+                COUNT(ps.team_id) as teams_simulated,
+                pr.is_stored
+                FROM prediction_runs pr
+                JOIN user_simulations us ON pr.run_id = us.run_id  -- Added this join
+                LEFT JOIN conference c ON pr.conference_id = c.conf_id
+                LEFT JOIN prediction_summary ps ON pr.run_id = ps.run_id
+                WHERE us.user_id = :user_id  -- Changed from pr.user_id
+                GROUP BY pr.run_id, pr.run_date, pr.season_year, pr.n_simulations, 
+                        pr.matchday, c.conf_name, pr.is_stored
+                ORDER BY pr.run_date DESC
+                LIMIT :limit OFFSET :skip
+            """
         simulations = await database.fetch_all(
             query,
             values={
@@ -177,10 +178,11 @@ async def get_user_simulations(
     
         # Get total count for pagination
         count_query = """
-            SELECT COUNT(*) as total
-            FROM prediction_runs
-            WHERE user_id = :user_id
-        """
+            SELECT COUNT(DISTINCT pr.run_id) as total
+            FROM prediction_runs pr
+            JOIN user_simulations us ON pr.run_id = us.run_id
+            WHERE us.user_id = :user_id
+            """
         total_result = await database.fetch_one(
             count_query,
             values={"user_id": current_user['user_id']}
@@ -220,24 +222,26 @@ async def get_all_simulations(
 
         query = f"""
             SELECT
-            pr.run_id,
-            pr.run_date,
-            pr.season_year,
-            pr.n_simulations,
-            pr.matchday,
-            c.conf_name as conference,
-            u.username,
-            COUNT(ps.team_id) as teams_simulated
-        FROM prediction_runs pr
-        LEFT JOIN conference c ON pr.conference_id = c.conf_id
-        LEFT JOIN users u ON pr.user_id = u.user_id
-        LEFT JOIN prediction_summary ps ON pr.run_id = ps.run_id
-        {where_clause}
-        GROUP BY pr.run_id, pr.run_date, pr.season_year, pr.n_simulations, 
-                 pr.matchday, c.conf_name, u.username
-        ORDER BY pr.run_date DESC
-        LIMIT :limit OFFSET :skip
-    """
+                pr.run_id,
+                pr.run_date,
+                pr.season_year,
+                pr.n_simulations,
+                pr.matchday,
+                c.conf_name as conference,
+                u.username,
+                COUNT(ps.team_id) as teams_simulated
+            FROM prediction_runs pr
+            LEFT JOIN conference c ON pr.conference_id = c.conf_id
+            LEFT JOIN user_simulations us ON pr.run_id = us.run_id  -- Added
+            LEFT JOIN users u ON us.user_id = u.user_id  -- Changed from pr.user_id
+            LEFT JOIN prediction_summary ps ON pr.run_id = ps.run_id
+            {where_clause}
+            GROUP BY pr.run_id, pr.run_date, pr.season_year, pr.n_simulations, 
+                     pr.matchday, c.conf_name, u.username
+            ORDER BY pr.run_date DESC
+            LIMIT :limit OFFSET :skip
+        """
+            
         simulations = await database.fetch_all(query, values=values)
 
         # Get total count
@@ -363,6 +367,8 @@ async def run_simulation_task(
             combined_results = {
                 "eastern": eastern_results,
                 "western": western_results,
+                "eastern_run_id": eastern_results.get('run_id'),
+                "western_run_id": western_results.get('run_id'),
                 "regular_season_records": regular_season_records
             }
             
@@ -699,10 +705,10 @@ async def store_playoff_results(
     proj_query = """
         INSERT INTO playoff_projection (
             proj_date, season_year, parent_projection, proj_type,
-            proj_name, n_simulations, user_id, created_at
+            proj_name, n_simulations, created_by, created_at
         ) VALUES (
             NOW(), 2025, :parent_projection, 'simulation',
-            :proj_name, :n_simulations, :user_id, NOW()
+            :proj_name, :n_simulations, :created_by, NOW()
         ) RETURNING proj_id
     """
     
@@ -710,7 +716,7 @@ async def store_playoff_results(
         "parent_projection": parent_run_id,
         "proj_name": f"Playoff Simulation - {datetime.now().strftime('%Y-%m-%d %H:%M')}",
         "n_simulations": n_simulations,
-        "user_id": user_id
+        "created_by": user_id
     }
     
     proj_result = await db_manager.db.fetch_one(proj_query, values=proj_values)

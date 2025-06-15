@@ -235,28 +235,32 @@ async def main():
                 print(f"\n{'='*80}")
                 print(f"{conf_display_name} Conference Final Standings Projection")
                 print(f"{'='*80}")
-                print(f"{'Rank':<4} {'Team':<25} {'Current Pts':<12} {'Games':<6} {'Playoff %':<10} {'Avg Rank':<10}")
+                print(f"{'Proj':<4} {'Team':<25} {'Curr':<4} {'Pts':<4} {'GP':<4} {'Playoff %':<10} {'Avg Final':<10}")
+                print(f"{'Rank':<4} {'':<25} {'Rank':<4} {'':<4} {'':<4} {'':<10} {'Rank':<10}")
                 print(f"{'-'*80}")
-                
+
                 for idx, (_, row) in enumerate(summary_df.iterrows(), 1):
                     team_name = row['Team'][:24]  # Truncate long names
+                    current_rank = int(row['Current Rank'])
                     current_pts = int(row['Current Points'])
                     games_played = int(row['Games Played'])
                     playoff_pct = f"{row['Playoff Qualification %']:.1f}%"
                     avg_rank = f"{row['Average Final Rank']:.2f}"
                     
-                    print(f"{idx:<4} {team_name:<25} {current_pts:<12} {games_played:<6} {playoff_pct:<10} {avg_rank:<10}")
-                
+                    print(f"{idx:<4} {team_name:<25} {current_rank:<4} {current_pts:<4} {games_played:<4} {playoff_pct:<10} {avg_rank:<10}")
+
                 print(f"{'-'*80}")
                 print(f"Total teams: {len(summary_df)}")
                 print(f"Simulations run: {n_simulations:,}")
-                
+
                 # Additional insights
                 playoff_teams = summary_df[summary_df['Playoff Qualification %'] >= 50.0]
                 eliminated_teams = summary_df[summary_df['Playoff Qualification %'] < 1.0]
-                
+                clinched_teams = summary_df[summary_df['Playoff Qualification %'] >= 99.9]
+
                 print(f"\nPlayoff Picture:")
                 print(f"  Teams likely to make playoffs (>50%): {len(playoff_teams)}")
+                print(f"  Teams clinched playoffs (>99.9%): {len(clinched_teams)}")
                 print(f"  Teams effectively eliminated (<1%): {len(eliminated_teams)}")
 
                 # Save results to CSV with timestamp
