@@ -15,27 +15,17 @@ def mock_db():
     db.fetch_one = AsyncMock()
     db.execute = AsyncMock()
     db.fetch_val = AsyncMock()
-    # Mock transaction context manager
-    # db.transaction = MagicMock() # Use this if Database.transaction is a regular method returning a context manager
-    # db.transaction.return_value.__aenter__ = AsyncMock()
-    # db.transaction.return_value.__aexit__ = AsyncMock()
 
-    # If Database.transaction is an async context manager itself:
-    db.transaction = AsyncMock() # Make transaction itself an AsyncMock
-    # Then in tests, you might need to mock the __aenter__ and __aexit__ of what it returns if it's called like `async with db.transaction():`
-    # However, if it's more like `db.transaction(lambda txn: ...)` or `await db.transaction()`, then AsyncMock() is fine.
-    # For `async with self.db.transaction():` as used in DatabaseManager, we need to mock what `db.transaction()` returns.
+    # Mock the transaction() method which returns an async context manager
+    db.transaction = MagicMock()
+
+    # What transaction() returns should be an async context manager
     mock_transaction_context = AsyncMock()
+    # __aenter__ should return the mock transaction object itself, or another mock if needed
+    mock_transaction_context.__aenter__ = AsyncMock(return_value=AsyncMock(name="mock_transaction_instance"))
+    mock_transaction_context.__aexit__ = AsyncMock()
+
     db.transaction.return_value = mock_transaction_context
-    # No, this is simpler: if db.transaction is the context manager, it needs aenter/aexit
-    # If db.transaction() returns a context manager, then db.transaction is a MagicMock and its return_value is an AsyncMock context manager
-    # The provided code in DatabaseManager is `async with self.db.transaction():`
-    # This means `self.db.transaction` IS the async context manager.
-    # So, `db.transaction` needs `__aenter__` and `__aexit__`.
-    # Let's redefine `db.transaction` for clarity if it's used directly as a context manager
-    db.transaction = AsyncMock(spec=True) # Make it an AsyncMock itself
-    db.transaction.__aenter__ = AsyncMock(return_value=AsyncMock()) # aenter returns a mock transaction object
-    db.transaction.__aexit__ = AsyncMock()
 
     return db
 
@@ -90,8 +80,8 @@ async def test_store_simulation_results(db_manager, mock_db):
     run_id = 123
     user_id = 1 # store_simulation_run needs user_id, but store_simulation_results does not directly
     summary_data = [
-        {"_team_id": "T1", "Team": "Team 1", "Average Points": 50.5, "Average Final Rank": 2.3, "Playoff Qualification %": 95.5, "Current Points": 0, "Games Played": 0},
-        {"_team_id": "T2", "Team": "Team 2", "Average Points": 45.1, "Average Final Rank": 3.1, "Playoff Qualification %": 80.0, "Current Points": 0, "Games Played": 0},
+        {"_team_id": "T1", "Team": "Team 1", "Average Points": 50.5, "Average Final Rank": 2.3, "Playoff Qualification %": 95.5, "Current Points": 0, "Games Played": 0, "Current Rank": 1},
+        {"_team_id": "T2", "Team": "Team 2", "Average Points": 45.1, "Average Final Rank": 3.1, "Playoff Qualification %": 80.0, "Current Points": 0, "Games Played": 0, "Current Rank": 2},
     ]
     summary_df = pd.DataFrame(summary_data)
     final_rank_dist = {
@@ -111,18 +101,19 @@ async def test_store_simulation_results(db_manager, mock_db):
 
     assert mock_db.execute.call_count == len(summary_df)
 
-    args_T1, _ = mock_db.execute.call_args_list[0]
-    query_T1 = args_T1[0]
-    values_T1 = args_T1[1]
+    # The 'values' are passed as keyword arguments in the SUT
+    first_call_args = mock_db.execute.call_args_list[0]
+    query_T1 = first_call_args.args[0]
+    values_T1 = first_call_args.kwargs['values']
 
     assert "INSERT INTO prediction_summary" in query_T1
     assert values_T1["run_id"] == run_id
     assert values_T1["team_id"] == "T1"
     assert values_T1["avg_points"] == 50.5
-    assert values_T1["avg_rank"] == 2.3
+    assert values_T1["avg_final_rank"] == 2.3 # Corrected key
     assert values_T1["playoff_prob_pct"] == 95.5
     assert values_T1["rank_dist_json"] == '[1, 2, 2, 3, 1]' # JSON string
-    assert values_T1["games_rem"] == 5
+    assert values_T1["games_remaining"] == 5 # Corrected key
     assert values_T1["status_final"] == "x-"
 
 

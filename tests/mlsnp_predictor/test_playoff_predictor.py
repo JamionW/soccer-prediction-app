@@ -173,7 +173,7 @@ def test_simulate_match_home_advantage(mock_poisson, playoff_predictor_instance)
     # To verify HFA was applied, we'd need to capture args to np.random.poisson
     # This requires more complex mocking or refactoring simulate_match to return expected goals.
 
-@patch('numpy.random.poisson', side_effect=[2,2]) # Draw
+@patch('numpy.random.poisson', side_effect=[2,2, 2,2, 2,2, 2,2]) # Draw for all four scenarios
 @patch('numpy.random.random')
 def test_simulate_match_shootout_probabilities(mock_random, mock_poisson, playoff_predictor_instance):
     # Home win in shootout
@@ -198,14 +198,15 @@ def test_simulate_match_shootout_probabilities(mock_random, mock_poisson, playof
 
 def test_run_playoff_simulations_structure(playoff_predictor_instance, sample_team_performance_playoffs):
     eastern_seeds = {f"E{i}": i for i in range(1, 9)}
-    western_seeds = {f"W{i}": i for i in range(1, 3)} # Smaller West for quicker test
+    western_seeds = {f"W{i}": i for i in range(1, 9)} # Adjusted to 8 seeds for West
 
     # Ensure all seeded teams exist in performance data for this specific test run
     current_team_perf = sample_team_performance_playoffs.copy()
-    for i in range(1,9):
-        if f"E{i}" not in current_team_perf: current_team_perf[f"E{i}"] = {"xgf_per_game":1.1, "xga_per_game":1.1, "games_played":10}
-    for i in range(1,3):
-        if f"W{i}" not in current_team_perf: current_team_perf[f"W{i}"] = {"xgf_per_game":1.1, "xga_per_game":1.1, "games_played":10}
+    for conf_prefix in ["E", "W"]:
+        for i in range(1,9):
+            team_id = f"{conf_prefix}{i}"
+            if team_id not in current_team_perf:
+                current_team_perf[team_id] = {"xgf_per_game":1.1, "xga_per_game":1.1, "games_played":10}
 
     # Update predictor instance for this test
     playoff_predictor_instance.team_performance = current_team_perf

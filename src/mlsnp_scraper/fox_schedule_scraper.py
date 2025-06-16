@@ -16,6 +16,15 @@ from pathlib import Path
 import time
 import sys
 import io
+import os
+
+# Define output directory and log file path
+output_dir = "output"
+log_file_path = os.path.join(output_dir, "fox_sports_scraper.log")
+
+# Create output directory if it doesn't exist
+if not os.path.exists(output_dir):
+    os.makedirs(output_dir)
 
 # Configure logging
 logging.basicConfig(
@@ -23,7 +32,7 @@ logging.basicConfig(
     format='%(asctime)s - %(levelname)s - %(message)s',
     handlers=[
         logging.StreamHandler(sys.stdout),
-        logging.FileHandler('output/fox_sports_scraper.log', encoding='utf-8')
+        logging.FileHandler(log_file_path, encoding='utf-8')
     ]
 )
 logger = logging.getLogger(__name__)
@@ -340,22 +349,36 @@ class FoxSportsMLSNextProScraper:
     
     def _resolve_by_enhanced_logo(self, abbrev: str, row_element, cell_index: int = None) -> Optional[str]:
         """Enhanced logo resolution with specific patterns for NEW/COL."""
-        # Use cell-specific searching if index provided
+        target_search_area = None
         if cell_index is not None:
-            cells = row_element.find_all('td', class_='cell-entity')
-            if cell_index < len(cells):
-                current_cell = cells[cell_index]
+            # When called from _extract_fixtures_from_page, row_element is <tr>
+            # and cell_index is the index of the <td> we care about.
+            all_tds_in_row = row_element.find_all('td')
+            if cell_index < len(all_tds_in_row):
+                target_search_area = all_tds_in_row[cell_index]
             else:
-                logging.warning(f"Cell index {cell_index} not found for '{abbrev}'")
-                current_cell = row_element.find('td', class_='cell-entity')
+                logging.warning(f"Cell index {cell_index} out of bounds for row for '{abbrev}'. HTML: {str(row_element)[:200]}")
+                # Fallback: try to find any 'cell-entity' if specific index fails badly
+                # This might occur if the table structure is unexpected.
+                # However, for the test case, cell_index should be valid if row structure is as expected.
+                # If all_tds_in_row is empty, it means row_element wasn't a <tr> or had no <td>s.
+                # If cell_index is too large, it means the row didn't have enough <td>s.
+                # In these critical error cases, returning None is appropriate.
+                return None
         else:
-            current_cell = row_element.find('td', class_='cell-entity')
-        
-        if not current_cell:
-            logging.debug("No cell-entity found in row element")
+            # This path is taken by direct unit tests for _resolve_team_from_abbreviation.
+            # The row_element in those tests is typically a <tr><td><img ...></td></tr>.
+            # We need to find the <td> that contains the image.
+            if row_element.name == 'td': # If row_element itself is the td
+                 target_search_area = row_element
+            else: # Assume row_element is a <tr> or similar wrapper
+                 target_search_area = row_element.find('td') # Find the first td
+
+        if not target_search_area:
+            logging.debug(f"No valid TD cell found for logo resolution for '{abbrev}'. Searched in: {str(row_element)[:200]}")
             return None
         
-        images = current_cell.find_all('img')
+        images = target_search_area.find_all('img')
         logging.info(f"Found {len(images)} images in current cell for '{abbrev}'")
         
         for img in images:
@@ -483,7 +506,8 @@ class FoxSportsMLSNextProScraper:
                 
                 if home_abbrev and away_abbrev:
                     home_team = self._resolve_team_from_abbreviation(home_abbrev, row, cell_index=0)
-                    away_team = self._resolve_team_from_abbreviation(away_abbrev, row, cell_index=1)
+                    # The away team's info (name and logo) is in cells[2]
+                    away_team = self._resolve_team_from_abbreviation(away_abbrev, row, cell_index=2)
                     
                     if home_team and away_team:
                         if home_team == away_team:

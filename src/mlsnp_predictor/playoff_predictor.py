@@ -616,7 +616,7 @@ class MLSNPPlayoffPredictor:
                 } for team in all_teams
             },
             'matchup_frequency': defaultdict(int),
-            'opponent_selection_frequency': defaultdict(lambda: defaultdict(int))
+            'opponent_selection_frequency': defaultdict(lambda: defaultdict(lambda: defaultdict(int)))
         }
         
         # Run simulations

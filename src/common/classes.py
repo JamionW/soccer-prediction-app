@@ -1,12 +1,14 @@
 from pydantic import BaseModel
 from typing import Optional, List, Dict, Any
 
+from typing import ClassVar
+
 class SimulationRequest(BaseModel):
     conference: str  # "eastern" or "western"
     n_simulations: int = 25000
     include_playoffs: bool = False
     simulation_preset: Optional[str] = "standard"
-    SIMULATION_PRESETS = {
+    SIMULATION_PRESETS: ClassVar[Dict[str, Dict[str, any]]] = {
         "quick": {
             "count": 1000,
             "description": "Quick estimate (~3 seconds)",
