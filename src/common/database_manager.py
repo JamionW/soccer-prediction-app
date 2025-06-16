@@ -1265,12 +1265,12 @@ class DatabaseManager:
                 INSERT INTO prediction_summary (
                 run_id, team_id, games_remaining, current_points, current_rank,
                 avg_points, avg_final_rank, median_final_rank, best_rank, worst_rank,
-                rank_25, rank_75, playoff_prob_pct, clinched, eliminated, rank_dist_json,
+                rank_25, rank_75, playoff_prob_pct, clinched, eliminated,
                 status_final, created_at
                 ) VALUES (
                     :run_id, :team_id, :games_remaining, :current_points, :current_rank,
                     :avg_points, :avg_final_rank, :median_final_rank, :best_rank, :worst_rank,
-                    :rank_25, :rank_75, :playoff_prob_pct, :clinched, :eliminated, :rank_dist_json,
+                    :rank_25, :rank_75, :playoff_prob_pct, :clinched, :eliminated,
                     :status_final, NOW()
                 )
             """
@@ -1313,7 +1313,6 @@ class DatabaseManager:
                     "playoff_prob_pct": playoff_prob,
                     "clinched": clinched,
                     "eliminated": eliminated,
-                    "rank_dist_json": json.dumps(rank_dist),
                     "status_final": qual_info.get('status') # Added this line
                 }
                 

@@ -84,10 +84,6 @@ async def test_store_simulation_results(db_manager, mock_db):
         {"_team_id": "T2", "Team": "Team 2", "Average Points": 45.1, "Average Final Rank": 3.1, "Playoff Qualification %": 80.0, "Current Points": 0, "Games Played": 0, "Current Rank": 2},
     ]
     summary_df = pd.DataFrame(summary_data)
-    final_rank_dist = {
-        "T1": [1, 2, 2, 3, 1],
-        "T2": [3, 4, 3, 2, 4],
-    }
     qualification_data = {
         "T1": {"games_remaining": 5, "status": "x-"},
         "T2": {"games_remaining": 5, "status": "y-"},
@@ -97,7 +93,7 @@ async def test_store_simulation_results(db_manager, mock_db):
     # This also tests store_simulation_run indirectly if we want
     # For this test, run_id is given, so we only test store_simulation_results
 
-    await db_manager.store_simulation_results(run_id, summary_df, final_rank_dist, qualification_data)
+    await db_manager.store_simulation_results(run_id, summary_df, {}, qualification_data)
 
     assert mock_db.execute.call_count == len(summary_df)
 
@@ -112,7 +108,6 @@ async def test_store_simulation_results(db_manager, mock_db):
     assert values_T1["avg_points"] == 50.5
     assert values_T1["avg_final_rank"] == 2.3 # Corrected key
     assert values_T1["playoff_prob_pct"] == 95.5
-    assert values_T1["rank_dist_json"] == '[1, 2, 2, 3, 1]' # JSON string
     assert values_T1["games_remaining"] == 5 # Corrected key
     assert values_T1["status_final"] == "x-"
 
