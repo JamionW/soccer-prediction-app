@@ -43,8 +43,12 @@ class DatabaseManager:
         after the database connection is established.
         """
         logger.info("Initializing database manager...")
-        await self.ensure_conferences_exist()
-        logger.info("Database manager initialization complete.")
+        try:
+            await self.ensure_conferences_exist()
+            logger.info("Database manager initialization complete.")
+        except Exception as e:
+            logger.error(f"Error during DatabaseManager initialization: {e}", exc_info=True)
+            raise
         
     @property
     def asa_client(self):
@@ -64,38 +68,43 @@ class DatabaseManager:
         
         This method ensures consistent team data across the system.
         """
-        query = "SELECT * FROM team WHERE team_id = :team_id"
-        team = await self.db.fetch_one(query, values={"team_id": team_id})
-        
-        if team:
-            return dict(team)
-        
-        logger.info(f"Creating new team: {team_name} ({team_id})")
-        
-        insert_query = """
-            INSERT INTO team (team_id, team_name, team_abbv, team_short_name, is_active, created_at)
-            VALUES (:team_id, :team_name, :team_abbv, :short_name, true, NOW())
-            RETURNING *
-        """
-        
-        if not team_abbv:
-            team_abbv = ''.join(word[0].upper() for word in team_name.split()[:3])
-        
-        short_name = team_name.split()[0]
-        
-        values = {
-            "team_id": team_id,
-            "team_name": team_name,
-            "team_abbv": team_abbv,
-            "short_name": short_name
-        }
-        
-        team = await self.db.fetch_one(insert_query, values=values)
-        
-        if conference_id:
-            await self.create_team_affiliation(team_id, conference_id)
-        
-        return dict(team)
+        try:
+            query = "SELECT * FROM team WHERE team_id = :team_id"
+            team = await self.db.fetch_one(query, values={"team_id": team_id})
+
+            if team:
+                return dict(team)
+
+            logger.info(f"Team {team_id} not found, creating new team: {team_name}")
+
+            insert_query = """
+                INSERT INTO team (team_id, team_name, team_abbv, team_short_name, is_active, created_at)
+                VALUES (:team_id, :team_name, :team_abbv, :short_name, true, NOW())
+                RETURNING *
+            """
+
+            if not team_abbv:
+                team_abbv = ''.join(word[0].upper() for word in team_name.split()[:3])
+
+            short_name = team_name.split()[0] if team_name else team_abbv
+
+            values = {
+                "team_id": team_id,
+                "team_name": team_name,
+                "team_abbv": team_abbv,
+                "short_name": short_name
+            }
+
+            new_team_record = await self.db.fetch_one(insert_query, values=values)
+
+            if conference_id:
+                await self.create_team_affiliation(team_id, conference_id)
+
+            logger.info(f"Successfully created team: {team_name} ({team_id})")
+            return dict(new_team_record)
+        except Exception as e:
+            logger.error(f"Database error in get_or_create_team for team_id {team_id}: {e}", exc_info=True)
+            raise
     
     async def create_team_affiliation(self, team_id: str, conference_id: int, 
                                       league_id: int = 1, division_id: int = None):
@@ -103,36 +112,44 @@ class DatabaseManager:
         Create or update a team's affiliation with a conference and league.
         This is crucial for tracking which teams belong to which conference over time.
         """
-        check_query = """
-            SELECT * FROM team_affiliations 
-            WHERE team_id = :team_id AND conference_id = :conference_id AND is_current = true
-        """
-        existing = await self.db.fetch_one(check_query, values={"team_id": team_id, "conference_id": conference_id})
-        
-        if existing:
-            return dict(existing)
+        try:
+            check_query = """
+                SELECT * FROM team_affiliations
+                WHERE team_id = :team_id AND conference_id = :conference_id AND is_current = true
+            """
+            existing = await self.db.fetch_one(check_query, values={"team_id": team_id, "conference_id": conference_id})
             
-        update_query = """
-            UPDATE team_affiliations SET is_current = false, end_date = CURRENT_DATE
-            WHERE team_id = :team_id AND is_current = true
-        """
-        await self.db.execute(update_query, values={"team_id": team_id})
-        
-        insert_query = """
-            INSERT INTO team_affiliations 
-            (team_id, league_id, conference_id, division_id, start_date, is_current, created_at)
-            VALUES (:team_id, :league_id, :conference_id, :division_id, CURRENT_DATE, true, NOW())
-            RETURNING *
-        """
-        values = {
-            "team_id": team_id,
-            "league_id": league_id,
-            "conference_id": conference_id,
-            "division_id": division_id
-        }
-        
-        affiliation = await self.db.fetch_one(insert_query, values=values)
-        return dict(affiliation)
+            if existing:
+                logger.debug(f"Team {team_id} already has current affiliation with conference {conference_id}.")
+                return dict(existing)
+
+            logger.info(f"Updating existing affiliations and creating new for team {team_id} with conference {conference_id}.")
+            async with self.db.transaction(): # Ensure atomicity
+                update_query = """
+                    UPDATE team_affiliations SET is_current = false, end_date = CURRENT_DATE
+                    WHERE team_id = :team_id AND is_current = true
+                """
+                await self.db.execute(update_query, values={"team_id": team_id})
+
+                insert_query = """
+                    INSERT INTO team_affiliations
+                    (team_id, league_id, conference_id, division_id, start_date, is_current, created_at)
+                    VALUES (:team_id, :league_id, :conference_id, :division_id, CURRENT_DATE, true, NOW())
+                    RETURNING *
+                """
+                values = {
+                    "team_id": team_id,
+                    "league_id": league_id,
+                    "conference_id": conference_id,
+                    "division_id": division_id
+                }
+
+                affiliation = await self.db.fetch_one(insert_query, values=values)
+            logger.info(f"Successfully created affiliation for team {team_id} with conference {conference_id}.")
+            return dict(affiliation)
+        except Exception as e:
+            logger.error(f"Database error in create_team_affiliation for team_id {team_id}, conf_id {conference_id}: {e}", exc_info=True)
+            raise
 
     async def get_conference_teams(self, conference_id: int, season_year: int) -> Dict[str, str]:
         """
@@ -145,64 +162,76 @@ class DatabaseManager:
         """
         from datetime import datetime, date
         
-        current_year = datetime.now().year
-        
-        if season_year == current_year:
-            # For current year, use the is_current flag for efficiency
-            query = """
-                SELECT t.team_id, t.team_name
-                FROM team t
-                JOIN team_affiliations ta ON t.team_id = ta.team_id
-                WHERE ta.conference_id = :conference_id
-                AND ta.is_current = true
-                AND t.is_active = true
-                ORDER BY t.team_name
-            """
-            values = {"conference_id": conference_id}
-        else:
-            # For historical years, check date ranges
-            # Assume season runs from Jan 1 to Dec 31 of the given year
-            season_start = date(season_year, 1, 1)
-            season_end = date(season_year, 12, 31)
+        logger.debug(f"Fetching teams for conference_id: {conference_id}, season: {season_year}")
+        try:
+            current_year = datetime.now().year
             
-            query = """
-                SELECT t.team_id, t.team_name
-                FROM team t
-                JOIN team_affiliations ta ON t.team_id = ta.team_id
-                WHERE ta.conference_id = :conference_id
-                AND t.is_active = true
-                AND (
-                    -- Team affiliation overlaps with the season
-                    (ta.start_date IS NULL OR ta.start_date <= :season_end) AND
-                    (ta.end_date IS NULL OR ta.end_date >= :season_start)
-                )
-                ORDER BY t.team_name
-            """
-            values = {
-                "conference_id": conference_id,
-                "season_start": season_start,
-                "season_end": season_end
-            }
-    
-        teams = await self.db.fetch_all(query, values=values)
-        return {team['team_id']: team['team_name'] for team in teams}
+            if season_year == current_year:
+                # For current year, use the is_current flag for efficiency
+                query = """
+                    SELECT t.team_id, t.team_name
+                    FROM team t
+                    JOIN team_affiliations ta ON t.team_id = ta.team_id
+                    WHERE ta.conference_id = :conference_id
+                    AND ta.is_current = true
+                    AND t.is_active = true
+                    ORDER BY t.team_name
+                """
+                values = {"conference_id": conference_id}
+            else:
+                # For historical years, check date ranges
+                season_start = date(season_year, 1, 1)
+                season_end = date(season_year, 12, 31)
+
+                query = """
+                    SELECT t.team_id, t.team_name
+                    FROM team t
+                    JOIN team_affiliations ta ON t.team_id = ta.team_id
+                    WHERE ta.conference_id = :conference_id
+                    AND t.is_active = true
+                    AND (
+                        (ta.start_date IS NULL OR ta.start_date <= :season_end) AND
+                        (ta.end_date IS NULL OR ta.end_date >= :season_start)
+                    )
+                    ORDER BY t.team_name
+                """
+                values = {
+                    "conference_id": conference_id,
+                    "season_start": season_start,
+                    "season_end": season_end
+                }
+
+            teams_records = await self.db.fetch_all(query, values=values)
+            teams_dict = {team['team_id']: team['team_name'] for team in teams_records}
+            logger.info(f"Found {len(teams_dict)} teams for conference_id: {conference_id}, season: {season_year}")
+            return teams_dict
+        except Exception as e:
+            logger.error(f"Database error in get_conference_teams for conf_id {conference_id}, season {season_year}: {e}", exc_info=True)
+            raise
 
     async def ensure_conferences_exist(self):
         """
         Ensures the Eastern and Western conferences exist in the database.
         This prevents errors in downstream processing that rely on conference data.
         """
-        conferences = {1: 'Eastern Conference', 2: 'Western Conference'}
-        for conf_id, conf_name in conferences.items():
-            query = "SELECT * FROM conference WHERE conf_id = :conf_id"
-            conference = await self.db.fetch_one(query, values={"conf_id": conf_id})
-            if not conference:
-                insert_query = """
-                    INSERT INTO conference (conf_id, conf_name, league_id, created_at)
-                    VALUES (:conf_id, :conf_name, 1, NOW())
-                """
-                await self.db.execute(insert_query, values={"conf_id": conf_id, "conf_name": conf_name})
-                logger.info(f"Inserted {conf_name} into database.")
+        try:
+            conferences = {1: 'Eastern Conference', 2: 'Western Conference'}
+            for conf_id, conf_name in conferences.items():
+                query = "SELECT * FROM conference WHERE conf_id = :conf_id"
+                conference = await self.db.fetch_one(query, values={"conf_id": conf_id})
+                if not conference:
+                    logger.info(f"Conference {conf_name} (ID: {conf_id}) not found, creating.")
+                    insert_query = """
+                        INSERT INTO conference (conf_id, conf_name, league_id, created_at)
+                        VALUES (:conf_id, :conf_name, 1, NOW())
+                    """
+                    await self.db.execute(insert_query, values={"conf_id": conf_id, "conf_name": conf_name})
+                    logger.info(f"Inserted {conf_name} into database.")
+                else:
+                    logger.debug(f"Conference {conf_name} (ID: {conf_id}) already exists.")
+        except Exception as e:
+            logger.error(f"Database error in ensure_conferences_exist: {e}", exc_info=True)
+            raise
 
     # ==================== Game Data Management ====================
     
@@ -211,108 +240,131 @@ class DatabaseManager:
         """
         Retrieve all games for a season from the database, with optional filters.
         """
-        query = """
-            SELECT g.*, 
-                   ht.team_name as home_team_name, at.team_name as away_team_name,
-                   hta.conference_id as home_conference_id, ata.conference_id as away_conference_id
-            FROM games g
-            JOIN team ht ON g.home_team_id = ht.team_id
-            JOIN team at ON g.away_team_id = at.team_id
-            LEFT JOIN team_affiliations hta ON ht.team_id = hta.team_id AND hta.is_current = true
-            LEFT JOIN team_affiliations ata ON at.team_id = ata.team_id AND ata.is_current = true
-            WHERE g.season_year = :season_year
-        """
-        values = {"season_year": season_year}
-        
-        if conference:
-            conf_id = 1 if conference.lower() == 'eastern' else 2
-            # Correctly fetches games where at least one team is in the conference
-            query += " AND (hta.conference_id = :conf_id OR ata.conference_id = :conf_id)"
-            values["conf_id"] = conf_id
-        
-        if not include_incomplete:
-            query += " AND g.is_completed = true"
-        
-        query += " ORDER BY g.date, g.game_id"
-        
-        games = await self.db.fetch_all(query, values=values)
-        return [dict(game) for game in games]
+        logger.debug(f"Fetching games for season: {season_year}, conference: {conference}, include_incomplete: {include_incomplete}")
+        try:
+            query = """
+                SELECT g.*,
+                       ht.team_name as home_team_name, at.team_name as away_team_name,
+                       hta.conference_id as home_conference_id, ata.conference_id as away_conference_id
+                FROM games g
+                JOIN team ht ON g.home_team_id = ht.team_id
+                JOIN team at ON g.away_team_id = at.team_id
+                LEFT JOIN team_affiliations hta ON ht.team_id = hta.team_id AND hta.is_current = true
+                LEFT JOIN team_affiliations ata ON at.team_id = ata.team_id AND ata.is_current = true
+                WHERE g.season_year = :season_year
+            """
+            values = {"season_year": season_year}
+
+            if conference:
+                conf_id = 1 if conference.lower() == 'eastern' else 2
+                query += " AND (hta.conference_id = :conf_id OR ata.conference_id = :conf_id)"
+                values["conf_id"] = conf_id
+
+            if not include_incomplete:
+                query += " AND g.is_completed = true"
+
+            query += " ORDER BY g.date, g.game_id"
+
+            games_records = await self.db.fetch_all(query, values=values)
+            games_list = [dict(game) for game in games_records]
+            logger.info(f"Found {len(games_list)} games for season: {season_year}, conference: {conference}")
+            return games_list
+        except Exception as e:
+            logger.error(f"Database error in get_games_for_season for year {season_year}, conf {conference}: {e}", exc_info=True)
+            raise
 
     async def get_or_fetch_game(self, game_id: str) -> Optional[Dict]:
         """
         Get a single game from the database or fetch it from the API if missing.
         """
-        query = "SELECT * FROM games WHERE game_id = :game_id"
-        game = await self.db.fetch_one(query, values={"game_id": game_id})
-        
-        if not game:
-            logger.warning(f"Game {game_id} not found in database")
-            return None
-            
-        if game['asa_loaded']:
-            return dict(game)
-        
-        # Extract team IDs and date from the existing game record
-        home_team_id = game['home_team_id']
-        away_team_id = game['away_team_id']
-        game_date = game['date']
-        season_year = game['season_year']
-        
-        logger.info(f"Game {game_id} needs ASA data, fetching by teams and date...")
+        game: Optional[Dict] = None  # Initialize game
         try:
-            # Fetch games for both teams for the season
-            games_data = self.asa_client.get_games(
-                leagues=['mlsnp'],
-                team_ids=[home_team_id, away_team_id],
-                seasons=[str(season_year)]  # Changed from season_name
-            )
-            
-            if games_data.empty:
-                logger.warning(f"No ASA games found for teams {home_team_id} vs {away_team_id} in {season_year}")
-                return dict(game)
-            
-            # Convert game_date to date object for comparison
-            target_date = game_date.date() if hasattr(game_date, 'date') else game_date
-            
-            # Find the matching game by home/away teams and date
-            for idx, asa_game in games_data.iterrows():
-                # Parse ASA date
-                asa_date_str = asa_game.get('date_time_utc', asa_game.get('date'))
-                if asa_date_str:
-                    try:
-                        # Use pandas to parse and convert to timezone-naive
-                        asa_datetime = pd.to_datetime(asa_date_str)
-                        asa_date = asa_datetime.tz_localize(None).date() if asa_datetime.tzinfo else asa_datetime.date()
-                    except Exception as e:
-                        logger.warning(f"Could not parse ASA date: {asa_date_str}, error: {e}")
-                        continue
-                    
-                    # Check if this is our game (same teams and within 1 day)
-                    date_diff = abs((asa_date - target_date).days)
-                    if (asa_game['home_team_id'] == home_team_id and 
-                        asa_game['away_team_id'] == away_team_id and
-                        date_diff <= 1):  # Allow 1 day difference for timezone issues
-                        
-                        # Found the matching game!
-                        game_data = asa_game.to_dict()
-                        
-                        # IMPORTANT: Preserve our original game_id
-                        game_data['game_id'] = game_id
-                        
-                        # Store with ASA data
-                        await self.store_game(game_data, from_asa=True)
-                        
-                        # Return the updated record
-                        updated_game = await self.db.fetch_one(query, values={"game_id": game_id})
-                        return dict(updated_game) if updated_game else None
-            
-            logger.warning(f"Could not find exact match in ASA data for {home_team_id} vs {away_team_id} on {target_date}")
-            return dict(game)
-            
-        except Exception as e:
-            logger.error(f"Error fetching game {game_id} from ASA: {e}", exc_info=True)
-            return dict(game) if game else None
+            query = "SELECT * FROM games WHERE game_id = :game_id"
+            game = await self.db.fetch_one(query, values={"game_id": game_id})
 
+            if not game:
+                logger.warning(f"Game {game_id} not found in database")
+                return None
+
+            # Proceed only if game was found    
+            if game['asa_loaded']:
+                return dict(game)
+        
+            # Extract team IDs and date from the existing game record
+            home_team_id = game['home_team_id']
+            away_team_id = game['away_team_id']
+            game_date = game['date']
+            season_year = game['season_year']
+            
+            logger.info(f"Game {game_id} needs ASA data, fetching by teams and date...")
+            try:
+                # Fetch games for both teams for the season
+                games_data = self.asa_client.get_games(
+                    leagues=['mlsnp'],
+                    team_ids=[home_team_id, away_team_id],
+                    seasons=[str(season_year)]  # Changed from season_name
+                )
+                
+                if games_data.empty:
+                    logger.warning(f"No ASA games found for teams {home_team_id} vs {away_team_id} in {season_year}")
+                    return dict(game)
+                
+                # Convert game_date to date object for comparison
+                target_date = game_date.date() if hasattr(game_date, 'date') else game_date
+                
+                # Find the matching game by home/away teams and date
+                for idx, asa_game in games_data.iterrows():
+                    # Parse ASA date
+                    asa_date_str = asa_game.get('date_time_utc', asa_game.get('date'))
+                    if asa_date_str:
+                        try:
+                            # Use pandas to parse and convert to timezone-naive
+                            asa_datetime = pd.to_datetime(asa_date_str)
+                            asa_date = asa_datetime.tz_localize(None).date() if asa_datetime.tzinfo else asa_datetime.date()
+                        except Exception as e:
+                            logger.warning(f"Could not parse ASA date: {asa_date_str}, error: {e}")
+                            continue
+                        
+                        # Check if this is our game (same teams and within 1 day)
+                        date_diff = abs((asa_date - target_date).days)
+                        if (asa_game['home_team_id'] == home_team_id and 
+                            asa_game['away_team_id'] == away_team_id and
+                            date_diff <= 1):  # Allow 1 day difference for timezone issues
+                            
+                            # Found the matching game!
+                            game_data = asa_game.to_dict()
+                            
+                            # IMPORTANT: Preserve our original game_id
+                            game_data['game_id'] = game_id
+                            
+                            # Store with ASA data
+                            await self.store_game(game_data, from_asa=True)
+                            
+                            # Return the updated record
+                            updated_game = await self.db.fetch_one(query, values={"game_id": game_id})
+                            return dict(updated_game) if updated_game else None
+                
+                logger.warning(f"Could not find exact match in ASA data for {home_team_id} vs {away_team_id} on {target_date}")
+                return dict(game)
+                
+            except Exception as e:
+                logger.error(f"Error fetching game {game_id} from ASA: {e}", exc_info=True)
+                # If game was fetched from DB but ASA fetch failed, return the DB game.
+                # If game is None (e.g. initial DB fetch failed and was caught by outer except), this will be None.
+                return dict(game) if game else None
+        except Exception as e: # This is the missing outer except block
+            logger.error(f"Error in get_or_fetch_game for game {game_id}: {e}", exc_info=True)
+            return None # Return None if any error occurs in the outer try block
+        
+    def _convert_nan_to_none_scalar(self, value):
+        """Converts a single NaN value (float('nan') or np.nan) to None."""
+        if isinstance(value, float) and np.isnan(value):
+            return None
+        # Handle numpy specific NaN types (e.g., from pandas Series.to_dict())
+        if isinstance(value, np.generic) and np.isscalar(value) and np.isnan(value):
+            return None
+        return value    
+    
     async def store_game(self, game_data: Dict, from_asa: bool = False) -> Dict:
         """
         Store a game in the database, handling data transformation and updates.
@@ -389,14 +441,16 @@ class DatabaseManager:
             
             if from_asa:
                 # Store original ASA data before any corrections
-                original_asa_data = json.dumps({
-                'home_score': game_data.get('home_score'),
-                'away_score': game_data.get('away_score'),
-                'penalties': game_data.get('penalties'),
-                'home_penalties': game_data.get('home_penalties'),
-                'away_penalties': game_data.get('away_penalties'),
-                'went_to_shootout_original': went_to_shootout
-                })
+                original_asa_data_dict_raw = {
+                    'home_score': self._convert_nan_to_none_scalar(game_data.get('home_score')),
+                    'away_score': self._convert_nan_to_none_scalar(game_data.get('away_score')),
+                    'penalties': self._convert_nan_to_none_scalar(game_data.get('penalties')),
+                    'home_penalties': self._convert_nan_to_none_scalar(game_data.get('home_penalties')),
+                    'away_penalties': self._convert_nan_to_none_scalar(game_data.get('away_penalties')),
+                    # For went_to_shootout_original, get the raw value (which might be NaN) and convert to None if so
+                    'went_to_shootout_original': self._convert_nan_to_none_scalar(game_data.get('penalties', game_data.get('went_to_shootout', False)))
+                }
+                original_asa_data = json.dumps(original_asa_data_dict_raw) # Use the dict with NaNs converted to None
 
                 # For ASA data: determine completion based on actual score data
                 # ASA should only return games that have been played
@@ -991,12 +1045,13 @@ class DatabaseManager:
         """
         logger.info(f"Loading historical data for {season_year} season...")
         try:
-            games = self.asa_client.get_games(leagues=['mlsnp'], season_name=[str(season_year)])
-            logger.info(f"Found {len(games)} games for {season_year} season.")
+            games_df = self.asa_client.get_games(leagues=['mlsnp'], season_name=[str(season_year)])
+            logger.info(f"Found {len(games_df)} games for {season_year} season.")
             
-            for game in games:
-                await self.store_game(game, from_asa=True)
-                if len(games) > 100:
+            # Corrected iteration over DataFrame rows
+            for _, game_row in games_df.iterrows():
+                await self.store_game(game_row.to_dict(), from_asa=True)
+                if len(games_df) > 100: # Still use original length for sleep logic
                     await asyncio.sleep(0.01)
 
             team_ids = await self.db.fetch_all("SELECT DISTINCT team_id FROM team")
@@ -1148,73 +1203,345 @@ class DatabaseManager:
 
     # ==================== Simulation Result Storage ====================
 
-    async def store_simulation_run(self, conference: str, n_simulations: int, season_year: int) -> int:
+    def _safe_numeric(self, value, default=None, as_int=False):
+        """
+        Safely convert values to numeric, handling NaN, None, 'N/A', etc.
+        
+        Args:
+            value: The value to convert
+            default: Default value if conversion fails
+            as_int: If True, convert to integer
+        
+        Returns:
+            Converted numeric value or default
+        """
+        if pd.isna(value) or value == 'N/A' or value is None:
+            return default
+        try:
+            result = float(value)
+            return int(result) if as_int else result
+        except (ValueError, TypeError):
+            return default
+
+    async def store_simulation_run(self, user_id: int, conference: str, n_simulations: int, season_year: int) -> int:
         """
         Stores a new simulation run record and returns the run ID.
         """
-        query = """
-            INSERT INTO simulation_runs (conference, n_simulations, season_year, run_timestamp)
-            VALUES (:conference, :n_simulations, :season_year, NOW())
-            RETURNING run_id
-        """
-        values = {"conference": conference, "n_simulations": n_simulations, "season_year": season_year}
-        run_id = await self.db.fetch_val(query, values=values)
-        logger.info(f"Stored new simulation run with ID: {run_id}")
-        return run_id
+        logger.info(f"Storing simulation run: UserID {user_id}, Conf: {conference}, N_sim: {n_simulations}, Year: {season_year}")
+        try:
+            # Start a transaction since we need to insert into two tables
+            async with self.db.transaction():
+                # First, insert into prediction_runs
+                run_query = """
+                    INSERT INTO prediction_runs (
+                        conference_id, n_simulations, season_year, run_date, 
+                        is_stored, matchday, league_id
+                    ) VALUES (
+                        :conference_id, :n_simulations, :season_year, NOW(), 
+                        TRUE, :matchday, :league_id
+                    )
+                    RETURNING run_id
+                """
+                
+                # Map conference name to ID
+                conf_map = {"eastern": 1, "western": 2}
+                conference_id = conf_map.get(conference.lower())
+                
+                if conference_id is None:
+                    # Handle "both" - might need to run two separate simulations
+                    raise ValueError(f"Invalid conference: {conference}. Use 'eastern' or 'western'")
+                
+                # Get current matchday (you might want to calculate this dynamically)
+                # For now, using a placeholder
+                current_matchday = await self.get_current_matchday(season_year)
+                
+                run_values = {
+                    "conference_id": conference_id,
+                    "n_simulations": n_simulations,
+                    "season_year": season_year,
+                    "matchday": current_matchday or 0,
+                    "league_id": 1  # MLS Next Pro
+                }
+                
+                run_result = await self.db.fetch_one(run_query, values=run_values)
+                run_id = run_result['run_id']
+                
+                # Second, link this run to the user
+                user_sim_query = """
+                    INSERT INTO user_simulations (user_id, run_id, created_at)
+                    VALUES (:user_id, :run_id, NOW())
+                """
+                
+                await self.db.execute(user_sim_query, values={
+                    "user_id": user_id,
+                    "run_id": run_id
+                })
+                
+                logger.info(f"Stored new prediction run with ID: {run_id} for user {user_id}")
+                return run_id
+                
+        except Exception as e:
+            logger.error(f"Database error in store_simulation_run: {e}", exc_info=True)
+            raise
 
-    async def store_simulation_results(self, run_id: int, summary_df: Any, final_rank_dist: Dict):
+    async def store_simulation_results(self, run_id: int, summary_df: pd.DataFrame, simulation_results: Dict, qualification_data: Dict):
         """
         Stores detailed simulation results, including team summaries and rank distributions.
         """
-        team_results_query = """
-            INSERT INTO simulation_results (run_id, team_id, avg_points, avg_rank, 
-                playoff_pct, final_rank_distribution, created_at)
-            VALUES (:run_id, :team_id, :avg_points, :avg_rank, 
-                :playoff_pct, :final_rank_distribution, NOW())
-        """
-        for _, row in summary_df.iterrows():
-            team_id = row['_team_id']
-            rank_dist = final_rank_dist.get(team_id, [])
-            
-            result_values = {
-                "run_id": run_id,
-                "team_id": team_id,
-                "avg_points": row['Average Points'],
-                "avg_rank": row['Average Final Rank'],
-                "playoff_pct": row['Playoff Qualification %'],
-                "final_rank_distribution": json.dumps(rank_dist)
-            }
-            await self.db.execute(team_results_query, values=result_values)
-        logger.info(f"Stored {len(summary_df)} team simulation results for run_id: {run_id}")
+        logger.info(f"Storing simulation results for run_id: {run_id}")
 
-    async def get_latest_simulation_run(self, conference: str, season_year: int) -> Optional[Dict]:
+        try:
+            summary_insert_query = """
+                INSERT INTO prediction_summary (
+                    run_id, team_id, games_remaining, current_points, current_rank,
+                    average_points, avg_final_rank, median_final_rank, best_rank, worst_rank,
+                    rank_25, rank_75, best_points, worst_points, playoff_prob_pct, 
+                    clinched, eliminated, created_at
+                ) VALUES (
+                    :run_id, :team_id, :games_remaining, :current_points, :current_rank,
+                    :average_points, :avg_final_rank, :median_final_rank, :best_rank, :worst_rank,
+                    :rank_25, :rank_75, :best_points, :worst_points, :playoff_prob_pct,
+                    :clinched, :eliminated, NOW()
+                )
+                ON CONFLICT (run_id, team_id) DO UPDATE SET
+                    games_remaining = EXCLUDED.games_remaining,
+                    current_points = EXCLUDED.current_points,
+                    current_rank = EXCLUDED.current_rank,
+                    average_points = EXCLUDED.average_points,
+                    avg_final_rank = EXCLUDED.avg_final_rank,
+                    median_final_rank = EXCLUDED.median_final_rank,
+                    best_rank = EXCLUDED.best_rank,
+                    worst_rank = EXCLUDED.worst_rank,
+                    rank_25 = EXCLUDED.rank_25,
+                    rank_75 = EXCLUDED.rank_75,
+                    best_points = EXCLUDED.best_points,
+                    worst_points = EXCLUDED.worst_points,
+                    playoff_prob_pct = EXCLUDED.playoff_prob_pct,
+                    clinched = EXCLUDED.clinched,
+                    eliminated = EXCLUDED.eliminated,
+                    created_at = NOW()
+            """
+        
+            for _, row in summary_df.iterrows():
+                team_id = row['_team_id']
+                rank_dist = simulation_results.get(team_id, [])
+                qual_info = qualification_data.get(team_id, {})
+            
+                # Calculate rank statistics from actual simulation results
+                if rank_dist:
+                    rank_array = np.array(rank_dist)
+                    median_rank = np.median(rank_array)
+                    best_rank = np.min(rank_array)
+                    worst_rank = np.max(rank_array)
+                    rank_25 = np.percentile(rank_array, 25)
+                    rank_75 = np.percentile(rank_array, 75)
+                else:
+                    # Fallback to DataFrame values if no simulation data
+                    median_rank = self._safe_numeric(row.get('Median Final Rank', row['Average Final Rank']))
+                    best_rank = self._safe_numeric(row.get('Best Rank', row['Average Final Rank']))
+                    worst_rank = self._safe_numeric(row.get('Worst Rank', row['Average Final Rank']))
+                    rank_25 = self._safe_numeric(row.get('_rank_25', row['Average Final Rank']))
+                    rank_75 = self._safe_numeric(row.get('_rank_75', row['Average Final Rank']))
+            
+                # Determine if clinched/eliminated based on playoff probability
+                playoff_prob = self._safe_numeric(row['Playoff Qualification %'], 0)
+                clinched = playoff_prob >= 99.9
+                eliminated = playoff_prob <= 0.1
+            
+                summary_values = {
+                    "run_id": run_id,
+                    "team_id": team_id,
+                    "games_remaining": qual_info.get('games_remaining', 0),
+                    "current_points": self._safe_numeric(row['Current Points'], 0, as_int=True),
+                    "current_rank": self._safe_numeric(row.get('Current Rank'), None, as_int=True),
+                    "average_points": self._safe_numeric(row['Average Points'], 0),
+                    "avg_final_rank": self._safe_numeric(row['Average Final Rank']),
+                    "median_final_rank": self._safe_numeric(median_rank),
+                    "best_rank": self._safe_numeric(best_rank, as_int=True),
+                    "worst_rank": self._safe_numeric(worst_rank, as_int=True),
+                    "rank_25": self._safe_numeric(rank_25, as_int=True),
+                    "rank_75": self._safe_numeric(rank_75, as_int=True),
+                    "best_points": self._safe_numeric(row.get('Best Points'), as_int=True),
+                    "worst_points": self._safe_numeric(row.get('Worst Points'), as_int=True),
+                    "playoff_prob_pct": playoff_prob,
+                    "clinched": clinched,
+                    "eliminated": eliminated
+                }
+            
+                await self.db.execute(summary_insert_query, values=summary_values)
+        
+            # Store shootout analysis data
+            await self._store_shootout_analysis(run_id, qualification_data)
+            
+            logger.info(f"Stored {len(summary_df)} team prediction summaries for run_id: {run_id}")
+        
+        except Exception as e:
+            logger.error(f"Database error in store_simulation_results for run_id {run_id}: {e}", exc_info=True)
+            raise
+
+    async def _store_shootout_analysis(self, run_id: int, qualification_data: Dict):
+        """
+        Store shootout analysis data. This provides data for the "Impact of Additional Shootout Wins" chart.
+        """
+        try:
+            shootout_entries_stored = 0
+            
+            for team_id, qual_data in qualification_data.items():
+                if not qual_data.get('shootout_win_impact'):
+                    continue
+                    
+                shootout_impact = qual_data.get('shootout_win_impact', {})
+                current_odds = qual_data.get('playoff_probability', 0)
+                
+                # Calculate wins needed for 50% and 75% playoff odds
+                wins_for_50 = None
+                wins_for_75 = None
+                
+                for additional_wins, projected_odds in shootout_impact.items():
+                    if wins_for_50 is None and projected_odds >= 50:
+                        wins_for_50 = additional_wins
+                    if wins_for_75 is None and projected_odds >= 75:
+                        wins_for_75 = additional_wins
+                
+                # Get corresponding summary_id from prediction_summary
+                summary_query = """
+                    SELECT summary_id FROM prediction_summary 
+                    WHERE run_id = :run_id AND team_id = :team_id
+                """
+                summary_result = await self.db.fetch_one(
+                    summary_query, 
+                    values={"run_id": run_id, "team_id": team_id}
+                )
+                
+                if not summary_result:
+                    logger.warning(f"No summary_id found for team {team_id} in run {run_id}")
+                    continue
+                    
+                # Insert or update shootout analysis
+                shootout_query = """
+                    INSERT INTO shootout_analysis (
+                        summary_id, run_id, team_id, games_remaining,
+                        wins_for_50_odds, wins_for_75_odds, current_odds
+                    ) VALUES (
+                        :summary_id, :run_id, :team_id, :games_remaining,
+                        :wins_for_50_odds, :wins_for_75_odds, :current_odds
+                    )
+                    ON CONFLICT (summary_id) DO UPDATE SET
+                        run_id = EXCLUDED.run_id,
+                        team_id = EXCLUDED.team_id,
+                        games_remaining = EXCLUDED.games_remaining,
+                        wins_for_50_odds = EXCLUDED.wins_for_50_odds,
+                        wins_for_75_odds = EXCLUDED.wins_for_75_odds,
+                        current_odds = EXCLUDED.current_odds
+                """
+                
+                values = {
+                    "summary_id": summary_result['summary_id'],
+                    "run_id": run_id,
+                    "team_id": team_id,
+                    "games_remaining": qual_data.get('games_remaining', 0),
+                    "wins_for_50_odds": wins_for_50,
+                    "wins_for_75_odds": wins_for_75,
+                    "current_odds": current_odds
+                }
+                
+                await self.db.execute(shootout_query, values=values)
+                shootout_entries_stored += 1
+                
+            if shootout_entries_stored > 0:
+                logger.info(f"Stored shootout analysis for {shootout_entries_stored} teams (run_id: {run_id})")
+            else:
+                logger.debug(f"No shootout analysis data to store for run_id: {run_id}")
+            
+        except Exception as e:
+            logger.warning(f"Could not store shootout analysis for run_id {run_id}: {e}")
+            # Don't raise - this is optional functionality that shouldn't break the main storage
+
+
+    async def get_latest_simulation_run(self, user_id: int, conference: str, season_year: int) -> Optional[Dict]:
         """
         Retrieves the latest simulation run details for a given conference and season.
         """
-        query = """
-            SELECT * FROM simulation_runs
-            WHERE conference = :conference AND season_year = :season_year
-            ORDER BY run_timestamp DESC LIMIT 1
-        """
-        run = await self.db.fetch_one(query, values={"conference": conference, "season_year": season_year})
-        return dict(run) if run else None
+        logger.debug(f"Fetching latest prediction run for user: {user_id}, conference: {conference}, season: {season_year}")
+    
+        try:
+            conf_map = {"eastern": 1, "western": 2}
+            conference_id = conf_map.get(conference.lower())
+            
+            if conference_id is None:
+                logger.warning(f"Invalid conference: {conference}")
+                return None
+            
+            query = """
+                SELECT pr.*, us.user_id 
+                FROM prediction_runs pr
+                JOIN user_simulations us ON pr.run_id = us.run_id
+                WHERE us.user_id = :user_id 
+                AND pr.conference_id = :conference_id 
+                AND pr.season_year = :season_year
+                ORDER BY pr.run_date DESC 
+                LIMIT 1
+            """
+            
+            values = {
+                "user_id": user_id,
+                "conference_id": conference_id, 
+                "season_year": season_year
+            }
+            
+            run = await self.db.fetch_one(query, values=values)
+            if run:
+                logger.info(f"Found latest prediction run: ID {run['run_id']} for user: {user_id}")
+                return dict(run)
+            else:
+                logger.info(f"No prediction run found for user: {user_id}, conference: {conference}")
+                return None
+                
+        except Exception as e:
+            logger.error(f"Database error in get_latest_simulation_run: {e}", exc_info=True)
+            raise
+
 
     async def get_simulation_results_for_run(self, run_id: int) -> List[Dict]:
         """
         Retrieves all stored simulation results for a given run ID.
         """
-        query = """
-            SELECT sr.*, t.team_name
-            FROM simulation_results sr
-            JOIN team t ON sr.team_id = t.team_id
-            WHERE sr.run_id = :run_id
-            ORDER BY sr.avg_rank ASC
+        logger.debug(f"Fetching simulation results for run_id: {run_id}")
+    
+        try:
+            query = """
+                SELECT ps.*, t.team_name
+                FROM prediction_summary ps
+                JOIN team t ON ps.team_id = t.team_id
+                WHERE ps.run_id = :run_id
+                ORDER BY ps.avg_final_rank ASC
+            """
+            
+            results = await self.db.fetch_all(query, values={"run_id": run_id})
+            
+            parsed_results = []
+            for row in results:
+                res_dict = dict(row)
+                parsed_results.append(res_dict)
+            
+            logger.info(f"Found {len(parsed_results)} results for run_id: {run_id}")
+            return parsed_results
+            
+        except Exception as e:
+            logger.error(f"Database error in get_simulation_results_for_run: {e}", exc_info=True)
+            raise
+
+    async def get_current_matchday(self, season_year: int) -> Optional[int]:
         """
-        results = await self.db.fetch_all(query, values={"run_id": run_id})
-        # Parse the JSON string back into a list
-        parsed_results = []
-        for r in results:
-            res_dict = dict(r)
-            res_dict['final_rank_distribution'] = json.loads(res_dict['final_rank_distribution'])
-            parsed_results.append(res_dict)
-        return parsed_results
+        Calculate the current matchday based on completed games.
+        """
+        query = """
+            SELECT MAX(matchday) as current_matchday
+            FROM games
+            WHERE season_year = :season_year
+            AND is_completed = true
+            AND matchday > 0
+        """
+        
+        result = await self.db.fetch_one(query, values={"season_year": season_year})
+        return result['current_matchday'] if result and result['current_matchday'] else 0

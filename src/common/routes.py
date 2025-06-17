@@ -145,52 +145,58 @@ async def get_user_simulations(
     Get all simulations run by the current user.
     Supports pagination with skip and limit parameters.
     """
-    query = """
-        SELECT 
-            pr.run_id,
-            pr.run_date,
-            pr.season_year,
-            pr.n_simulations,
-            pr.matchday,
-            c.conf_name as conference,
-            COUNT(ps.team_id) as teams_simulated,
-            pr.is_stored
-        FROM prediction_runs pr
-        LEFT JOIN conference c ON pr.conference_id = c.conf_id
-        LEFT JOIN prediction_summary ps ON pr.run_id = ps.run_id
-        WHERE pr.user_id = :user_id
-        GROUP BY pr.run_id, pr.run_date, pr.season_year, pr.n_simulations, 
-                 pr.matchday, c.conf_name, pr.is_stored
-        ORDER BY pr.run_date DESC
-        LIMIT :limit OFFSET :skip
-    """
+    logger.info(f"Fetching simulations for user_id: {current_user['user_id']}, skip: {skip}, limit: {limit}")
+    try:
+        query = """
+            SELECT
+                pr.run_id,
+                pr.run_date,
+                pr.season_year,
+                pr.n_simulations,
+                pr.matchday,
+                c.conf_name as conference,
+                COUNT(ps.team_id) as teams_simulated,
+                pr.is_stored
+                FROM prediction_runs pr
+                JOIN user_simulations us ON pr.run_id = us.run_id  -- Added this join
+                LEFT JOIN conference c ON pr.conference_id = c.conf_id
+                LEFT JOIN prediction_summary ps ON pr.run_id = ps.run_id
+                WHERE us.user_id = :user_id  -- Changed from pr.user_id
+                GROUP BY pr.run_id, pr.run_date, pr.season_year, pr.n_simulations, 
+                        pr.matchday, c.conf_name, pr.is_stored
+                ORDER BY pr.run_date DESC
+                LIMIT :limit OFFSET :skip
+            """
+        simulations = await database.fetch_all(
+            query,
+            values={
+                "user_id": current_user['user_id'],
+                "limit": limit,
+                "skip": skip
+            }
+        )
     
-    simulations = await database.fetch_all(
-        query,
-        values={
-            "user_id": current_user['user_id'],
-            "limit": limit,
-            "skip": skip
+        # Get total count for pagination
+        count_query = """
+            SELECT COUNT(DISTINCT pr.run_id) as total
+            FROM prediction_runs pr
+            JOIN user_simulations us ON pr.run_id = us.run_id
+            WHERE us.user_id = :user_id
+            """
+        total_result = await database.fetch_one(
+            count_query,
+            values={"user_id": current_user['user_id']}
+        )
+    
+        return {
+            "simulations": [dict(sim) for sim in simulations],
+            "total": total_result['total'],
+            "skip": skip,
+            "limit": limit
         }
-    )
-    
-    # Get total count for pagination
-    count_query = """
-        SELECT COUNT(*) as total 
-        FROM prediction_runs 
-        WHERE user_id = :user_id
-    """
-    total_result = await database.fetch_one(
-        count_query,
-        values={"user_id": current_user['user_id']}
-    )
-    
-    return {
-        "simulations": [dict(sim) for sim in simulations],
-        "total": total_result['total'],
-        "skip": skip,
-        "limit": limit
-    }
+    except Exception as e:
+        logger.error(f"Error fetching simulations for user {current_user['user_id']}: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail="Failed to fetch user simulations.")
 
 # ==================== Public Simulation Routes ====================
 
@@ -204,51 +210,197 @@ async def get_all_simulations(
     Get all simulations from all users (public view).    
     Can filter by conference and supports pagination.
     """
-    where_clause = ""
-    values = {"limit": limit, "skip": skip}
+    logger.info(f"Fetching all simulations. Skip: {skip}, Limit: {limit}, Conference: {conference}")
+    try:
+        where_clause = ""
+        values = {"limit": limit, "skip": skip}
+
+        if conference and conference != "both":
+            conf_id = 1 if conference == "eastern" else 2
+            where_clause = "WHERE pr.conference_id = :conf_id"
+            values["conf_id"] = conf_id
+
+        query = f"""
+            SELECT
+                pr.run_id,
+                pr.run_date,
+                pr.season_year,
+                pr.n_simulations,
+                pr.matchday,
+                c.conf_name as conference,
+                u.username,
+                COUNT(ps.team_id) as teams_simulated
+            FROM prediction_runs pr
+            LEFT JOIN conference c ON pr.conference_id = c.conf_id
+            LEFT JOIN user_simulations us ON pr.run_id = us.run_id  -- Added
+            LEFT JOIN users u ON us.user_id = u.user_id  -- Changed from pr.user_id
+            LEFT JOIN prediction_summary ps ON pr.run_id = ps.run_id
+            {where_clause}
+            GROUP BY pr.run_id, pr.run_date, pr.season_year, pr.n_simulations, 
+                     pr.matchday, c.conf_name, u.username
+            ORDER BY pr.run_date DESC
+            LIMIT :limit OFFSET :skip
+        """
+            
+        simulations = await database.fetch_all(query, values=values)
+
+        # Get total count
+        count_query = f"""
+            SELECT COUNT(*) as total
+            FROM prediction_runs pr
+            {where_clause}
+        """
+        
+        count_values = values.copy()
+        count_values.pop('limit', None)
+        count_values.pop('skip', None)
+        total_result = await database.fetch_one(count_query, values=count_values)
+
+        return {
+            "simulations": [dict(sim) for sim in simulations],
+            "total": total_result['total'],
+            "skip": skip,
+            "limit": limit
+        }
+    except Exception as e:
+        logger.error(f"Error fetching all simulations: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail="Failed to fetch all simulations.")
     
-    if conference and conference != "both":
-        conf_id = 1 if conference == "eastern" else 2
-        where_clause = "WHERE pr.conference_id = :conf_id"
-        values["conf_id"] = conf_id
-    
-    query = f"""
-        SELECT 
-            pr.run_id,
-            pr.run_date,
-            pr.season_year,
-            pr.n_simulations,
-            pr.matchday,
-            c.conf_name as conference,
-            u.username,
-            COUNT(ps.team_id) as teams_simulated
-        FROM prediction_runs pr
-        LEFT JOIN conference c ON pr.conference_id = c.conf_id
-        LEFT JOIN users u ON pr.user_id = u.user_id
-        LEFT JOIN prediction_summary ps ON pr.run_id = ps.run_id
-        {where_clause}
-        GROUP BY pr.run_id, pr.run_date, pr.season_year, pr.n_simulations, 
-                 pr.matchday, c.conf_name, u.username
-        ORDER BY pr.run_date DESC
-        LIMIT :limit OFFSET :skip
+@router.get("/simulations/{run_id}/chart-data")
+async def get_simulation_chart_data(
+    run_id: int,
+    current_user: Dict = Depends(auth_manager.validate_token)
+):
     """
+    Retrieve all chart data for a given simulation run.
     
-    simulations = await database.fetch_all(query, values=values)
-    
-    # Get total count
-    count_query = f"""
-        SELECT COUNT(*) as total 
-        FROM prediction_runs pr
-        {where_clause}
+    Returns:
+        Dictionary with all chart data needed for frontend visualization
     """
-    total_result = await database.fetch_one(count_query, values=values)
-    
-    return {
-        "simulations": [dict(sim) for sim in simulations],
-        "total": total_result['total'],
-        "skip": skip,
-        "limit": limit
-    }
+    try:
+        access_query = """
+            SELECT pr.run_id 
+            FROM prediction_runs pr
+            JOIN user_simulations us ON pr.run_id = us.run_id
+            WHERE pr.run_id = :run_id AND us.user_id = :user_id
+        """
+        
+        access_check = await database.fetch_one(
+            access_query, 
+            values={"run_id": run_id, "user_id": current_user['user_id']}
+        )
+        
+        if not access_check:
+            raise HTTPException(status_code=404, detail="Simulation not found or access denied")
+        
+        # Get prediction summary data with all chart columns
+        summary_query = """
+            SELECT 
+                ps.*,
+                t.team_name,
+                c.conf_name as conference
+            FROM prediction_summary ps
+            JOIN team t ON ps.team_id = t.team_id
+            JOIN prediction_runs pr ON ps.run_id = pr.run_id
+            LEFT JOIN conference c ON pr.conference_id = c.conf_id
+            WHERE ps.run_id = :run_id
+            ORDER BY ps.playoff_prob_pct DESC
+        """
+        
+        summary_data = await database.fetch_all(summary_query, values={"run_id": run_id})
+        
+        if not summary_data:
+            raise HTTPException(status_code=404, detail="No results found for this simulation")
+        
+        # Get shootout analysis data
+        shootout_query = """
+            SELECT sa.*, t.team_name
+            FROM shootout_analysis sa
+            JOIN team t ON sa.team_id = t.team_id
+            WHERE sa.run_id = :run_id
+        """
+        
+        shootout_data = await database.fetch_all(shootout_query, values={"run_id": run_id})
+        
+        # Get run metadata
+        run_query = """
+            SELECT pr.*, c.conf_name as conference
+            FROM prediction_runs pr
+            LEFT JOIN conference c ON pr.conference_id = c.conf_id
+            WHERE pr.run_id = :run_id
+        """
+        
+        run_metadata = await database.fetch_one(run_query, values={"run_id": run_id})
+        
+        # Format data for charts
+        chart_data = {
+            "playoff_probabilities": [
+                {
+                    "team_name": row['team_name'],
+                    "team_id": row['team_id'],
+                    "probability": float(row['playoff_prob_pct']) if row['playoff_prob_pct'] is not None else 0,
+                    "clinched": bool(row['clinched']) if row['clinched'] is not None else False,
+                    "eliminated": bool(row['eliminated']) if row['eliminated'] is not None else False,
+                    "current_rank": int(row['current_rank']) if row['current_rank'] is not None else None
+                }
+                for row in summary_data
+            ],
+            "rank_distributions": [
+                {
+                    "team_name": row['team_name'],
+                    "team_id": row['team_id'],
+                    "avg_rank": float(row['avg_final_rank']) if row['avg_final_rank'] is not None else None,
+                    "median_rank": float(row['median_final_rank']) if row['median_final_rank'] is not None else None,
+                    "best_rank": int(row['best_rank']) if row['best_rank'] is not None else None,
+                    "worst_rank": int(row['worst_rank']) if row['worst_rank'] is not None else None,
+                    "rank_25": int(row['rank_25']) if row['rank_25'] is not None else None,
+                    "rank_75": int(row['rank_75']) if row['rank_75'] is not None else None
+                }
+                for row in summary_data
+            ],
+            "points_analysis": [
+                {
+                    "team_name": row['team_name'],
+                    "team_id": row['team_id'],
+                    "current_points": int(row['current_points']) if row['current_points'] is not None else 0,
+                    "average_points": float(row['average_points']) if row['average_points'] is not None else 0,
+                    "best_points": int(row['best_points']) if row['best_points'] is not None else None,
+                    "worst_points": int(row['worst_points']) if row['worst_points'] is not None else None,
+                    "current_rank": int(row['current_rank']) if row['current_rank'] is not None else None,
+                    "avg_final_rank": float(row['avg_final_rank']) if row['avg_final_rank'] is not None else None,
+                    "playoff_prob": float(row['playoff_prob_pct']) if row['playoff_prob_pct'] is not None else 0
+                }
+                for row in summary_data
+            ],
+            "shootout_analysis": [
+                {
+                    "team_name": row['team_name'],
+                    "team_id": row['team_id'],
+                    "games_remaining": int(row['games_remaining']) if row['games_remaining'] is not None else 0,
+                    "wins_for_50_odds": int(row['wins_for_50_odds']) if row['wins_for_50_odds'] is not None else None,
+                    "wins_for_75_odds": int(row['wins_for_75_odds']) if row['wins_for_75_odds'] is not None else None,
+                    "current_odds": float(row['current_odds']) if row['current_odds'] is not None else 0
+                }
+                for row in shootout_data
+            ],
+            "metadata": {
+                "run_id": run_id,
+                "conference": run_metadata['conference'] if run_metadata else None,
+                "total_teams": len(summary_data),
+                "n_simulations": int(run_metadata['n_simulations']) if run_metadata else None,
+                "season_year": int(run_metadata['season_year']) if run_metadata else None,
+                "run_date": run_metadata['run_date'].isoformat() if run_metadata and run_metadata['run_date'] else None
+            }
+        }
+        
+        logger.info(f"Successfully retrieved chart data for run_id {run_id} (user: {current_user['user_id']})")
+        return chart_data
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Error retrieving chart data for run_id {run_id}: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail="Failed to retrieve chart data")
 
 # ==================== Simulation Execution Routes ====================
 
@@ -268,7 +420,8 @@ async def run_regular_season_simulation(
     3. Run Monte Carlo simulations
     4. Store results in the database
     """
-    simulation_id = f"sim_{datetime.now().strftime('%Y%m%d_%H%M%S')}_{request.conference}_{current_user['user_id']}"
+    simulation_id = f"sim_{datetime.now().strftime('%Y%m%d_%H%M%S')}_{request.conference}_{current_user.get('username', 'unknown_user')}"
+    logger.info(f"Initiating regular season simulation. ID: {simulation_id}, User: {current_user.get('username', current_user['user_id'])}, Conference: {request.conference}, N_sim: {request.n_simulations}, Playoffs: {request.include_playoffs}")
     
     # Initialize the simulation status
     simulation_cache[simulation_id] = {
@@ -309,6 +462,7 @@ async def run_simulation_task(
     """
     Background task to run the actual simulation.
     """
+    logger.info(f"Background task started for simulation_id: {simulation_id}. Conference: {conference}, N_sim: {n_simulations}, Include_playoffs: {include_playoffs}, User_id: {user_id}")
     try:
         # First, ensure we have historical data loaded
         await ensure_historical_data_loaded()
@@ -349,6 +503,8 @@ async def run_simulation_task(
             combined_results = {
                 "eastern": eastern_results,
                 "western": western_results,
+                "eastern_run_id": eastern_results.get('run_id'),
+                "western_run_id": western_results.get('run_id'),
                 "regular_season_records": regular_season_records
             }
             
@@ -398,9 +554,10 @@ async def run_simulation_task(
                 "playoff_simulation_available": False,
                 "results": results
             })
+            logger.info(f"Simulation {simulation_id} completed successfully.")
         
     except Exception as e:
-        logger.error(f"Simulation {simulation_id} failed: {str(e)}")
+        logger.error(f"Simulation {simulation_id} failed: {str(e)}", exc_info=True)
         simulation_cache[simulation_id]["status"] = "failed"
         simulation_cache[simulation_id]["error"] = str(e)
 
@@ -457,6 +614,7 @@ async def run_conference_simulation(
     league_averages: Dict[str, float]
 ) -> Dict:
     # Run simulation for a single conference with provided league averages.
+    logger.info(f"Starting conference simulation for {conference}. N_sim: {n_simulations}, User_id: {user_id}")
 
     run_id = await db_manager.store_simulation_run(
         user_id=user_id,
@@ -464,11 +622,14 @@ async def run_conference_simulation(
         n_simulations=n_simulations,
         season_year=2025
     )
+    logger.info(f"Stored simulation run for {conference}, run_id: {run_id}")
     
     # 1. FETCH: Get all data from DatabaseManager
+    logger.debug(f"Fetching simulation data for {conference}, run_id: {run_id}")
     sim_data = await db_manager.get_data_for_simulation(conference, 2025)
     
     # 2. COMPUTE: Run simulation with fetched data
+    logger.debug(f"Initializing MLSNPRegSeasonPredictor for {conference}, run_id: {run_id}")
     predictor = MLSNPRegSeasonPredictor(
         conference=conference,
         conference_teams=sim_data["conference_teams"],
@@ -478,13 +639,16 @@ async def run_conference_simulation(
     )
     
     summary_df, simulation_results, _, qualification_data = predictor.run_simulations(n_simulations)
+    logger.info(f"Completed {n_simulations} simulations for {conference}, run_id: {run_id}")
     
     # 3. STORE: Save results to database
+    logger.debug(f"Storing simulation results for {conference}, run_id: {run_id}")
     await db_manager.store_simulation_results(
         run_id, summary_df, simulation_results, qualification_data
     )
     
     # 4. FORMAT: Prepare API response with ALL required fields
+    logger.debug(f"Formatting API response for {conference}, run_id: {run_id}")
     team_performances = []
     top_8_teams = {}
     team_records = {}
@@ -547,11 +711,14 @@ async def run_playoff_simulation_with_records(
     Run playoff simulations with regular season records for home field advantage.
     This is an internal function, not a route handler.
     """
+    logger.info(f"Starting playoff simulation. Eastern Seeds: {len(eastern_seeds)}, Western Seeds: {len(western_seeds)}, N_sim: {n_simulations}, User_id: {user_id}, Parent_run_id: {parent_run_id}")
     try:
         # Get game data for team performance metrics
+        logger.debug("Fetching games for season 2025 for playoff simulation.")
         games = await db_manager.get_games_for_season(2025)
         
         # Get team performance data
+        logger.debug("Calculating team performance metrics for playoff simulation.")
         team_performance = {}
         league_totals = {"xgf": 0, "xga": 0, "games": 0}
         
@@ -572,8 +739,10 @@ async def run_playoff_simulation_with_records(
         # Calculate league averages
         league_avg_xgf = league_totals["xgf"] / league_totals["games"] if league_totals["games"] > 0 else 1.2
         league_avg_xga = league_totals["xga"] / league_totals["games"] if league_totals["games"] > 0 else 1.2
+        logger.debug(f"League averages for playoff sim: xGF={league_avg_xgf:.2f}, xGA={league_avg_xga:.2f}")
         
         # Initialize playoff predictor with regular season records
+        logger.debug("Initializing MLSNPPlayoffPredictor.")
         playoff_predictor = MLSNPPlayoffPredictor(
             games_data=games,
             team_performance=team_performance,
@@ -583,13 +752,16 @@ async def run_playoff_simulation_with_records(
         )
         
         # Run simulations
+        logger.info(f"Running {n_simulations} playoff simulations.")
         results = playoff_predictor.run_playoff_simulations(
             eastern_seeds=eastern_seeds,
             western_seeds=western_seeds,
             n_simulations=n_simulations
         )
+        logger.info("Completed playoff simulations.")
         
         # Store playoff results in database
+        logger.debug("Storing playoff simulation results.")
         playoff_run_id = await store_playoff_results(
             results=results,
             user_id=user_id,
@@ -607,7 +779,8 @@ async def run_playoff_simulation_with_records(
         }
         
     except Exception as e:
-        logger.error(f"Playoff simulation failed: {str(e)}")
+        logger.error(f"Playoff simulation failed: {str(e)}", exc_info=True)
+        # This exception will be caught by the caller (run_simulation_task or run_playoff_simulation endpoint)
         raise
 
 # ==================== Data Management Routes ====================
@@ -626,24 +799,32 @@ async def load_historical_data(
     if not current_user.get('is_admin'):
         raise HTTPException(status_code=403, detail="Admin access required")
     
+    logger.info(f"Admin user {current_user.get('username', current_user['user_id'])} attempting to load historical data for year: {year}")
     try:
         await db_manager.load_historical_season(year)
+        logger.info(f"Successfully loaded historical data for year: {year}")
         return {"message": f"Successfully loaded {year} season data"}
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        logger.error(f"Failed to load historical data for year {year}: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail=f"Failed to load historical data for {year}. Error: {str(e)}")
 
 @router.get("/data/seasons")
 async def get_available_seasons():
     """Get list of seasons with data in the database."""
-    query = """
-        SELECT DISTINCT season_year, COUNT(*) as game_count
-        FROM games
-        GROUP BY season_year
-        ORDER BY season_year DESC
-    """
-    
-    seasons = await database.fetch_all(query)
-    return [{"year": s['season_year'], "games": s['game_count']} for s in seasons]
+    logger.info("Fetching available seasons.")
+    try:
+        query = """
+            SELECT DISTINCT season_year, COUNT(*) as game_count
+            FROM games
+            GROUP BY season_year
+            ORDER BY season_year DESC
+        """
+        seasons = await database.fetch_all(query)
+        logger.info(f"Found {len(seasons)} seasons with data.")
+        return [{"year": s['season_year'], "games": s['game_count']} for s in seasons]
+    except Exception as e:
+        logger.error(f"Failed to fetch available seasons: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail="Failed to fetch available seasons.")
 
 async def store_playoff_results(
     results: Dict,
@@ -660,10 +841,10 @@ async def store_playoff_results(
     proj_query = """
         INSERT INTO playoff_projection (
             proj_date, season_year, parent_projection, proj_type,
-            proj_name, n_simulations, user_id, created_at
+            proj_name, n_simulations, created_by, created_at
         ) VALUES (
             NOW(), 2025, :parent_projection, 'simulation',
-            :proj_name, :n_simulations, :user_id, NOW()
+            :proj_name, :n_simulations, :created_by, NOW()
         ) RETURNING proj_id
     """
     
@@ -671,7 +852,7 @@ async def store_playoff_results(
         "parent_projection": parent_run_id,
         "proj_name": f"Playoff Simulation - {datetime.now().strftime('%Y-%m-%d %H:%M')}",
         "n_simulations": n_simulations,
-        "user_id": user_id
+        "created_by": user_id
     }
     
     proj_result = await db_manager.db.fetch_one(proj_query, values=proj_values)
@@ -743,36 +924,41 @@ async def run_playoff_simulation(
     Run playoff simulations with manually specified seeding.
     This is the actual HTTP endpoint for users who want to run custom playoff brackets.
     """
+    logger.info(f"User {current_user.get('username', current_user['user_id'])} running manual playoff simulation. N_sim: {request.n_simulations}")
+    try:
+        regular_season_records = {}
+        
+        # Fetch current standings for both conferences to act as regular season records
+        logger.debug("Fetching current standings for manual playoff simulation.")
+        for conference_name_iter in ['eastern', 'western']: # Use a different variable name
+            standings = await db_manager.calculate_and_store_standings(2025, conference_name_iter)
+            conference_records = {}
 
-    regular_season_records = {}
-    
-    # Fetch current standings for both conferences
-    for conference in ['eastern', 'western']:
-        standings = await db_manager.calculate_and_store_standings(2025, conference)
-        conference_records = {}
+            for team_standing in standings:
+                team_id = team_standing['team_id']
+                conference_records[team_id] = {
+                    "team_name": team_standing.get('name', ''),
+                    "points": team_standing['points'],
+                    "average_final_points": team_standing['points'],  # Use current points as avg_final_points for manual sim
+                    "wins": team_standing['wins'],
+                    "goal_difference": team_standing['goal_difference'],
+                    "goals_for": team_standing['goals_for']
+                }
+            regular_season_records[conference_name_iter] = conference_records
         
-        for team_standing in standings:
-            team_id = team_standing['team_id']
-            conference_records[team_id] = {
-                "team_name": team_standing.get('name', ''),
-                "points": team_standing['points'],
-                "average_final_points": team_standing['points'],  # Use current for manual
-                "wins": team_standing['wins'],
-                "goal_difference": team_standing['goal_difference'],
-                "goals_for": team_standing['goals_for']
-            }
-        
-        regular_season_records[conference] = conference_records
-    
-    result = await run_playoff_simulation_with_records(
-        eastern_seeds=request.eastern_seeds,
-        western_seeds=request.western_seeds,
-        regular_season_records=regular_season_records,
-        n_simulations=request.n_simulations,
-        user_id=current_user['user_id']
-    )
-    
-    return result
+        result = await run_playoff_simulation_with_records(
+            eastern_seeds=request.eastern_seeds,
+            western_seeds=request.western_seeds,
+            regular_season_records=regular_season_records,
+            n_simulations=request.n_simulations,
+            user_id=current_user['user_id']
+            # parent_run_id can be None or a special value for manual playoff runs
+        )
+        logger.info(f"Manual playoff simulation successful for user {current_user.get('username', current_user['user_id'])}. Proj ID: {result.get('playoff_run_id')}")
+        return result
+    except Exception as e:
+        logger.error(f"Manual playoff simulation failed for user {current_user.get('username', current_user['user_id'])}: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail=f"Playoff simulation failed: {str(e)}")
 
 # ==================== Helper Functions ====================
 
@@ -781,16 +967,27 @@ async def ensure_historical_data_loaded():
     Ensure we have historical data loaded.    
     Checks if 2025 season is loaded and loads if not.
     """
-    for year in [2025]:
-        # Check if we have games for this year
-        count_result = await database.fetch_one(
-            "SELECT COUNT(*) as count FROM games WHERE season_year = :year",
-            values={"year": year}
-        )
-        
-        if count_result['count'] == 0:
-            logger.info(f"Loading {year} season data...")
-            await db_manager.load_historical_season(year)
+    # This function is critical for simulations. Adding robust logging and error handling.
+    for year in [2025]: # Assuming 2025 is the target season for now
+        try:
+            logger.debug(f"Checking if historical data for {year} is loaded.")
+            count_result = await database.fetch_one(
+                "SELECT COUNT(*) as count FROM games WHERE season_year = :year",
+                values={"year": year}
+            )
+
+            if count_result and count_result['count'] == 0:
+                logger.info(f"No game data found for season {year}. Attempting to load historical data.")
+                await db_manager.load_historical_season(year)
+                logger.info(f"Successfully loaded historical data for season {year}.")
+            else:
+                logger.debug(f"Historical data for {year} is already loaded (game count: {count_result['count'] if count_result else 'N/A'}).")
+        except Exception as e:
+            logger.error(f"Failed during ensure_historical_data_loaded for year {year}: {e}", exc_info=True)
+            # This is a critical failure for simulations depending on this data.
+            # Depending on policy, we might want to raise an exception here to stop the simulation.
+            # For now, logging the error. The simulation might fail later due to missing data.
+            raise  # Re-raise to be caught by the simulation task's main error handler
 
 # In-memory cache for simulation status (replace with Redis in production)
-simulation_cache = {}
+simulation_cache = {}  # TODO: Replace with Redis or a more robust solution

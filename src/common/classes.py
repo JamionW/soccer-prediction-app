@@ -1,10 +1,35 @@
 from pydantic import BaseModel
 from typing import Optional, List, Dict, Any
 
+from typing import ClassVar
+
 class SimulationRequest(BaseModel):
     conference: str  # "eastern" or "western"
-    n_simulations: int = 10000
+    n_simulations: int = 25000
     include_playoffs: bool = False
+    simulation_preset: Optional[str] = "standard"
+    SIMULATION_PRESETS: ClassVar[Dict[str, Dict[str, any]]] = {
+        "quick": {
+            "count": 1000,
+            "description": "Quick estimate (~3 seconds)",
+            "accuracy": "±3% margin of error"
+        },
+        "standard": {
+            "count": 25000,
+            "description": "Professional accuracy (~1 minute)",
+            "accuracy": "±0.6% margin of error"
+        },
+        "detailed": {
+            "count": 50000,
+            "description": "High precision (~2 minutes)",
+            "accuracy": "±0.4% margin of error"
+        },
+        "research": {
+            "count": 100000,
+            "description": "Maximum precision (~4 minutes)",
+            "accuracy": "±0.3% margin of error"
+        }
+    }
     
 class PlayoffSeedingRequest(BaseModel):
     """Request model for custom playoff seeding"""

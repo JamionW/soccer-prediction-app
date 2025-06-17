@@ -1,5 +1,6 @@
 import logging
 import sys
+import os
 import io
 import asyncio
 import numpy as np
@@ -8,6 +9,11 @@ from typing import Dict, List, Tuple
 from src.mlsnp_predictor.reg_season_predictor import MLSNPRegSeasonPredictor
 from src.common.database import database
 from src.common.database_manager import DatabaseManager
+import plotly
+from src.common.chart_generator import MLSNPChartGenerator
+
+# Ensure output directory exists
+os.makedirs('output', exist_ok=True)
 
 # Configure logging
 logging.basicConfig(
@@ -16,7 +22,8 @@ logging.basicConfig(
     handlers=[
         logging.StreamHandler(sys.stdout),
         logging.FileHandler('output/run_predictor.log', encoding='utf-8')
-    ]
+    ],
+    force=True  # Ensure handlers are set up even if already configured
 )
 logger = logging.getLogger(__name__)
 
@@ -86,6 +93,43 @@ async def calculate_league_averages(db_manager: DatabaseManager, season_year: in
         "total_teams": len(team_latest),
         "total_games": total_games
     }
+
+def generate_charts_if_requested(summary_df, simulation_results, qualification_data, 
+                                conference, n_simulations):
+    """
+    Ask user if they want to generate charts and create them if yes.
+    """
+    generate_charts = input(f"\nGenerate interactive charts for {conference} conference? (y/n): ").lower().strip()
+    
+    if generate_charts == 'y':
+        print(f"Generating interactive charts for {conference} conference...")
+        
+        try:
+            chart_generator = MLSNPChartGenerator()
+            chart_files = chart_generator.generate_all_charts(
+                summary_df=summary_df,
+                simulation_results=simulation_results,
+                qualification_data=qualification_data,
+                conference=conference,
+                n_simulations=n_simulations
+            )
+            
+            chart_generator.show_charts_summary(chart_files, conference)
+            
+            # Ask if they want to open the dashboard
+            open_dashboard = input("\nOpen dashboard in browser? (y/n): ").lower().strip()
+            if open_dashboard == 'y':
+                import webbrowser
+                dashboard_file = chart_files.get('dashboard')
+                if dashboard_file:
+                    webbrowser.open(f'file://{os.path.abspath(dashboard_file)}')
+                    print(f"Opened dashboard in browser!")
+            
+        except Exception as e:
+            logger.error(f"Error generating charts: {e}", exc_info=True)
+            print(f"Chart generation failed: {e}")
+    else:
+        print("Skipping chart generation.")
 
 
 async def main():
@@ -235,34 +279,47 @@ async def main():
                 print(f"\n{'='*80}")
                 print(f"{conf_display_name} Conference Final Standings Projection")
                 print(f"{'='*80}")
-                print(f"{'Rank':<4} {'Team':<25} {'Current Pts':<12} {'Games':<6} {'Playoff %':<10} {'Avg Rank':<10}")
+                print(f"{'Proj':<4} {'Team':<25} {'Curr':<4} {'Pts':<4} {'GP':<4} {'Playoff %':<10} {'Avg Final':<10}")
+                print(f"{'Rank':<4} {'':<25} {'Rank':<4} {'':<4} {'':<4} {'':<10} {'Rank':<10}")
                 print(f"{'-'*80}")
-                
+
                 for idx, (_, row) in enumerate(summary_df.iterrows(), 1):
                     team_name = row['Team'][:24]  # Truncate long names
+                    current_rank = int(row['Current Rank'])
                     current_pts = int(row['Current Points'])
                     games_played = int(row['Games Played'])
                     playoff_pct = f"{row['Playoff Qualification %']:.1f}%"
                     avg_rank = f"{row['Average Final Rank']:.2f}"
                     
-                    print(f"{idx:<4} {team_name:<25} {current_pts:<12} {games_played:<6} {playoff_pct:<10} {avg_rank:<10}")
-                
+                    print(f"{idx:<4} {team_name:<25} {current_rank:<4} {current_pts:<4} {games_played:<4} {playoff_pct:<10} {avg_rank:<10}")
+
                 print(f"{'-'*80}")
                 print(f"Total teams: {len(summary_df)}")
                 print(f"Simulations run: {n_simulations:,}")
-                
+
                 # Additional insights
                 playoff_teams = summary_df[summary_df['Playoff Qualification %'] >= 50.0]
                 eliminated_teams = summary_df[summary_df['Playoff Qualification %'] < 1.0]
-                
+                clinched_teams = summary_df[summary_df['Playoff Qualification %'] >= 99.9]
+
                 print(f"\nPlayoff Picture:")
                 print(f"  Teams likely to make playoffs (>50%): {len(playoff_teams)}")
+                print(f"  Teams clinched playoffs (>99.9%): {len(clinched_teams)}")
                 print(f"  Teams effectively eliminated (<1%): {len(eliminated_teams)}")
 
                 # Save results to CSV with timestamp
                 output_file = f"output/{conf_name}_season_simulation_results_{season_year}_{datetime.now().strftime('%Y%m%d_%H%M')}.csv"
                 summary_df.to_csv(output_file, index=False)
                 logger.info(f"Results saved to {output_file}")
+
+                # Generate charts if requested
+                generate_charts_if_requested(
+                    summary_df=summary_df,
+                    simulation_results=simulation_results,
+                    qualification_data=qualification_data,
+                    conference=conf_name,
+                    n_simulations=n_simulations
+                )
                 
                 # Store in database option
                 store_in_db = input(f"\nStore {conf_display_name} conference results in database? (y/n): ").lower().strip()
