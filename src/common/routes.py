@@ -250,7 +250,7 @@ async def get_all_simulations(
             FROM prediction_runs pr
             {where_clause}
         """
-        # Need to remove limit and skip for total count if they were added to values for the main query
+        
         count_values = values.copy()
         count_values.pop('limit', None)
         count_values.pop('skip', None)
@@ -265,6 +265,142 @@ async def get_all_simulations(
     except Exception as e:
         logger.error(f"Error fetching all simulations: {e}", exc_info=True)
         raise HTTPException(status_code=500, detail="Failed to fetch all simulations.")
+    
+@router.get("/simulations/{run_id}/chart-data")
+async def get_simulation_chart_data(
+    run_id: int,
+    current_user: Dict = Depends(auth_manager.validate_token)
+):
+    """
+    Retrieve all chart data for a given simulation run.
+    
+    Returns:
+        Dictionary with all chart data needed for frontend visualization
+    """
+    try:
+        access_query = """
+            SELECT pr.run_id 
+            FROM prediction_runs pr
+            JOIN user_simulations us ON pr.run_id = us.run_id
+            WHERE pr.run_id = :run_id AND us.user_id = :user_id
+        """
+        
+        access_check = await database.fetch_one(
+            access_query, 
+            values={"run_id": run_id, "user_id": current_user['user_id']}
+        )
+        
+        if not access_check:
+            raise HTTPException(status_code=404, detail="Simulation not found or access denied")
+        
+        # Get prediction summary data with all chart columns
+        summary_query = """
+            SELECT 
+                ps.*,
+                t.team_name,
+                c.conf_name as conference
+            FROM prediction_summary ps
+            JOIN team t ON ps.team_id = t.team_id
+            JOIN prediction_runs pr ON ps.run_id = pr.run_id
+            LEFT JOIN conference c ON pr.conference_id = c.conf_id
+            WHERE ps.run_id = :run_id
+            ORDER BY ps.playoff_prob_pct DESC
+        """
+        
+        summary_data = await database.fetch_all(summary_query, values={"run_id": run_id})
+        
+        if not summary_data:
+            raise HTTPException(status_code=404, detail="No results found for this simulation")
+        
+        # Get shootout analysis data
+        shootout_query = """
+            SELECT sa.*, t.team_name
+            FROM shootout_analysis sa
+            JOIN team t ON sa.team_id = t.team_id
+            WHERE sa.run_id = :run_id
+        """
+        
+        shootout_data = await database.fetch_all(shootout_query, values={"run_id": run_id})
+        
+        # Get run metadata
+        run_query = """
+            SELECT pr.*, c.conf_name as conference
+            FROM prediction_runs pr
+            LEFT JOIN conference c ON pr.conference_id = c.conf_id
+            WHERE pr.run_id = :run_id
+        """
+        
+        run_metadata = await database.fetch_one(run_query, values={"run_id": run_id})
+        
+        # Format data for charts
+        chart_data = {
+            "playoff_probabilities": [
+                {
+                    "team_name": row['team_name'],
+                    "team_id": row['team_id'],
+                    "probability": float(row['playoff_prob_pct']) if row['playoff_prob_pct'] is not None else 0,
+                    "clinched": bool(row['clinched']) if row['clinched'] is not None else False,
+                    "eliminated": bool(row['eliminated']) if row['eliminated'] is not None else False,
+                    "current_rank": int(row['current_rank']) if row['current_rank'] is not None else None
+                }
+                for row in summary_data
+            ],
+            "rank_distributions": [
+                {
+                    "team_name": row['team_name'],
+                    "team_id": row['team_id'],
+                    "avg_rank": float(row['avg_final_rank']) if row['avg_final_rank'] is not None else None,
+                    "median_rank": float(row['median_final_rank']) if row['median_final_rank'] is not None else None,
+                    "best_rank": int(row['best_rank']) if row['best_rank'] is not None else None,
+                    "worst_rank": int(row['worst_rank']) if row['worst_rank'] is not None else None,
+                    "rank_25": int(row['rank_25']) if row['rank_25'] is not None else None,
+                    "rank_75": int(row['rank_75']) if row['rank_75'] is not None else None
+                }
+                for row in summary_data
+            ],
+            "points_analysis": [
+                {
+                    "team_name": row['team_name'],
+                    "team_id": row['team_id'],
+                    "current_points": int(row['current_points']) if row['current_points'] is not None else 0,
+                    "average_points": float(row['average_points']) if row['average_points'] is not None else 0,
+                    "best_points": int(row['best_points']) if row['best_points'] is not None else None,
+                    "worst_points": int(row['worst_points']) if row['worst_points'] is not None else None,
+                    "current_rank": int(row['current_rank']) if row['current_rank'] is not None else None,
+                    "avg_final_rank": float(row['avg_final_rank']) if row['avg_final_rank'] is not None else None,
+                    "playoff_prob": float(row['playoff_prob_pct']) if row['playoff_prob_pct'] is not None else 0
+                }
+                for row in summary_data
+            ],
+            "shootout_analysis": [
+                {
+                    "team_name": row['team_name'],
+                    "team_id": row['team_id'],
+                    "games_remaining": int(row['games_remaining']) if row['games_remaining'] is not None else 0,
+                    "wins_for_50_odds": int(row['wins_for_50_odds']) if row['wins_for_50_odds'] is not None else None,
+                    "wins_for_75_odds": int(row['wins_for_75_odds']) if row['wins_for_75_odds'] is not None else None,
+                    "current_odds": float(row['current_odds']) if row['current_odds'] is not None else 0
+                }
+                for row in shootout_data
+            ],
+            "metadata": {
+                "run_id": run_id,
+                "conference": run_metadata['conference'] if run_metadata else None,
+                "total_teams": len(summary_data),
+                "n_simulations": int(run_metadata['n_simulations']) if run_metadata else None,
+                "season_year": int(run_metadata['season_year']) if run_metadata else None,
+                "run_date": run_metadata['run_date'].isoformat() if run_metadata and run_metadata['run_date'] else None
+            }
+        }
+        
+        logger.info(f"Successfully retrieved chart data for run_id {run_id} (user: {current_user['user_id']})")
+        return chart_data
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Error retrieving chart data for run_id {run_id}: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail="Failed to retrieve chart data")
 
 # ==================== Simulation Execution Routes ====================
 

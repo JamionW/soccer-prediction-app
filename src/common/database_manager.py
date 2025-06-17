@@ -356,7 +356,15 @@ class DatabaseManager:
             logger.error(f"Error in get_or_fetch_game for game {game_id}: {e}", exc_info=True)
             return None # Return None if any error occurs in the outer try block
         
-
+    def _convert_nan_to_none_scalar(self, value):
+        """Converts a single NaN value (float('nan') or np.nan) to None."""
+        if isinstance(value, float) and np.isnan(value):
+            return None
+        # Handle numpy specific NaN types (e.g., from pandas Series.to_dict())
+        if isinstance(value, np.generic) and np.isscalar(value) and np.isnan(value):
+            return None
+        return value    
+    
     async def store_game(self, game_data: Dict, from_asa: bool = False) -> Dict:
         """
         Store a game in the database, handling data transformation and updates.
@@ -433,14 +441,16 @@ class DatabaseManager:
             
             if from_asa:
                 # Store original ASA data before any corrections
-                original_asa_data = json.dumps({
-                'home_score': game_data.get('home_score'),
-                'away_score': game_data.get('away_score'),
-                'penalties': game_data.get('penalties'),
-                'home_penalties': game_data.get('home_penalties'),
-                'away_penalties': game_data.get('away_penalties'),
-                'went_to_shootout_original': went_to_shootout
-                })
+                original_asa_data_dict_raw = {
+                    'home_score': self._convert_nan_to_none_scalar(game_data.get('home_score')),
+                    'away_score': self._convert_nan_to_none_scalar(game_data.get('away_score')),
+                    'penalties': self._convert_nan_to_none_scalar(game_data.get('penalties')),
+                    'home_penalties': self._convert_nan_to_none_scalar(game_data.get('home_penalties')),
+                    'away_penalties': self._convert_nan_to_none_scalar(game_data.get('away_penalties')),
+                    # For went_to_shootout_original, get the raw value (which might be NaN) and convert to None if so
+                    'went_to_shootout_original': self._convert_nan_to_none_scalar(game_data.get('penalties', game_data.get('went_to_shootout', False)))
+                }
+                original_asa_data = json.dumps(original_asa_data_dict_raw) # Use the dict with NaNs converted to None
 
                 # For ASA data: determine completion based on actual score data
                 # ASA should only return games that have been played
@@ -1193,11 +1203,31 @@ class DatabaseManager:
 
     # ==================== Simulation Result Storage ====================
 
+    def _safe_numeric(self, value, default=None, as_int=False):
+        """
+        Safely convert values to numeric, handling NaN, None, 'N/A', etc.
+        
+        Args:
+            value: The value to convert
+            default: Default value if conversion fails
+            as_int: If True, convert to integer
+        
+        Returns:
+            Converted numeric value or default
+        """
+        if pd.isna(value) or value == 'N/A' or value is None:
+            return default
+        try:
+            result = float(value)
+            return int(result) if as_int else result
+        except (ValueError, TypeError):
+            return default
+
     async def store_simulation_run(self, user_id: int, conference: str, n_simulations: int, season_year: int) -> int:
         """
         Stores a new simulation run record and returns the run ID.
         """
-        logger.info(f"Storing simulation run: UserID {user_id}, Conf: {conference}, N_sim: {n_simulations}, Year: {season_year}") # Added user_id to log
+        logger.info(f"Storing simulation run: UserID {user_id}, Conf: {conference}, N_sim: {n_simulations}, Year: {season_year}")
         try:
             # Start a transaction since we need to insert into two tables
             async with self.db.transaction():
@@ -1263,24 +1293,41 @@ class DatabaseManager:
         try:
             summary_insert_query = """
                 INSERT INTO prediction_summary (
-                run_id, team_id, games_remaining, current_points, current_rank,
-                avg_points, avg_final_rank, median_final_rank, best_rank, worst_rank,
-                rank_25, rank_75, playoff_prob_pct, clinched, eliminated,
-                status_final, created_at
+                    run_id, team_id, games_remaining, current_points, current_rank,
+                    average_points, avg_final_rank, median_final_rank, best_rank, worst_rank,
+                    rank_25, rank_75, best_points, worst_points, playoff_prob_pct, 
+                    clinched, eliminated, created_at
                 ) VALUES (
                     :run_id, :team_id, :games_remaining, :current_points, :current_rank,
-                    :avg_points, :avg_final_rank, :median_final_rank, :best_rank, :worst_rank,
-                    :rank_25, :rank_75, :playoff_prob_pct, :clinched, :eliminated,
-                    :status_final, NOW()
+                    :average_points, :avg_final_rank, :median_final_rank, :best_rank, :worst_rank,
+                    :rank_25, :rank_75, :best_points, :worst_points, :playoff_prob_pct,
+                    :clinched, :eliminated, NOW()
                 )
+                ON CONFLICT (run_id, team_id) DO UPDATE SET
+                    games_remaining = EXCLUDED.games_remaining,
+                    current_points = EXCLUDED.current_points,
+                    current_rank = EXCLUDED.current_rank,
+                    average_points = EXCLUDED.average_points,
+                    avg_final_rank = EXCLUDED.avg_final_rank,
+                    median_final_rank = EXCLUDED.median_final_rank,
+                    best_rank = EXCLUDED.best_rank,
+                    worst_rank = EXCLUDED.worst_rank,
+                    rank_25 = EXCLUDED.rank_25,
+                    rank_75 = EXCLUDED.rank_75,
+                    best_points = EXCLUDED.best_points,
+                    worst_points = EXCLUDED.worst_points,
+                    playoff_prob_pct = EXCLUDED.playoff_prob_pct,
+                    clinched = EXCLUDED.clinched,
+                    eliminated = EXCLUDED.eliminated,
+                    created_at = NOW()
             """
-            
+        
             for _, row in summary_df.iterrows():
                 team_id = row['_team_id']
                 rank_dist = simulation_results.get(team_id, [])
                 qual_info = qualification_data.get(team_id, {})
-                
-                # Calculate rank statistics from distribution
+            
+                # Calculate rank statistics from actual simulation results
                 if rank_dist:
                     rank_array = np.array(rank_dist)
                     median_rank = np.median(rank_array)
@@ -1289,40 +1336,126 @@ class DatabaseManager:
                     rank_25 = np.percentile(rank_array, 25)
                     rank_75 = np.percentile(rank_array, 75)
                 else:
-                    median_rank = row['Average Final Rank']
-                    best_rank = worst_rank = rank_25 = rank_75 = row['Average Final Rank']
-                
+                    # Fallback to DataFrame values if no simulation data
+                    median_rank = self._safe_numeric(row.get('Median Final Rank', row['Average Final Rank']))
+                    best_rank = self._safe_numeric(row.get('Best Rank', row['Average Final Rank']))
+                    worst_rank = self._safe_numeric(row.get('Worst Rank', row['Average Final Rank']))
+                    rank_25 = self._safe_numeric(row.get('_rank_25', row['Average Final Rank']))
+                    rank_75 = self._safe_numeric(row.get('_rank_75', row['Average Final Rank']))
+            
                 # Determine if clinched/eliminated based on playoff probability
-                playoff_prob = row['Playoff Qualification %']
+                playoff_prob = self._safe_numeric(row['Playoff Qualification %'], 0)
                 clinched = playoff_prob >= 99.9
                 eliminated = playoff_prob <= 0.1
-                
+            
                 summary_values = {
                     "run_id": run_id,
                     "team_id": team_id,
                     "games_remaining": qual_info.get('games_remaining', 0),
-                    "current_points": row['Current Points'],
-                    "current_rank": row['Current Rank'],
-                    "avg_points": row['Average Points'],
-                    "avg_final_rank": row['Average Final Rank'],
-                    "median_final_rank": float(median_rank),
-                    "best_rank": int(best_rank),
-                    "worst_rank": int(worst_rank),
-                    "rank_25": int(rank_25),
-                    "rank_75": int(rank_75),
+                    "current_points": self._safe_numeric(row['Current Points'], 0, as_int=True),
+                    "current_rank": self._safe_numeric(row.get('Current Rank'), None, as_int=True),
+                    "average_points": self._safe_numeric(row['Average Points'], 0),
+                    "avg_final_rank": self._safe_numeric(row['Average Final Rank']),
+                    "median_final_rank": self._safe_numeric(median_rank),
+                    "best_rank": self._safe_numeric(best_rank, as_int=True),
+                    "worst_rank": self._safe_numeric(worst_rank, as_int=True),
+                    "rank_25": self._safe_numeric(rank_25, as_int=True),
+                    "rank_75": self._safe_numeric(rank_75, as_int=True),
+                    "best_points": self._safe_numeric(row.get('Best Points'), as_int=True),
+                    "worst_points": self._safe_numeric(row.get('Worst Points'), as_int=True),
                     "playoff_prob_pct": playoff_prob,
                     "clinched": clinched,
-                    "eliminated": eliminated,
-                    "status_final": qual_info.get('status') # Added this line
+                    "eliminated": eliminated
                 }
-                
+            
                 await self.db.execute(summary_insert_query, values=summary_values)
+        
+            # Store shootout analysis data
+            await self._store_shootout_analysis(run_id, qualification_data)
             
             logger.info(f"Stored {len(summary_df)} team prediction summaries for run_id: {run_id}")
-            
+        
         except Exception as e:
             logger.error(f"Database error in store_simulation_results for run_id {run_id}: {e}", exc_info=True)
             raise
+
+    async def _store_shootout_analysis(self, run_id: int, qualification_data: Dict):
+        """
+        Store shootout analysis data. This provides data for the "Impact of Additional Shootout Wins" chart.
+        """
+        try:
+            shootout_entries_stored = 0
+            
+            for team_id, qual_data in qualification_data.items():
+                if not qual_data.get('shootout_win_impact'):
+                    continue
+                    
+                shootout_impact = qual_data.get('shootout_win_impact', {})
+                current_odds = qual_data.get('playoff_probability', 0)
+                
+                # Calculate wins needed for 50% and 75% playoff odds
+                wins_for_50 = None
+                wins_for_75 = None
+                
+                for additional_wins, projected_odds in shootout_impact.items():
+                    if wins_for_50 is None and projected_odds >= 50:
+                        wins_for_50 = additional_wins
+                    if wins_for_75 is None and projected_odds >= 75:
+                        wins_for_75 = additional_wins
+                
+                # Get corresponding summary_id from prediction_summary
+                summary_query = """
+                    SELECT summary_id FROM prediction_summary 
+                    WHERE run_id = :run_id AND team_id = :team_id
+                """
+                summary_result = await self.db.fetch_one(
+                    summary_query, 
+                    values={"run_id": run_id, "team_id": team_id}
+                )
+                
+                if not summary_result:
+                    logger.warning(f"No summary_id found for team {team_id} in run {run_id}")
+                    continue
+                    
+                # Insert or update shootout analysis
+                shootout_query = """
+                    INSERT INTO shootout_analysis (
+                        summary_id, run_id, team_id, games_remaining,
+                        wins_for_50_odds, wins_for_75_odds, current_odds
+                    ) VALUES (
+                        :summary_id, :run_id, :team_id, :games_remaining,
+                        :wins_for_50_odds, :wins_for_75_odds, :current_odds
+                    )
+                    ON CONFLICT (summary_id) DO UPDATE SET
+                        run_id = EXCLUDED.run_id,
+                        team_id = EXCLUDED.team_id,
+                        games_remaining = EXCLUDED.games_remaining,
+                        wins_for_50_odds = EXCLUDED.wins_for_50_odds,
+                        wins_for_75_odds = EXCLUDED.wins_for_75_odds,
+                        current_odds = EXCLUDED.current_odds
+                """
+                
+                values = {
+                    "summary_id": summary_result['summary_id'],
+                    "run_id": run_id,
+                    "team_id": team_id,
+                    "games_remaining": qual_data.get('games_remaining', 0),
+                    "wins_for_50_odds": wins_for_50,
+                    "wins_for_75_odds": wins_for_75,
+                    "current_odds": current_odds
+                }
+                
+                await self.db.execute(shootout_query, values=values)
+                shootout_entries_stored += 1
+                
+            if shootout_entries_stored > 0:
+                logger.info(f"Stored shootout analysis for {shootout_entries_stored} teams (run_id: {run_id})")
+            else:
+                logger.debug(f"No shootout analysis data to store for run_id: {run_id}")
+            
+        except Exception as e:
+            logger.warning(f"Could not store shootout analysis for run_id {run_id}: {e}")
+            # Don't raise - this is optional functionality that shouldn't break the main storage
 
 
     async def get_latest_simulation_run(self, user_id: int, conference: str, season_year: int) -> Optional[Dict]:
@@ -1389,9 +1522,6 @@ class DatabaseManager:
             parsed_results = []
             for row in results:
                 res_dict = dict(row)
-                # The schema doesn't show a rank_dist_json column
-                # The distribution data might need to be stored elsewhere
-                # or reconstructed from the percentile data
                 parsed_results.append(res_dict)
             
             logger.info(f"Found {len(parsed_results)} results for run_id: {run_id}")

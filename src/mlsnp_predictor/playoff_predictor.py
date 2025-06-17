@@ -658,8 +658,8 @@ class MLSNPPlayoffPredictor:
                 results['team_probabilities'][champion]['championship_win'] += 1
 
             # Aggregate opponent selection frequency
-            for conf_name_iter in ['eastern', 'western']:
-                current_conf_results = sim_result.get(conf_name_iter, {})
+            for conf in ['eastern', 'western']:
+                current_conf_results = sim_result.get(conf, {})
                 if current_conf_results and 'round1_selection_details' in current_conf_results:
                     for selection_detail in sim_result[conf]['round1_selection_details']:
                         selector = selection_detail['selector_id']

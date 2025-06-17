@@ -1,4 +1,3 @@
-from xml.etree.ElementTree import QName
 import numpy as np
 import pandas as pd
 import logging
@@ -65,25 +64,87 @@ class MLSNPRegSeasonPredictor:
             team_name = self.team_names.get(team_id, team_id)
             
             # Check for impossible records (more wins than games played, etc.)
-            total_results = stats.get('wins', 0) + stats.get('losses', 0) + stats.get('draws', 0) + stats.get('shootout_wins', 0)
+            total_results = stats.get('wins', 0) + stats.get('losses', 0) + stats.get('draws', 0)
             games_played = stats.get('games_played', 0)
-            
+
             if total_results != games_played and games_played > 0:
                 warnings.append(f"⚠️  {team_name}: Win/loss/draw counts don't add up to games played ({total_results} vs {games_played})")
             
+            if stats.get('wins', 0) > games_played:
+                warnings.append(f"⚠️  {team_name}: More wins ({stats.get('wins', 0)}) than games played ({games_played})")
+        
+            if stats.get('losses', 0) > games_played:
+                warnings.append(f"⚠️  {team_name}: More losses ({stats.get('losses', 0)}) than games played ({games_played})")
+                
+            if stats.get('draws', 0) > games_played:
+                warnings.append(f"⚠️  {team_name}: More draws ({stats.get('draws', 0)}) than games played ({games_played})")
+            
             # Check for unusual points calculations
+            shootout_losses = stats.get('draws', 0) - stats.get('shootout_wins', 0)
             expected_points = (stats.get('wins', 0) * 3) + (stats.get('shootout_wins', 0) * 2) + (stats.get('draws', 0) - stats.get('shootout_wins', 0))
             actual_points = stats.get('points', 0)
             
-            if expected_points != actual_points:
+            if abs(expected_points - actual_points) > 0:  # Allow for small rounding errors
                 warnings.append(f"⚠️  {team_name}: Points calculation seems off (expected {expected_points}, got {actual_points})")
+                warnings.append(f"    → Breakdown: {stats.get('wins', 0)} reg wins × 3 + {stats.get('shootout_wins', 0)} SO wins × 2 + {shootout_losses} SO losses × 1")
         
         # Check for corrected games
         corrected_games = [g for g in self.games_data if g.get('data_corrected', False)]
         if corrected_games:
             warnings.append(f"ℹ️  {len(corrected_games)} games were auto-corrected during import (check correction_notes)")
         
-        return warnings    
+        return warnings
+    
+    def _debug_team_standings(self, team_id: str) -> None:
+        """Debug helper to trace a specific team's standings calculation"""
+        if team_id not in self.conference_teams:
+            return
+            
+        logger.info(f"\n=== DEBUG: Tracing standings for {self.team_names.get(team_id, team_id)} ===")
+        
+        # Count different game types for this team
+        reg_wins = reg_losses = shootout_games = 0
+        
+        for game in self.games_data:
+            if not game.get("is_completed"):
+                continue
+                
+            home_id, away_id = game["home_team_id"], game["away_team_id"]
+            if team_id not in [home_id, away_id]:
+                continue
+                
+            try:
+                home_score = int(game.get("home_score", 0))
+                away_score = int(game.get("away_score", 0))
+            except (ValueError, TypeError):
+                continue
+                
+            went_to_shootout = game.get("went_to_shootout", False)
+            
+            if team_id == home_id:
+                team_score, opp_score = home_score, away_score
+            else:
+                team_score, opp_score = away_score, home_score
+                
+            if went_to_shootout:
+                shootout_games += 1
+                logger.info(f"  Shootout game: {team_score}-{opp_score} (reg), SO result: {game.get('home_penalties', 0)}-{game.get('away_penalties', 0)}")
+            elif team_score > opp_score:
+                reg_wins += 1
+                logger.info(f"  Regular win: {team_score}-{opp_score}")
+            elif team_score < opp_score:
+                reg_losses += 1
+                logger.info(f"  Regular loss: {team_score}-{opp_score}")
+        
+        final_stats = self.current_standings.get(team_id, {})
+        logger.info(f"Final calculated stats:")
+        logger.info(f"  Games played: {final_stats.get('games_played', 0)}")
+        logger.info(f"  Wins: {final_stats.get('wins', 0)} (expected reg wins: {reg_wins})")
+        logger.info(f"  Losses: {final_stats.get('losses', 0)} (expected reg losses: {reg_losses})")
+        logger.info(f"  Draws: {final_stats.get('draws', 0)} (expected shootout games: {shootout_games})")
+        logger.info(f"  Shootout wins: {final_stats.get('shootout_wins', 0)}")
+        logger.info(f"  Points: {final_stats.get('points', 0)}")
+        logger.info("=== END DEBUG ===\n")
     
     def _calculate_current_standings(self) -> Dict[str, Dict]:
         """
@@ -109,9 +170,11 @@ class MLSNPRegSeasonPredictor:
 
             # Additional check: if we have scores, it should be completed
             has_scores = (game.get("home_score") is not None and game.get("away_score") is not None)
-            if has_scores and not is_completed: # Check original 'is_completed' from data
-                logger.warning(f"Game {game.get('game_id', 'unknown')} has scores but source data indicates 'is_completed: False'. Trusting source 'is_completed' flag for standings calculation.")
-                # Do not override 'is_completed' to True here. Let the original flag decide.
+            if has_scores and not is_completed:
+                logger.warning(f"STANDINGS DATA ISSUE: Game {game.get('game_id', 'unknown')} has scores "
+                            f"({game.get('home_score')}-{game.get('away_score')}) but is_completed=False. "
+                            f"Treating as completed for standings calculation.")
+                is_completed = True  # Override to prevent skipping games with scores
 
             if not is_completed: # This will now correctly use the original 'is_completed' flag from game data
                 skipped_games_count += 1
@@ -277,6 +340,15 @@ class MLSNPRegSeasonPredictor:
             for warning in warnings:
                 logger.warning(f"  {warning}")
 
+        problematic_teams = [w for w in warnings if "Win/loss/draw counts don't add up" in w]
+        if problematic_teams:
+            # Extract team name from first warning and debug it
+            first_warning = problematic_teams[0]
+            team_name = first_warning.split("⚠️  ")[1].split(":")[0]
+            team_id = next((tid for tid, name in self.team_names.items() if name == team_name), None)
+            if team_id:
+                self._debug_team_standings(team_id)
+
         final_ranks = defaultdict(list)
         final_points = defaultdict(list)
 
@@ -368,22 +440,58 @@ class MLSNPRegSeasonPredictor:
         
         for team_id, ranks in final_ranks.items():
             current_stats = self.current_standings.get(team_id, {})
+            points_list = final_points.get(team_id, [])
             playoff_prob = (np.array(ranks) <= 8).mean() * 100
             
+            if ranks:
+                avg_rank = np.mean(ranks)
+                median_rank = np.median(ranks)
+                best_rank = min(ranks)
+                worst_rank = max(ranks)
+                rank_25 = np.percentile(ranks, 25)
+                rank_75 = np.percentile(ranks, 75)
+            else:
+                avg_rank = median_rank = best_rank = worst_rank = rank_25 = rank_75 = 999
+
+            if points_list:
+                avg_points = np.mean(points_list)
+                best_points = max(points_list)
+                worst_points = min(points_list)
+            else:
+                avg_points = current_stats.get('points', 0)
+                best_points = worst_points = avg_points
+
+            status = ""
+            if worst_rank <= 8:
+                status = "x-"  # Clinched playoffs
+            elif best_rank > 8:
+                status = "e-"  # Eliminated from playoffs
+
+            team_name = self.team_names.get(team_id, team_id)
+            display_name = f"{status}{team_name}" if status else team_name
+
             summary_data.append({
-                'Team': self.team_names.get(team_id, team_id),
+                'Team': display_name,
                 '_team_id': team_id,
                 'Current Points': current_stats.get('points', 0),
                 'Current Rank': current_rank_map.get(team_id, 999),
                 'Games Played': current_stats.get('games_played', 0),
                 'Playoff Qualification %': playoff_prob,
-                'Average Final Rank': np.mean(ranks),
-                'Average Points': np.mean(final_points[team_id]),
+                'Average Final Rank': avg_rank,
+                'Average Points': avg_points,
+                'Median Final Rank': median_rank,
+                'Best Rank': best_rank,
+                'Worst Rank': worst_rank,
+                'Best Points': best_points,
+                'Worst Points': worst_points,
+                '_rank_25': rank_25,
+                '_rank_75': rank_75,
             })
 
             qualification_data[team_id] = {
                 'games_remaining': len(self.remaining_games),
-                'status': '', # This can be enhanced later
+                'status': status,
+                'playoff_probability': playoff_prob,
                 'shootout_win_impact': {} # Placeholder for compatibility
             }
 
